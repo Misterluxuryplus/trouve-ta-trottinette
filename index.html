@@ -347,25 +347,28 @@
     .best-card,
     .alt-card,
     .compare-card {
+      display: grid;
+      gap: 12px;
       border: 1px solid rgba(148, 163, 184, 0.16);
       border-radius: 24px;
       background:
         linear-gradient(145deg, rgba(56, 189, 248, 0.09), rgba(249, 115, 22, 0.07)),
         #020617;
+      box-shadow: 0 16px 42px rgba(0, 0, 0, 0.26);
     }
 
     .best-card {
       position: relative;
       overflow: hidden;
       margin-top: 14px;
-      padding: 22px 16px;
-      text-align: center;
-      border-color: rgba(56, 189, 248, 0.3);
+      padding: 22px 16px 18px;
+      border-color: rgba(56, 189, 248, 0.34);
       background:
-        radial-gradient(circle at 50% 0%, rgba(56, 189, 248, 0.23), transparent 44%),
+        radial-gradient(circle at 50% 0%, rgba(56, 189, 248, 0.25), transparent 45%),
+        radial-gradient(circle at 95% 18%, rgba(249, 115, 22, 0.18), transparent 30%),
         linear-gradient(145deg, rgba(56, 189, 248, 0.16), rgba(249, 115, 22, 0.12)),
         #020617;
-      box-shadow: 0 18px 48px rgba(0, 0, 0, 0.32), var(--glow-blue), var(--glow-orange);
+      box-shadow: 0 22px 54px rgba(0, 0, 0, 0.36), var(--glow-blue), var(--glow-orange);
     }
 
     .best-card::after {
@@ -396,12 +399,13 @@
     }
 
     .heavy-warning {
-      margin-top: 12px;
       padding: 12px;
-      border: 1px solid rgba(250, 204, 21, 0.34);
+      border: 1px solid rgba(250, 204, 21, 0.42);
       border-radius: 16px;
       color: #fde68a;
-      background: rgba(250, 204, 21, 0.11);
+      background:
+        linear-gradient(135deg, rgba(250, 204, 21, 0.14), rgba(249, 115, 22, 0.08)),
+        rgba(15, 23, 42, 0.76);
       font-size: 12px;
       line-height: 1.4;
       font-weight: 800;
@@ -419,7 +423,7 @@
     }
 
     .brand {
-      margin-top: 14px;
+      margin-top: 2px;
       color: #7dd3fc;
       font-size: 13px;
       font-weight: 900;
@@ -434,44 +438,61 @@
     }
 
     .reason {
-      margin: 12px auto 0;
+      margin: 4px 0 0;
       color: #e2e8f0;
       font-size: 14px;
       line-height: 1.35;
       font-weight: 700;
     }
 
-    .quick-stats {
+    .why-box {
+      padding: 12px;
+      border: 1px solid rgba(56, 189, 248, 0.16);
+      border-radius: 16px;
+      background: rgba(15, 23, 42, 0.66);
+    }
+
+    .why-title {
+      display: block;
+      color: #fed7aa;
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .result-lines {
       display: grid;
       grid-template-columns: 1fr;
       gap: 8px;
-      margin-top: 16px;
     }
 
-    .stat {
+    .result-line {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 12px;
-      padding: 11px 12px;
+      padding: 12px;
       border: 1px solid rgba(148, 163, 184, 0.12);
       border-radius: 16px;
       background: rgba(255, 255, 255, 0.06);
       text-align: left;
     }
 
-    .stat span {
+    .result-line span {
       display: block;
       color: var(--muted);
       font-size: 12px;
       font-weight: 800;
     }
 
-    .stat strong {
+    .result-line strong {
       display: block;
       margin-top: 0;
       font-size: 17px;
       color: #f8fafc;
+      text-align: right;
+      white-space: nowrap;
     }
 
     .alternatives {
@@ -481,14 +502,42 @@
     }
 
     .alt-card {
+      padding: 16px;
+      border-color: rgba(249, 115, 22, 0.18);
+      background:
+        linear-gradient(145deg, rgba(56, 189, 248, 0.06), rgba(249, 115, 22, 0.08)),
+        rgba(2, 6, 23, 0.94);
+    }
+
+    .card-head {
+      display: grid;
+      gap: 4px;
+    }
+
+    .alt-card .card-head {
+      grid-template-columns: 1fr auto;
+      align-items: start;
+      gap: 10px;
+    }
+
+    .alt-card .card-title {
+      display: grid;
+      gap: 3px;
+    }
+
+    .alt-card .brand {
+      margin-top: 8px;
+    }
+
+    .alt-card .model {
+      font-size: 23px;
+    }
+
+    .compare-card {
       padding: 14px;
       background:
         linear-gradient(145deg, rgba(15, 23, 42, 0.94), rgba(2, 6, 23, 0.94)),
         #020617;
-    }
-
-    .alt-card .model {
-      font-size: 22px;
     }
 
     .alt-head {
@@ -672,19 +721,19 @@
         <div class="choice-grid">
           <label class="choice">
             <input type="radio" name="usageType" value="city" checked />
-            <span>Ville / travail</span>
+            <span>🏙 Trajets quotidiens</span>
           </label>
           <label class="choice">
             <input type="radio" name="usageType" value="versatile" />
-            <span>Polyvalent</span>
+            <span>🛴 Un peu de tout</span>
           </label>
           <label class="choice">
             <input type="radio" name="usageType" value="sport" />
-            <span>Sport / puissance</span>
+            <span>⚡ Sensations / Performance</span>
           </label>
           <label class="choice">
             <input type="radio" name="usageType" value="longRide" />
-            <span>Longues balades</span>
+            <span>🌄 Grandes balades</span>
           </label>
         </div>
       </div>
@@ -1068,11 +1117,14 @@
 
     function quickStats(scooter) {
       return `
-        <div class="quick-stats">
-          <div class="stat"><span>🔋 Autonomie estimée</span><strong>${Math.round(scooter.estimatedRange)} km</strong></div>
-          <div class="stat"><span>💸 Prix moyen constaté</span><strong>${euro(scooter.price)}</strong></div>
-          <div class="stat"><span>⚖️ Poids</span><strong>${formatWeight(scooter.weightKg)}</strong></div>
-          <div class="stat"><span>⚡ Vitesse max approx.</span><strong>${scooter.maxSpeed} km/h</strong></div>
+        <div class="result-lines">
+          <div class="result-line"><span>💸 Prix</span><strong>${euro(scooter.price)}</strong></div>
+          <div class="result-line"><span>🔋 Autonomie</span><strong>${Math.round(scooter.estimatedRange)} km</strong></div>
+          <div class="result-line"><span>⚖️ Poids</span><strong>${formatWeight(scooter.weightKg)}</strong></div>
+          <div class="result-line"><span>⚡ Vitesse max approx.</span><strong>${scooter.maxSpeed} km/h</strong></div>
+          <div class="result-line"><span>⚡ Puissance</span><strong>${scooter.ratings.power}/10</strong></div>
+          <div class="result-line"><span>🛋 Confort</span><strong>${scooter.ratings.comfort}/10</strong></div>
+          <div class="result-line"><span>🛠 Fiabilité</span><strong>${scooter.ratings.reliability}/10</strong></div>
         </div>
         ${heavyWarning(scooter)}
       `;
@@ -1087,8 +1139,7 @@
 
       return `
         <div class="heavy-warning">
-          ⚠️ Attention : cette trottinette est lourde.<br>
-          À partir de 35 kg, elle peut être difficile à porter, monter dans des escaliers, mettre dans un coffre ou transporter au quotidien.
+          ⚠️ Modèle lourd : à partir de 35 kg, la trott peut être difficile à porter ou transporter au quotidien.
         </div>
       `;
     }
@@ -1096,11 +1147,16 @@
     function bestCard(scooter, totalDistance) {
       return `
         <article class="best-card">
-          <span class="badge">🥇 Meilleur choix pour vous</span>
-          <div class="brand">${scooter.brand}</div>
-          <div class="model">${scooter.model}</div>
-          <p class="reason">${reasonFor(scooter, totalDistance)}</p>
+          <div class="card-head">
+            <span class="badge">🥇 Meilleur choix pour vous</span>
+            <div class="brand">${scooter.brand}</div>
+            <div class="model">${scooter.model}</div>
+          </div>
           ${quickStats(scooter)}
+          <div class="why-box">
+            <span class="why-title">Pourquoi ce choix ?</span>
+            <p class="reason">${reasonFor(scooter, totalDistance)}</p>
+          </div>
         </article>
       `;
     }
@@ -1108,22 +1164,27 @@
     function futureCard(scooter) {
       return `
         <article class="best-card">
-          <span class="badge">🎯 Objectif futur</span>
-          <div class="brand">${scooter.brand}</div>
-          <div class="model">${scooter.model}</div>
-          <p class="reason">Plus adaptée au besoin demandé, mais hors budget actuellement.</p>
+          <div class="card-head">
+            <span class="badge">🎯 Objectif futur</span>
+            <div class="brand">${scooter.brand}</div>
+            <div class="model">${scooter.model}</div>
+          </div>
           ${quickStats(scooter)}
+          <div class="why-box">
+            <span class="why-title">Pourquoi ce choix ?</span>
+            <p class="reason">Plus adaptée au besoin demandé, mais hors budget actuellement.</p>
+          </div>
         </article>
       `;
     }
 
     function altCard(scooter, index = 0) {
-      const medal = index === 0 ? "🥈 Alternative 1" : "🥉 Alternative 2";
+      const medal = index === 0 ? "🥈 Alternative intéressante" : "🥉 Autre choix possible";
       return `
         <article class="alt-card">
-          <span class="badge">${medal}</span>
-          <div class="alt-head">
-            <div>
+          <div class="card-head">
+            <div class="card-title">
+              <span class="badge">${medal}</span>
               <div class="brand">${scooter.brand}</div>
               <div class="model">${scooter.model}</div>
             </div>
