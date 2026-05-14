@@ -108,13 +108,32 @@
       font-weight: 900;
     }
 
+    .hero-mark {
+      display: grid;
+      place-items: center;
+      width: 58px;
+      height: 58px;
+      margin: 0 auto 14px;
+      border: 1px solid rgba(56, 189, 248, 0.32);
+      border-radius: 20px;
+      color: #07111f;
+      background: linear-gradient(135deg, var(--blue), var(--orange));
+      box-shadow:
+        0 14px 34px rgba(56, 189, 248, 0.22),
+        0 14px 34px rgba(249, 115, 22, 0.16);
+      font-size: 28px;
+      font-weight: 900;
+    }
+
     h1 {
-      margin: 0;
+      max-width: 340px;
+      margin: 0 auto;
       color: #f8fafc;
-      font-size: clamp(39px, 12vw, 58px);
-      line-height: 0.95;
+      font-size: clamp(31px, 8.8vw, 43px);
+      line-height: 1;
       letter-spacing: 0;
       text-transform: uppercase;
+      text-align: center;
       text-shadow:
         0 0 28px rgba(56, 189, 248, 0.34),
         0 0 38px rgba(249, 115, 22, 0.18);
@@ -128,8 +147,7 @@
       line-height: 1.4;
     }
 
-    .note,
-    .install-prompt {
+    .note {
       margin-top: 14px;
       padding: 15px;
       color: var(--orange-soft);
@@ -147,33 +165,6 @@
         linear-gradient(135deg, rgba(250, 204, 21, 0.12), rgba(249, 115, 22, 0.08)),
         rgba(15, 23, 42, 0.74);
       border-color: rgba(250, 204, 21, 0.28);
-    }
-
-    .install-prompt {
-      color: #dbeafe;
-      border-color: rgba(56, 189, 248, 0.22);
-    }
-
-    .install-prompt.hidden {
-      display: none;
-    }
-
-    .install-prompt strong {
-      color: #ffffff;
-      font-size: 14px;
-    }
-
-    .install-prompt button {
-      margin-top: 12px;
-      min-height: 48px;
-      font-size: 15px;
-    }
-
-    .ios-help {
-      margin-top: 8px;
-      color: #93c5fd;
-      font-size: 12px;
-      font-weight: 700;
     }
 
     .panel {
@@ -744,19 +735,13 @@
   <main class="app">
     <section class="hero">
       <div class="hero-badge">⚡ Conseiller trottinette intelligent</div>
-      <h1>🛴 TROUVE TA TROTT</h1>
+      <div class="hero-mark" aria-hidden="true">⚡</div>
+      <h1>TROUVE TA TROTT</h1>
       <p class="subtitle">Trouvez la trottinette la plus adaptée à votre besoin</p>
     </section>
 
     <section class="note public-speed">
       ⚠️ La vitesse maximale autorisée sur voie publique est de 25 km/h. Les autres vitesses sont affichées uniquement à titre indicatif.
-    </section>
-
-    <section class="install-prompt" id="installPrompt">
-      <strong>📲 Installer l’application</strong><br>
-      Ajoutez Autonomie Trott à l’écran d’accueil pour l’utiliser comme une vraie app mobile, même hors ligne après le premier chargement.
-      <button id="installButton" type="button">📲 Installer l’application</button>
-      <div class="ios-help" id="iosInstallHelp">Sur iPhone : touchez Partager, puis “Sur l’écran d’accueil”.</div>
     </section>
 
     <section class="panel">
@@ -1001,7 +986,6 @@
 
     const speedFactors = { 25: 1, 45: 0.95, 55: 0.9 };
     const state = { choices: [] };
-    let deferredInstallPrompt = null;
 
     const els = {
       distance: document.getElementById("distance"),
@@ -1014,9 +998,6 @@
       compareButton: document.getElementById("compareButton"),
       comparePanel: document.getElementById("comparePanel"),
       communityButton: document.getElementById("communityButton"),
-      installPrompt: document.getElementById("installPrompt"),
-      installButton: document.getElementById("installButton"),
-      iosInstallHelp: document.getElementById("iosInstallHelp"),
       appVersion: document.getElementById("appVersion")
     };
 
@@ -1025,7 +1006,6 @@
     document.getElementById("recommendButton").addEventListener("click", recommendScooters);
     els.compareButton.addEventListener("click", toggleCompare);
     els.communityButton.addEventListener("click", openCommunity);
-    els.installButton.addEventListener("click", installApp);
 
     function selectedValue(name) {
       return document.querySelector(`input[name="${name}"]:checked`).value;
@@ -1478,37 +1458,6 @@
     function openCommunity(event) {
       event.preventDefault();
       window.open("https://www.facebook.com/groups/843618944246747?locale=fr_FR", "_blank");
-    }
-
-    function isStandalone() {
-      return window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
-    }
-
-    async function installApp() {
-      if (!deferredInstallPrompt) return;
-      deferredInstallPrompt.prompt();
-      await deferredInstallPrompt.userChoice;
-      deferredInstallPrompt = null;
-      els.installButton.style.display = "none";
-    }
-
-    window.addEventListener("beforeinstallprompt", (event) => {
-      event.preventDefault();
-      deferredInstallPrompt = event;
-      els.installPrompt.classList.remove("hidden");
-      els.installButton.style.display = "block";
-      els.iosInstallHelp.style.display = "none";
-    });
-
-    window.addEventListener("appinstalled", () => {
-      els.installPrompt.classList.add("hidden");
-      deferredInstallPrompt = null;
-    });
-
-    if (isStandalone()) {
-      els.installPrompt.classList.add("hidden");
-    } else {
-      els.installButton.style.display = "none";
     }
 
     if ("serviceWorker" in navigator) {
