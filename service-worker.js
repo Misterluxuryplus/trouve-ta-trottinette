@@ -1,5 +1,5 @@
-// Change only this value on each release: v1-02, v1-03, v1-04...
-const CACHE_NAME = "trouve-ta-trott-v1-08";
+// Change only this value on each release: v1-10, v1-11, v1-12...
+const CACHE_NAME = "trouve-ta-trott-v1-10";
 
 const APP_SHELL = [
   "./",
@@ -16,7 +16,9 @@ self.addEventListener("install", (event) => {
 
   event.waitUntil(
     caches.open(CACHE_NAME)
-      .then((cache) => cache.addAll(APP_SHELL))
+      .then((cache) => Promise.all(
+        APP_SHELL.map((url) => fetchAndCacheFresh(cache, url))
+      ))
   );
 });
 
@@ -32,6 +34,12 @@ self.addEventListener("activate", (event) => {
   );
 });
 
+self.addEventListener("message", (event) => {
+  if (event.data && event.data.type === "SKIP_WAITING") {
+    self.skipWaiting();
+  }
+});
+
 self.addEventListener("fetch", (event) => {
   if (event.request.method !== "GET") return;
 
@@ -39,23 +47,55 @@ self.addEventListener("fetch", (event) => {
   const url = new URL(request.url);
 
   if (request.mode === "navigate") {
-    event.respondWith(networkFirst(request, "./index.html"));
+    event.respondWith(networkFirstHtml(request));
     return;
   }
 
   if (url.origin === self.location.origin) {
-    event.respondWith(networkFirst(request));
+    event.respondWith(networkFirstAsset(request));
     return;
   }
 
   event.respondWith(fetch(request).catch(() => caches.match(request)));
 });
 
-async function networkFirst(request, fallbackUrl = null) {
+async function fetchAndCacheFresh(cache, url) {
+  try {
+    const request = new Request(url, { cache: "reload" });
+    const response = await fetch(request);
+
+    if (response && response.ok) {
+      await cache.put(url, response.clone());
+    }
+  } catch (error) {
+    // Offline during install: the app will use whatever is already available.
+  }
+}
+
+async function networkFirstHtml(request) {
   const cache = await caches.open(CACHE_NAME);
 
   try {
-    const response = await fetch(request, { cache: "no-store" });
+    const response = await fetch(request, { cache: "reload" });
+
+    if (response && response.ok) {
+      await cache.put(request, response.clone());
+      await cache.put("./index.html", response.clone());
+    }
+
+    return response;
+  } catch (error) {
+    return (await cache.match(request))
+      || (await cache.match("./index.html"))
+      || (await caches.match("./index.html"));
+  }
+}
+
+async function networkFirstAsset(request) {
+  const cache = await caches.open(CACHE_NAME);
+
+  try {
+    const response = await fetch(request, { cache: "reload" });
 
     if (response && response.ok) {
       await cache.put(request, response.clone());
@@ -63,6 +103,6 @@ async function networkFirst(request, fallbackUrl = null) {
 
     return response;
   } catch (error) {
-    return (await caches.match(request)) || (fallbackUrl ? await caches.match(fallbackUrl) : undefined);
+    return (await cache.match(request)) || (await caches.match(request));
   }
 }
