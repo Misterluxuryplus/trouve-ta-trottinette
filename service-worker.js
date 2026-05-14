@@ -1,5 +1,5 @@
-// Change only this value on each release: v1-10, v1-11, v1-12...
-const CACHE_NAME = "trouve-ta-trott-v1-10";
+// Change only this value on each release: v1-11, v1-12, v1-13...
+const CACHE_NAME = "trouve-ta-trott-v1-11";
 
 const APP_SHELL = [
   "./",

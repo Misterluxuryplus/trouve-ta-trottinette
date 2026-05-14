@@ -711,6 +711,7 @@
     .compare-card {
       width: 100%;
       min-width: 0;
+      max-width: 100%;
       padding: 14px;
       background:
         linear-gradient(145deg, rgba(15, 23, 42, 0.94), rgba(2, 6, 23, 0.94)),
@@ -736,8 +737,8 @@
 
     .compare {
       display: none;
-      grid-auto-flow: column;
-      grid-auto-columns: minmax(0, 100%);
+      width: 100%;
+      max-width: 100%;
       gap: 16px;
       margin-top: 16px;
       padding: 4px 0 14px;
@@ -748,7 +749,14 @@
       scrollbar-color: rgba(56, 189, 248, 0.45) rgba(15, 23, 42, 0.6);
     }
 
+    .compare.is-open {
+      display: flex;
+      flex-wrap: nowrap;
+    }
+
     .compare-card {
+      flex: 0 0 100%;
+      max-width: 100%;
       padding: 14px;
       scroll-snap-align: start;
       scroll-snap-stop: always;
@@ -758,6 +766,7 @@
       margin: 0 0 10px;
       font-size: 17px;
       line-height: 1.15;
+      overflow-wrap: anywhere;
     }
 
     .rating-grid {
@@ -778,11 +787,25 @@
       background: rgba(15, 23, 42, 0.72);
       font-size: 12px;
       font-weight: 900;
+      min-width: 0;
     }
 
     .rating-pill .score-badge,
     .rating-line .score-badge {
+      flex: none;
       margin-left: auto;
+    }
+
+    .rating-pill span,
+    .rating-line span {
+      min-width: 0;
+      overflow-wrap: anywhere;
+    }
+
+    .rating-pill strong,
+    .rating-line strong {
+      flex: none;
+      white-space: nowrap;
     }
 
     .price-line {
@@ -794,11 +817,14 @@
     }
 
     @media (min-width: 760px) {
-      .compare {
-        grid-auto-flow: initial;
-        grid-auto-columns: initial;
+      .compare.is-open {
+        display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
         overflow-x: visible;
+      }
+
+      .compare-card {
+        flex-basis: auto;
       }
     }
 
@@ -1669,7 +1695,7 @@
         `;
         els.alternatives.innerHTML = futureChoices.slice(1, 3).map((scooter, index) => altCard(scooter, index, totalDistance, speed, budget, usageType, weight, futureChoices[0])).join("");
         els.comparePanel.innerHTML = futureChoices.map(compareCard).join("");
-        els.comparePanel.style.display = "none";
+        els.comparePanel.classList.remove("is-open");
         els.compareButton.style.display = futureChoices.length ? "block" : "none";
         els.compareButton.textContent = "📊 Comparer les modèles";
         els.result.style.display = "block";
@@ -1685,7 +1711,7 @@
       els.bestChoice.innerHTML = bestCard(choices[0], totalDistance, speed, budget, usageType, weight);
       els.alternatives.innerHTML = choices.slice(1, 3).map((scooter, index) => altCard(scooter, index, totalDistance, speed, budget, usageType, weight, choices[0])).join("");
       els.comparePanel.innerHTML = choices.map(compareCard).join("");
-      els.comparePanel.style.display = "none";
+      els.comparePanel.classList.remove("is-open");
       els.compareButton.style.display = "block";
       els.compareButton.textContent = "📊 Comparer les modèles";
       els.result.style.display = "block";
@@ -1693,9 +1719,8 @@
     }
 
     function toggleCompare() {
-      const isOpen = els.comparePanel.style.display === "grid";
-      els.comparePanel.style.display = isOpen ? "none" : "grid";
-      els.compareButton.textContent = isOpen ? "📊 Comparer les modèles" : "Masquer la comparaison";
+      const isOpen = els.comparePanel.classList.toggle("is-open");
+      els.compareButton.textContent = isOpen ? "Masquer la comparaison" : "📊 Comparer les modèles";
     }
 
     function toggleWhyDetails(event) {
