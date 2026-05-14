@@ -1435,7 +1435,8 @@
         const futureChoices = futureFits.slice(0, 3);
         state.choices = futureChoices;
         els.result.classList.add("future-mode");
-        els.resultSummary.textContent = resultSummaryText(totalDistance, budget, usageType, false);
+        els.resultSummary.textContent = "";
+        els.resultSummary.style.display = "none";
         els.bestChoice.innerHTML = `
           <div class="honest-message">
             ⚠️ Budget probablement trop faible pour ce besoin.<br>
@@ -1457,6 +1458,7 @@
       const choices = strongAccessibleFits.slice(0, 3);
       state.choices = choices;
       els.result.classList.remove("future-mode");
+      els.resultSummary.style.display = "block";
       els.resultSummary.textContent = resultSummaryText(totalDistance, budget, usageType, true);
       els.bestChoice.innerHTML = bestCard(choices[0], totalDistance, speed, budget, usageType, weight);
       els.alternatives.innerHTML = choices.slice(1, 3).map((scooter, index) => altCard(scooter, index, totalDistance, speed, budget, usageType, weight)).join("");
