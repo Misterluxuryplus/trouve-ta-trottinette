@@ -390,7 +390,7 @@
       position: relative;
       overflow: hidden;
       margin-top: 14px;
-      padding: 22px 16px 18px;
+      padding: 20px 16px 18px;
       border-color: rgba(56, 189, 248, 0.34);
       background:
         radial-gradient(circle at 50% 0%, rgba(56, 189, 248, 0.25), transparent 45%),
@@ -443,6 +443,7 @@
 
     .badge {
       display: inline-flex;
+      width: fit-content;
       padding: 6px 10px;
       border-radius: 999px;
       color: #07111f;
@@ -452,7 +453,7 @@
     }
 
     .brand {
-      margin-top: 2px;
+      margin-top: 4px;
       color: #7dd3fc;
       font-size: 13px;
       font-weight: 900;
@@ -461,7 +462,7 @@
 
     .model {
       margin-top: 4px;
-      font-size: clamp(28px, 8vw, 36px);
+      font-size: clamp(25px, 7vw, 33px);
       line-height: 1.05;
       font-weight: 900;
     }
@@ -537,6 +538,14 @@
       font-size: 12px;
       font-weight: 900;
       line-height: 1.2;
+    }
+
+    .choice-summary {
+      margin: 2px 0 0;
+      color: #e0f2fe;
+      font-size: 14px;
+      line-height: 1.35;
+      font-weight: 900;
     }
 
     .strength-badges {
@@ -686,12 +695,6 @@
       gap: 4px;
     }
 
-    .alt-card .card-head {
-      grid-template-columns: 1fr auto;
-      align-items: start;
-      gap: 10px;
-    }
-
     .alt-card .card-title {
       display: grid;
       gap: 3px;
@@ -702,10 +705,12 @@
     }
 
     .alt-card .model {
-      font-size: 23px;
+      font-size: 24px;
     }
 
     .compare-card {
+      width: 100%;
+      min-width: 0;
       padding: 14px;
       background:
         linear-gradient(145deg, rgba(15, 23, 42, 0.94), rgba(2, 6, 23, 0.94)),
@@ -731,34 +736,44 @@
 
     .compare {
       display: none;
-      gap: 10px;
-      margin-top: 14px;
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(0, 100%);
+      gap: 16px;
+      margin-top: 16px;
+      padding: 4px 0 14px;
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(56, 189, 248, 0.45) rgba(15, 23, 42, 0.6);
     }
 
     .compare-card {
       padding: 14px;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
     }
 
     .compare-card h3 {
       margin: 0 0 10px;
       font-size: 17px;
+      line-height: 1.15;
     }
 
     .rating-grid {
-      display: flex;
-      flex-wrap: wrap;
+      display: grid;
       gap: 8px;
     }
 
     .rating-pill,
     .rating-line {
-      display: inline-flex;
+      display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 8px;
       padding: 8px 10px;
       border: 1px solid rgba(148, 163, 184, 0.14);
-      border-radius: 999px;
+      border-radius: 14px;
       color: #dbeafe;
       background: rgba(15, 23, 42, 0.72);
       font-size: 12px;
@@ -772,10 +787,19 @@
 
     .price-line {
       width: 100%;
-      margin-top: 10px;
+      margin-top: 0;
       border-radius: 16px;
       background: rgba(249, 115, 22, 0.11);
       color: #fed7aa;
+    }
+
+    @media (min-width: 760px) {
+      .compare {
+        grid-auto-flow: initial;
+        grid-auto-columns: initial;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        overflow-x: visible;
+      }
     }
 
     .community-link {
@@ -1340,13 +1364,7 @@
         <div class="result-lines">
           <div class="result-line"><span>💸 Prix</span><strong>${euro(scooter.price)}</strong></div>
           <div class="result-line"><span>🔋 Autonomie</span><strong>${Math.round(scooter.estimatedRange)} km</strong></div>
-          <div class="result-line"><span>⚖️ Poids</span><strong>${formatWeight(scooter.weightKg)}</strong></div>
-          <div class="result-line"><span>⚡ Vitesse max approx.</span><strong>${scooter.maxSpeed} km/h</strong></div>
-          <div class="result-line"><span>⚡ Puissance</span>${scoreBadge(scooter.ratings.power)}</div>
-          <div class="result-line"><span>🛋 Confort</span>${scoreBadge(scooter.ratings.comfort)}</div>
-          <div class="result-line"><span>🛠 Fiabilité</span>${scoreBadge(scooter.ratings.reliability)}</div>
         </div>
-        ${heavyWarning(scooter)}
       `;
     }
 
@@ -1538,13 +1556,13 @@
       return `
         <article class="best-card">
           <div class="card-head">
-            <span class="badge">🥇 Meilleur choix pour vous</span>
+            <span class="badge">🥇 1er choix</span>
             <div class="brand">${scooter.brand}</div>
             <div class="model">${scooter.model}</div>
             ${badgesBlock(scooter, totalDistance, budget, usageType)}
+            <p class="choice-summary">${modelSummary(scooter, totalDistance, usageType)}</p>
           </div>
           ${quickStats(scooter)}
-          ${reasonsBlock(scooter, totalDistance, speed, budget, usageType, riderWeight)}
         </article>
       `;
     }
@@ -1557,15 +1575,16 @@
             <div class="brand">${scooter.brand}</div>
             <div class="model">${scooter.model}</div>
             ${badgesBlock(scooter, totalDistance, budget, usageType)}
+            <p class="choice-summary">${modelSummary(scooter, totalDistance, usageType)}</p>
           </div>
           ${quickStats(scooter)}
-          ${reasonsBlock(scooter, totalDistance, speed, budget, usageType, riderWeight)}
         </article>
       `;
     }
 
     function altCard(scooter, index = 0, totalDistance = 0, speed = 25, budget = 0, usageType = "city", riderWeight = 0, referenceScooter = null) {
-      const medal = index === 0 ? "🥈 Alternative intéressante" : "🥉 Autre choix possible";
+      const medal = index === 0 ? "🥈 2e choix" : "🥉 3e choix";
+      const comparison = comparisonExplanation(scooter, referenceScooter, totalDistance, usageType);
       return `
         <article class="alt-card">
           <div class="card-head">
@@ -1574,11 +1593,10 @@
               <div class="brand">${scooter.brand}</div>
               <div class="model">${scooter.model}</div>
               ${badgesBlock(scooter, totalDistance, budget, usageType)}
+              <p class="choice-summary">${comparison || modelSummary(scooter, totalDistance, usageType)}</p>
             </div>
-            <div class="pill">${scooter.category}</div>
           </div>
           ${quickStats(scooter)}
-          ${reasonsBlock(scooter, totalDistance, speed, budget, usageType, riderWeight, referenceScooter)}
         </article>
       `;
     }
@@ -1592,8 +1610,10 @@
             <div class="rating-pill"><span>🔋 Autonomie</span><strong>${Math.round(scooter.estimatedRange)} km</strong></div>
             <div class="rating-pill"><span>⚖️ Poids</span><strong>${formatWeight(scooter.weightKg)}</strong></div>
             <div class="rating-pill"><span>⚡ Vitesse</span><strong>${scooter.maxSpeed} km/h</strong></div>
+            <div class="rating-pill"><span>⚡ Puissance</span>${scoreBadge(scooter.ratings.power)}</div>
             <div class="rating-pill"><span>🛋 Confort</span>${scoreBadge(scooter.ratings.comfort)}</div>
             <div class="rating-pill"><span>🛠 Fiabilité</span>${scoreBadge(scooter.ratings.reliability)}</div>
+            <div class="rating-pill"><span>💸 Qualité/prix</span>${scoreBadge(scooter.ratings.value)}</div>
           </div>
           ${heavyWarning(scooter)}
         </article>
