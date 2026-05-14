@@ -481,6 +481,37 @@
       background: rgba(15, 23, 42, 0.66);
     }
 
+    .why-toggle {
+      min-height: 44px;
+      margin: 0;
+      border-radius: 14px;
+      color: #fff7ed;
+      background:
+        linear-gradient(135deg, rgba(249, 115, 22, 0.26), rgba(56, 189, 248, 0.2)),
+        rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(249, 115, 22, 0.24);
+      box-shadow: none;
+      font-size: 14px;
+    }
+
+    .why-content {
+      display: grid;
+      grid-template-rows: 0fr;
+      opacity: 0;
+      transition: grid-template-rows 0.22s ease, opacity 0.22s ease, margin-top 0.22s ease;
+      margin-top: 0;
+    }
+
+    .why-box.open .why-content {
+      grid-template-rows: 1fr;
+      opacity: 1;
+      margin-top: 10px;
+    }
+
+    .why-content-inner {
+      overflow: hidden;
+    }
+
     .why-title {
       display: block;
       color: #fed7aa;
@@ -506,6 +537,30 @@
       font-size: 12px;
       font-weight: 900;
       line-height: 1.2;
+    }
+
+    .strength-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 2px;
+    }
+
+    .strength-badge {
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      max-width: 100%;
+      padding: 7px 9px;
+      border: 1px solid rgba(56, 189, 248, 0.16);
+      border-radius: 999px;
+      color: #dbeafe;
+      background:
+        linear-gradient(135deg, rgba(56, 189, 248, 0.11), rgba(249, 115, 22, 0.08)),
+        rgba(15, 23, 42, 0.72);
+      font-size: 11.5px;
+      font-weight: 900;
+      line-height: 1.1;
     }
 
     .comparison-note {
@@ -858,6 +913,32 @@
         </div>
       </div>
 
+      <div class="question-card">
+        <span class="question-title"><span class="question-icon">🎯</span>Votre priorité ?</span>
+        <div class="choice-grid">
+          <label class="choice">
+            <input type="radio" name="priority" value="price" />
+            <span>💸 Prix</span>
+          </label>
+          <label class="choice">
+            <input type="radio" name="priority" value="range" />
+            <span>🔋 Autonomie</span>
+          </label>
+          <label class="choice">
+            <input type="radio" name="priority" value="performance" />
+            <span>⚡ Performance</span>
+          </label>
+          <label class="choice">
+            <input type="radio" name="priority" value="comfort" />
+            <span>🛋 Confort</span>
+          </label>
+          <label class="choice">
+            <input type="radio" name="priority" value="balance" checked />
+            <span>⚖️ Équilibre général</span>
+          </label>
+        </div>
+      </div>
+
       <button id="recommendButton" type="button">Trouver ma trott idéale ⚡</button>
     </section>
 
@@ -866,7 +947,7 @@
       <div class="result-summary" id="resultSummary"></div>
       <div id="bestChoice"></div>
       <div id="alternatives" class="alternatives"></div>
-      <button class="secondary" id="compareButton" type="button">Comparer les modèles</button>
+      <button class="secondary" id="compareButton" type="button">📊 Comparer les modèles</button>
       <div class="compare" id="comparePanel"></div>
     </section>
 
@@ -1056,6 +1137,7 @@
     document.getElementById("recommendButton").addEventListener("click", recommendScooters);
     els.compareButton.addEventListener("click", toggleCompare);
     els.communityButton.addEventListener("click", openCommunity);
+    els.result.addEventListener("click", toggleWhyDetails);
 
     function selectedValue(name) {
       return document.querySelector(`input[name="${name}"]:checked`).value;
@@ -1210,7 +1292,17 @@
       return score;
     }
 
-    function scoreScooter(scooter, totalDistance, speed, budget, usageType) {
+    function priorityScore(scooter, priority, totalDistance) {
+      const remaining = ((scooter.estimatedRange - totalDistance) / scooter.estimatedRange) * 100;
+
+      if (priority === "price") return scooter.ratings.value * 2.4 + (scooter.price <= 1200 ? 8 : 0);
+      if (priority === "range") return scooter.ratings.autonomy * 2.6 + Math.min(10, Math.max(0, remaining - 25) / 6);
+      if (priority === "performance") return scooter.ratings.power * 2.6 + (scooter.maxSpeed >= 70 ? 6 : 0);
+      if (priority === "comfort") return scooter.ratings.comfort * 2.8 + (scooter.weightKg < 35 ? 3 : 0);
+      return Math.min(scooter.ratings.value, scooter.ratings.autonomy, scooter.ratings.comfort) * 1.8 + (scooter.weightKg < 35 ? 4 : 0);
+    }
+
+    function scoreScooter(scooter, totalDistance, speed, budget, usageType, priority) {
       const remaining = ((scooter.estimatedRange - totalDistance) / scooter.estimatedRange) * 100;
       const budgetGap = Math.max(0, scooter.price - budget);
       const spareRange = scooter.estimatedRange - totalDistance;
@@ -1222,6 +1314,7 @@
       score += usageScore(scooter, usageType);
       score += categoryFitScore(scooter, usageType, totalDistance);
       score += realWorldFitScore(scooter, totalDistance, speed, usageType);
+      score += priorityScore(scooter, priority, totalDistance);
 
       if (remaining >= 30 && remaining <= 75) score += 20;
       if (remaining > 85 && totalDistance <= 20 && usageType !== "longRide") score -= 26;
@@ -1338,6 +1431,30 @@
       return "🛴 Choix cohérent pour votre besoin";
     }
 
+    function strengthBadges(scooter, totalDistance, budget, usageType) {
+      const remaining = ((scooter.estimatedRange - totalDistance) / scooter.estimatedRange) * 100;
+      const badges = [];
+      const add = (text) => {
+        if (!badges.includes(text) && badges.length < 2) badges.push(text);
+      };
+
+      if (scooter.price <= budget * 0.78 || scooter.ratings.value >= 9) add("💸 Meilleur budget");
+      if (scooter.ratings.autonomy >= 9 || remaining >= 60) add("🔋 Grosse autonomie");
+      if (scooter.ratings.power >= 9 || scooter.maxSpeed >= 85) add("⚡ Très performante");
+      if (usageType === "city" && scooter.weightKg < 35) add("🏙 Idéale quotidien");
+      if (scooter.ratings.comfort >= 9) add("🛋 Très confortable");
+      if (scooter.ratings.value >= 8 && scooter.ratings.comfort >= 8 && scooter.ratings.autonomy >= 8) add("⚖️ Bon équilibre");
+      if (["Dualtron", "Xiaomi", "Segway / Ninebot", "Vsett", "Kaabo", "Nami"].includes(scooter.brand)) add("🔥 Très populaire");
+
+      return badges;
+    }
+
+    function badgesBlock(scooter, totalDistance, budget, usageType) {
+      const badges = strengthBadges(scooter, totalDistance, budget, usageType);
+      if (!badges.length) return "";
+      return `<div class="strength-badges">${badges.map((badge) => `<span class="strength-badge">${badge}</span>`).join("")}</div>`;
+    }
+
     function comparisonExplanation(current, reference, totalDistance, usageType) {
       if (!reference || current.model === reference.model && current.brand === reference.brand) return "";
 
@@ -1371,17 +1488,21 @@
     }
 
     function reasonsBlock(scooter, totalDistance, speed, budget, usageType, riderWeight, referenceScooter = null) {
-      const reasons = smartReasons(scooter, totalDistance, speed, budget, usageType, riderWeight);
+      const reasons = smartReasons(scooter, totalDistance, speed, budget, usageType, riderWeight).slice(0, 3);
       const comparison = comparisonExplanation(scooter, referenceScooter, totalDistance, usageType);
 
       return `
         <div class="why-box">
-          <span class="why-title">💡 Pourquoi cette trott ?</span>
-          <div class="model-summary">${modelSummary(scooter, totalDistance, usageType)}</div>
-          <p class="reason">${reasonFor(scooter, totalDistance)}</p>
-          ${comparison ? `<div class="comparison-note">${comparison}</div>` : ""}
-          <div class="reason-list">
-            ${reasons.map((reason) => `<div class="reason-chip"><span>✅</span>${reason}</div>`).join("")}
+          <button class="why-toggle" type="button">💡 Pourquoi ce choix ?</button>
+          <div class="why-content">
+            <div class="why-content-inner">
+              <span class="why-title">💡 Pourquoi cette trott ?</span>
+              <div class="model-summary">${modelSummary(scooter, totalDistance, usageType)}</div>
+              ${comparison ? `<div class="comparison-note">${comparison}</div>` : ""}
+              <div class="reason-list">
+                ${reasons.map((reason) => `<div class="reason-chip"><span>✅</span>${reason}</div>`).join("")}
+              </div>
+            </div>
           </div>
         </div>
       `;
@@ -1420,6 +1541,7 @@
             <span class="badge">🥇 Meilleur choix pour vous</span>
             <div class="brand">${scooter.brand}</div>
             <div class="model">${scooter.model}</div>
+            ${badgesBlock(scooter, totalDistance, budget, usageType)}
           </div>
           ${quickStats(scooter)}
           ${reasonsBlock(scooter, totalDistance, speed, budget, usageType, riderWeight)}
@@ -1434,6 +1556,7 @@
             <span class="badge">🎯 Objectif futur</span>
             <div class="brand">${scooter.brand}</div>
             <div class="model">${scooter.model}</div>
+            ${badgesBlock(scooter, totalDistance, budget, usageType)}
           </div>
           ${quickStats(scooter)}
           ${reasonsBlock(scooter, totalDistance, speed, budget, usageType, riderWeight)}
@@ -1450,6 +1573,7 @@
               <span class="badge">${medal}</span>
               <div class="brand">${scooter.brand}</div>
               <div class="model">${scooter.model}</div>
+              ${badgesBlock(scooter, totalDistance, budget, usageType)}
             </div>
             <div class="pill">${scooter.category}</div>
           </div>
@@ -1464,14 +1588,12 @@
         <article class="compare-card">
           <h3>${scooter.brand} ${scooter.model}</h3>
           <div class="rating-grid">
-            <div class="rating-pill"><span>🔋 Autonomie</span>${scoreBadge(scooter.ratings.autonomy)}</div>
-            <div class="rating-pill"><span>⚡ Puissance</span>${scoreBadge(scooter.ratings.power)}</div>
+            <div class="rating-line price-line"><span>💸 Prix</span><strong>${euro(scooter.price)}</strong></div>
+            <div class="rating-pill"><span>🔋 Autonomie</span><strong>${Math.round(scooter.estimatedRange)} km</strong></div>
+            <div class="rating-pill"><span>⚖️ Poids</span><strong>${formatWeight(scooter.weightKg)}</strong></div>
+            <div class="rating-pill"><span>⚡ Vitesse</span><strong>${scooter.maxSpeed} km/h</strong></div>
             <div class="rating-pill"><span>🛋 Confort</span>${scoreBadge(scooter.ratings.comfort)}</div>
             <div class="rating-pill"><span>🛠 Fiabilité</span>${scoreBadge(scooter.ratings.reliability)}</div>
-            <div class="rating-pill"><span>💸 Qualité/prix</span>${scoreBadge(scooter.ratings.value)}</div>
-            <div class="rating-pill"><span>🔧 SAV / pièces</span>${scoreBadge(scooter.ratings.service)}</div>
-            <div class="rating-pill"><span>⚖️ Poids</span><strong>${formatWeight(scooter.weightKg)}</strong></div>
-            <div class="rating-line price-line"><span>Prix moyen constaté</span><strong>${euro(scooter.price)}</strong></div>
           </div>
           ${heavyWarning(scooter)}
         </article>
@@ -1484,6 +1606,7 @@
       const budget = Number(els.budget.value);
       const speed = Number(selectedValue("speed"));
       const usageType = selectedValue("usageType");
+      const priority = selectedValue("priority");
       const totalDistance = distance;
 
       if (!distance || !weight || !budget) {
@@ -1493,7 +1616,7 @@
 
       const ranked = scooters
         .map((scooter) => estimateScooter(scooter, speed, weight))
-        .map((scooter) => ({ ...scooter, score: scoreScooter(scooter, totalDistance, speed, budget, usageType) }))
+        .map((scooter) => ({ ...scooter, score: scoreScooter(scooter, totalDistance, speed, budget, usageType, priority) }))
         .sort((a, b) => b.score - a.score || a.price - b.price || a.brand.localeCompare(b.brand) || a.model.localeCompare(b.model));
 
       const accessibleFits = ranked.filter((scooter) => {
@@ -1519,9 +1642,8 @@
         els.resultSummary.style.display = "none";
         els.bestChoice.innerHTML = `
           <div class="honest-message">
-            ⚠️ Budget probablement trop faible pour ce besoin.<br>
-            Avec cette distance, cette vitesse, ce poids ou cet usage, les modèles vraiment adaptés dépassent ton budget actuel.<br><br>
-            Il peut être préférable d’économiser un peu plus afin d’obtenir une trottinette plus adaptée, plus confortable et plus sécurisante.
+            ⚠️ Votre budget semble un peu limité pour ce niveau de performance.<br><br>
+            💡 Il peut être intéressant d’économiser un peu plus pour obtenir plus d’autonomie, un meilleur confort et une meilleure fiabilité.
           </div>
           ${futureChoices.length ? futureCard(futureChoices[0], totalDistance, speed, budget, usageType, weight) : ""}
         `;
@@ -1529,7 +1651,7 @@
         els.comparePanel.innerHTML = futureChoices.map(compareCard).join("");
         els.comparePanel.style.display = "none";
         els.compareButton.style.display = futureChoices.length ? "block" : "none";
-        els.compareButton.textContent = "Comparer les modèles";
+        els.compareButton.textContent = "📊 Comparer les modèles";
         els.result.style.display = "block";
         els.result.scrollIntoView({ behavior: "smooth", block: "start" });
         return;
@@ -1545,7 +1667,7 @@
       els.comparePanel.innerHTML = choices.map(compareCard).join("");
       els.comparePanel.style.display = "none";
       els.compareButton.style.display = "block";
-      els.compareButton.textContent = "Comparer les modèles";
+      els.compareButton.textContent = "📊 Comparer les modèles";
       els.result.style.display = "block";
       els.result.scrollIntoView({ behavior: "smooth", block: "start" });
     }
@@ -1553,7 +1675,16 @@
     function toggleCompare() {
       const isOpen = els.comparePanel.style.display === "grid";
       els.comparePanel.style.display = isOpen ? "none" : "grid";
-      els.compareButton.textContent = isOpen ? "Comparer les modèles" : "Masquer la comparaison";
+      els.compareButton.textContent = isOpen ? "📊 Comparer les modèles" : "Masquer la comparaison";
+    }
+
+    function toggleWhyDetails(event) {
+      const button = event.target.closest(".why-toggle");
+      if (!button) return;
+
+      const box = button.closest(".why-box");
+      const isOpen = box.classList.toggle("open");
+      button.textContent = isOpen ? "Masquer l’explication" : "💡 Pourquoi ce choix ?";
     }
 
     function openCommunity(event) {
