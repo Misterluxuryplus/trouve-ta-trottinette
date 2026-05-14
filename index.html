@@ -61,19 +61,6 @@
       padding-bottom: 28px;
     }
 
-    .update-test-banner {
-      margin-bottom: 12px;
-      padding: 12px;
-      border: 1px solid rgba(56, 189, 248, 0.3);
-      border-radius: 18px;
-      color: #e0f2fe;
-      background: rgba(14, 165, 233, 0.12);
-      text-align: center;
-      font-size: 14px;
-      font-weight: 900;
-      box-shadow: 0 12px 28px rgba(14, 165, 233, 0.12);
-    }
-
     .hero,
     .panel,
     .result,
@@ -124,16 +111,19 @@
     h1 {
       margin: 0;
       color: #f8fafc;
-      font-size: clamp(30px, 9vw, 40px);
-      line-height: 1.08;
+      font-size: clamp(39px, 12vw, 58px);
+      line-height: 0.95;
       letter-spacing: 0;
-      text-shadow: 0 0 26px rgba(56, 189, 248, 0.28);
+      text-transform: uppercase;
+      text-shadow:
+        0 0 28px rgba(56, 189, 248, 0.34),
+        0 0 38px rgba(249, 115, 22, 0.18);
     }
 
     .subtitle {
       margin: 12px auto 0;
       color: #e0f2fe;
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 800;
       line-height: 1.4;
     }
@@ -723,6 +713,15 @@
       font-weight: 700;
     }
 
+    .app-version {
+      margin-top: 12px;
+      color: rgba(148, 163, 184, 0.72);
+      text-align: center;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+
     @media (max-width: 390px) {
       body {
         padding: 10px;
@@ -743,12 +742,10 @@
 
 <body>
   <main class="app">
-    <div class="update-test-banner">TEST MISE À JOUR 123</div>
-
     <section class="hero">
       <div class="hero-badge">⚡ Conseiller trottinette intelligent</div>
-      <h1>🛴 Autonomie Trott</h1>
-      <p class="subtitle">Trouve la trott idéale pour ton besoin</p>
+      <h1>🛴 TROUVE TA TROTT</h1>
+      <p class="subtitle">Trouvez la trottinette la plus adaptée à votre besoin</p>
     </section>
 
     <section class="note public-speed">
@@ -864,9 +861,13 @@
       <strong>🛴 Créé par Mister Luxuryplus</strong>
       <span>Team Dualtron Victor Luxury Plus</span>
     </footer>
+
+    <div class="app-version" id="appVersion"></div>
   </main>
 
   <script>
+    const APP_VERSION = "1.0";
+
     const scooters = [
       { brand: "Angwatt", model: "CS1", range: 55, maxSpeed: 55, powerWatts: 2400, weightKg: 34, price: 899, category: "polyvalente" },
       { brand: "Angwatt", model: "CS1 Pro", range: 70, maxSpeed: 60, powerWatts: 3200, weightKg: 38, price: 1199, category: "polyvalente" },
@@ -1015,8 +1016,11 @@
       communityButton: document.getElementById("communityButton"),
       installPrompt: document.getElementById("installPrompt"),
       installButton: document.getElementById("installButton"),
-      iosInstallHelp: document.getElementById("iosInstallHelp")
+      iosInstallHelp: document.getElementById("iosInstallHelp"),
+      appVersion: document.getElementById("appVersion")
     };
+
+    els.appVersion.textContent = `🛴 Trouve Ta Trott • Version ${APP_VERSION}`;
 
     document.getElementById("recommendButton").addEventListener("click", recommendScooters);
     els.compareButton.addEventListener("click", toggleCompare);
