@@ -1042,11 +1042,11 @@
       <span>Team Dualtron Victor Luxury Plus</span>
     </footer>
 
-    <div class="app-version" id="appVersion">🛴 Version 1.02</div>
+    <div class="app-version" id="appVersion">🛴 Version 1.03</div>
   </main>
 
   <script>
-    const APP_VERSION = "1.02";
+    const APP_VERSION = "1.03";
 
     const scooters = [
       { brand: "Angwatt", model: "CS1", range: 55, maxSpeed: 55, powerWatts: 2400, weightKg: 34, price: 899, category: "polyvalente" },
@@ -1315,16 +1315,20 @@
       return { ...scooter, estimatedRange, ratings: getRatings(scooter) };
     }
 
+    function remainingPercent(scooter, totalDistance) {
+      return ((scooter.estimatedRange - totalDistance) / scooter.estimatedRange) * 100;
+    }
+
     function usageScore(scooter, usageType) {
       const r = scooter.ratings;
       const weights = {
-        city: { reliability: 1.35, comfort: 1.2, portability: 1.25, service: 1.2, value: 1, autonomy: 0.65, power: 0.35 },
-        versatile: { reliability: 1, comfort: 1, portability: 0.8, service: 0.9, value: 1, autonomy: 1, power: 0.9 },
-        sport: { power: 1.25, autonomy: 1.25, comfort: 1.2, reliability: 0.9, value: 0.75, portability: 0.2, service: 0.75 },
-        longRide: { autonomy: 1.55, comfort: 1.25, reliability: 1.1, service: 0.85, value: 0.65, power: 0.7, portability: 0.2 }
+        city: { reliability: 1.55, comfort: 1.35, portability: 1.35, service: 1.25, value: 1.05, autonomy: 0.55, power: 0.15 },
+        versatile: { reliability: 0.95, comfort: 1.05, portability: 0.75, service: 0.8, value: 1.15, autonomy: 1.05, power: 0.95 },
+        sport: { power: 1.65, autonomy: 1.05, comfort: 1.05, reliability: 0.65, value: 0.85, portability: 0.05, service: 0.45 },
+        longRide: { autonomy: 1.8, comfort: 1.35, reliability: 0.95, service: 0.55, value: 0.75, power: 0.45, portability: 0.05 }
       }[usageType];
 
-      return Object.entries(weights).reduce((sum, [key, weight]) => sum + r[key] * weight, 0) * 4;
+      return Object.entries(weights).reduce((sum, [key, weight]) => sum + r[key] * weight, 0) * 2.8;
     }
 
     function categoryFitScore(scooter, usageType, totalDistance) {
@@ -1366,55 +1370,132 @@
     }
 
     function realWorldFitScore(scooter, totalDistance, speed, usageType) {
-      const remaining = ((scooter.estimatedRange - totalDistance) / scooter.estimatedRange) * 100;
+      const remaining = remainingPercent(scooter, totalDistance);
       let score = 0;
 
-      if (remaining >= 35 && remaining <= 78) score += 22;
-      if (remaining > 88 && totalDistance < 30 && usageType !== "longRide") score -= 20;
+      if (remaining >= 28 && remaining <= 72) score += 24;
+      if (remaining > 88 && totalDistance < 30 && usageType !== "longRide") score -= 24;
 
       if (speed >= 45 && totalDistance >= 20) {
-        if (scooter.estimatedRange >= 70 && scooter.estimatedRange <= 120 && scooter.maxSpeed >= speed + 15) score += 18;
-        if (scooter.ratings.comfort >= 8 && scooter.ratings.autonomy >= 8) score += 14;
-        if (usageType === "sport" && scooter.ratings.power >= 7 && scooter.ratings.autonomy >= 7) score += 12;
+        if (scooter.estimatedRange >= totalDistance * 1.45 && scooter.maxSpeed >= speed + 10) score += 18;
+        if (scooter.ratings.comfort >= 8 && scooter.ratings.autonomy >= 8) score += usageType === "city" ? 8 : 14;
+        if (usageType === "sport" && scooter.ratings.power >= 7 && scooter.ratings.autonomy >= 7) score += 18;
       }
 
-      score += Math.min(scooter.ratings.power, scooter.ratings.autonomy) * 3;
+      score += Math.min(scooter.ratings.power, scooter.ratings.autonomy) * (usageType === "sport" ? 3.2 : 2.2);
       return score;
     }
 
     function priorityScore(scooter, priority, totalDistance) {
-      const remaining = ((scooter.estimatedRange - totalDistance) / scooter.estimatedRange) * 100;
+      const remaining = remainingPercent(scooter, totalDistance);
 
-      if (priority === "price") return scooter.ratings.value * 2.4 + (scooter.price <= 1200 ? 8 : 0);
-      if (priority === "range") return scooter.ratings.autonomy * 2.6 + Math.min(10, Math.max(0, remaining - 25) / 6);
-      if (priority === "performance") return scooter.ratings.power * 2.6 + (scooter.maxSpeed >= 70 ? 6 : 0);
-      if (priority === "comfort") return scooter.ratings.comfort * 2.8 + (scooter.weightKg < 35 ? 3 : 0);
-      return Math.min(scooter.ratings.value, scooter.ratings.autonomy, scooter.ratings.comfort) * 1.8 + (scooter.weightKg < 35 ? 4 : 0);
+      if (priority === "price") return scooter.ratings.value * 5 + (scooter.price <= 1000 ? 18 : 0) + (scooter.price <= 1500 ? 8 : 0);
+      if (priority === "range") return scooter.ratings.autonomy * 5 + Math.min(24, Math.max(0, remaining - 25) / 2.4);
+      if (priority === "performance") return scooter.ratings.power * 5 + (scooter.maxSpeed >= 70 ? 14 : 0) + (scooter.maxSpeed >= 85 ? 8 : 0);
+      if (priority === "comfort") return scooter.ratings.comfort * 5 + (scooter.weightKg < 35 ? 7 : 0) + (scooter.ratings.reliability >= 7 ? 5 : 0);
+      return Math.min(scooter.ratings.value, scooter.ratings.autonomy, scooter.ratings.comfort) * 3.6 + (scooter.weightKg < 35 ? 8 : 0);
     }
 
-    function scoreScooter(scooter, totalDistance, speed, budget, usageType, priority) {
-      const remaining = ((scooter.estimatedRange - totalDistance) / scooter.estimatedRange) * 100;
-      const budgetGap = Math.max(0, scooter.price - budget);
+    function budgetFitScore(scooter, budget, priority) {
+      const ratio = scooter.price / budget;
+      let score = 0;
+
+      if (ratio <= 0.55) score += priority === "price" ? 26 : 12;
+      else if (ratio <= 0.8) score += priority === "price" ? 34 : 22;
+      else if (ratio <= 1) score += 18;
+
+      if (budget <= 900) score += scooter.ratings.value * 5 + (scooter.price <= budget * 0.95 ? 12 : 0);
+      if (budget <= 1400) score += scooter.ratings.value * 3.2;
+      if (budget >= 2500 && ratio < 0.45 && priority !== "price") score -= 10;
+
+      return score;
+    }
+
+    function distanceFitScore(scooter, totalDistance, usageType, priority) {
+      const remaining = remainingPercent(scooter, totalDistance);
+      let score = 0;
+
+      if (remaining < 10) return -220;
+      if (remaining < 20) score -= 80;
+      else if (remaining < 30) score -= 24;
+      else if (remaining <= 55) score += usageType === "city" ? 36 : 30;
+      else if (remaining <= 80) score += usageType === "longRide" || priority === "range" ? 36 : 18;
+      else score += usageType === "longRide" || priority === "range" ? 28 : -18;
+
+      if (totalDistance >= 45) score += scooter.ratings.autonomy * 5 + (scooter.estimatedRange >= totalDistance * 1.55 ? 22 : 0);
+      if (totalDistance <= 18 && scooter.estimatedRange > totalDistance * 5 && usageType !== "longRide" && priority !== "range") score -= 30;
+      if (totalDistance <= 30 && scooter.range > 125 && usageType !== "longRide" && priority !== "range") score -= 24;
+
+      return score;
+    }
+
+    function speedFitScore(scooter, speed, usageType, priority) {
+      let score = 0;
+      const speedMargin = scooter.maxSpeed - speed;
+
+      if (speedMargin < 0) return -220;
+      if (speed === 25) {
+        if (scooter.maxSpeed <= 45) score += 24;
+        if (scooter.maxSpeed >= 80 && usageType === "city" && priority !== "performance") score -= 28;
+      }
+
+      if (speed === 45) {
+        if (speedMargin >= 5 && speedMargin <= 30) score += 26;
+        if (speedMargin > 45 && usageType !== "sport" && priority !== "performance") score -= 18;
+      }
+
+      if (speed === 55) {
+        if (speedMargin >= 10) score += 28;
+        score += scooter.ratings.power * (usageType === "sport" || priority === "performance" ? 4 : 2);
+      }
+
+      return score;
+    }
+
+    function weightSuitabilityScore(scooter, riderWeight, usageType, priority) {
+      let score = 0;
+
+      if (riderWeight >= 95) score += scooter.ratings.power * 2.8 + scooter.ratings.comfort * 1.8;
+      if (riderWeight < 75 && scooter.weightKg >= 45 && usageType === "city") score -= 26;
+
+      if (usageType === "city") {
+        if (scooter.weightKg < 25) score += 20;
+        else if (scooter.weightKg < 35) score += 10;
+        else if (priority !== "performance" && priority !== "range") score -= 28;
+      }
+
+      if (usageType === "versatile" && scooter.weightKg < 38) score += 10;
+      if ((usageType === "sport" || usageType === "longRide") && scooter.weightKg >= 35) score += 6;
+
+      return score;
+    }
+
+    function scoreScooter(scooter, totalDistance, speed, budget, usageType, priority, riderWeight) {
+      const remaining = remainingPercent(scooter, totalDistance);
       const spareRange = scooter.estimatedRange - totalDistance;
       let score = 0;
 
-      score += Math.min(42, Math.max(-70, remaining));
-      score += scooter.maxSpeed >= speed ? 24 : -90;
-      score += scooter.price <= budget ? 28 : -Math.min(65, budgetGap / 60);
+      if (scooter.price > budget) return -10000 - (scooter.price - budget);
+      if (scooter.maxSpeed < speed) return -9000 - (speed - scooter.maxSpeed) * 100;
+      if (remaining < 10) return -8000 + remaining;
+
+      score += distanceFitScore(scooter, totalDistance, usageType, priority);
+      score += speedFitScore(scooter, speed, usageType, priority);
+      score += budgetFitScore(scooter, budget, priority);
+      score += weightSuitabilityScore(scooter, riderWeight, usageType, priority);
       score += usageScore(scooter, usageType);
       score += categoryFitScore(scooter, usageType, totalDistance);
       score += realWorldFitScore(scooter, totalDistance, speed, usageType);
       score += priorityScore(scooter, priority, totalDistance);
 
-      if (remaining >= 30 && remaining <= 75) score += 20;
-      if (remaining > 85 && totalDistance <= 20 && usageType !== "longRide") score -= 26;
-      if (spareRange > 90 && totalDistance <= 25 && usageType !== "longRide") score -= 30;
-      if (scooter.price > budget * 1.7) score -= 28;
-      if (usageType === "city" && scooter.weightKg >= 35 && speed <= 45 && totalDistance <= 35) score -= 12;
-      if (scooter.weightKg >= 35 && scooter.price <= budget * 0.8 && remaining >= 45) score += 12;
+      if (remaining >= 30 && remaining <= 75) score += 16;
+      if (remaining > 85 && totalDistance <= 20 && usageType !== "longRide" && priority !== "range") score -= 30;
+      if (spareRange > 90 && totalDistance <= 25 && usageType !== "longRide" && priority !== "range") score -= 34;
+      if (usageType === "city" && scooter.weightKg >= 35 && speed <= 45 && totalDistance <= 35) score -= 22;
+      if (scooter.market === "Marques alternatives / import") score -= usageType === "city" ? 8 : 4;
       if (scooter.weightKg >= 35 && scooter.maxSpeed >= speed + 20 && remaining >= 40) score += 10;
       if (scooter.weightKg >= 35 && scooter.ratings.value >= 9 && scooter.ratings.autonomy >= 8) score += 10;
-      if ((usageType === "sport" || usageType === "longRide") && scooter.weightKg >= 35 && remaining >= 30 && scooter.maxSpeed >= speed) score += 6;
+      if ((usageType === "sport" || usageType === "longRide") && scooter.weightKg >= 35 && remaining >= 30 && scooter.maxSpeed >= speed) score += 10;
 
       return score;
     }
@@ -1538,8 +1619,6 @@
       if (usageType === "city" && scooter.weightKg < 35) add("🏙 Idéale quotidien");
       if (scooter.ratings.comfort >= 9) add("🛋 Très confortable");
       if (scooter.ratings.value >= 8 && scooter.ratings.comfort >= 8 && scooter.ratings.autonomy >= 8) add("⚖️ Bon équilibre");
-      if (["Dualtron", "Xiaomi", "Segway / Ninebot", "Vsett", "Kaabo", "Nami"].includes(scooter.brand)) add("🔥 Très populaire");
-
       return badges;
     }
 
@@ -1700,6 +1779,37 @@
       `;
     }
 
+    function selectDiverseChoices(candidates, limit = 3) {
+      const choices = [];
+      const closeEnough = candidates.length ? candidates[0].score - 34 : 0;
+
+      for (const scooter of candidates) {
+        if (choices.length >= limit) break;
+
+        const sameBrand = choices.some((choice) => choice.brand === scooter.brand);
+        const sameCategory = choices.some((choice) => choice.category === scooter.category);
+        const isClose = scooter.score >= closeEnough;
+
+        if (!sameBrand || choices.length === 0) {
+          choices.push(scooter);
+          continue;
+        }
+
+        if (isClose && !sameCategory && choices.length < limit) {
+          choices.push(scooter);
+        }
+      }
+
+      for (const scooter of candidates) {
+        if (choices.length >= limit) break;
+        if (!choices.some((choice) => choice.brand === scooter.brand && choice.model === scooter.model)) {
+          choices.push(scooter);
+        }
+      }
+
+      return choices;
+    }
+
     function recommendScooters() {
       const distance = Number(els.distance.value);
       const weight = Number(els.weight.value);
@@ -1716,26 +1826,35 @@
 
       const ranked = scooters
         .map((scooter) => estimateScooter(scooter, speed, weight))
-        .map((scooter) => ({ ...scooter, score: scoreScooter(scooter, totalDistance, speed, budget, usageType, priority) }))
+        .map((scooter) => ({ ...scooter, score: scoreScooter(scooter, totalDistance, speed, budget, usageType, priority, weight) }))
         .sort((a, b) => b.score - a.score || a.price - b.price || a.brand.localeCompare(b.brand) || a.model.localeCompare(b.model));
 
       const accessibleFits = ranked.filter((scooter) => {
-        const remaining = ((scooter.estimatedRange - totalDistance) / scooter.estimatedRange) * 100;
+        const remaining = remainingPercent(scooter, totalDistance);
         return scooter.price <= budget && scooter.maxSpeed >= speed && remaining >= 20;
       });
 
       const strongAccessibleFits = accessibleFits.filter((scooter) => {
-        const remaining = ((scooter.estimatedRange - totalDistance) / scooter.estimatedRange) * 100;
-        return remaining >= 30 && scooter.score > 35;
+        const remaining = remainingPercent(scooter, totalDistance);
+        return remaining >= 30 && scooter.score > 0;
       });
 
-      const futureFits = ranked.filter((scooter) => {
-        const remaining = ((scooter.estimatedRange - totalDistance) / scooter.estimatedRange) * 100;
-        return scooter.price > budget && scooter.maxSpeed >= speed && remaining >= 30;
-      });
+      const recommendationPool = strongAccessibleFits.length ? strongAccessibleFits : accessibleFits;
 
-      if (!strongAccessibleFits.length) {
-        const futureChoices = futureFits.slice(0, 3);
+      const futureFits = scooters
+        .map((scooter) => estimateScooter(scooter, speed, weight))
+        .filter((scooter) => {
+          const remaining = remainingPercent(scooter, totalDistance);
+          return scooter.price > budget && scooter.maxSpeed >= speed && remaining >= 30;
+        })
+        .map((scooter) => ({
+          ...scooter,
+          score: scoreScooter(scooter, totalDistance, speed, scooter.price, usageType, priority, weight) - Math.min(70, (scooter.price - budget) / 45)
+        }))
+        .sort((a, b) => b.score - a.score || a.price - b.price || a.brand.localeCompare(b.brand) || a.model.localeCompare(b.model));
+
+      if (!recommendationPool.length) {
+        const futureChoices = selectDiverseChoices(futureFits, 3);
         state.choices = futureChoices;
         els.result.classList.add("future-mode");
         els.resultSummary.textContent = "";
@@ -1757,7 +1876,7 @@
         return;
       }
 
-      const choices = strongAccessibleFits.slice(0, 3);
+      const choices = selectDiverseChoices(recommendationPool, 3);
       state.choices = choices;
       els.result.classList.remove("future-mode");
       els.resultSummary.style.display = "block";
