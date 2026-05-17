@@ -14,6 +14,16 @@
   <link rel="icon" href="icons/icon.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="icons/icon-192.png" />
 
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-6VRKQ8S6E4"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+    gtag("config", "G-6VRKQ8S6E4");
+  </script>
+
   <style>
     :root {
       color-scheme: dark;
@@ -1086,11 +1096,11 @@
       <span>Team Dualtron Victor Luxury Plus</span>
     </footer>
 
-    <div class="app-version" id="appVersion">🛴 Version 1.04</div>
+    <div class="app-version" id="appVersion">🛴 Version 1.05</div>
   </main>
 
   <script>
-    const APP_VERSION = "1.04";
+    const APP_VERSION = "1.05";
 
     const scooters = [
       { brand: "Angwatt", model: "CS1", range: 55, maxSpeed: 55, powerWatts: 2400, weightKg: 34, price: 899, category: "polyvalente" },
@@ -1289,6 +1299,11 @@
         currency: "EUR",
         maximumFractionDigits: 0
       }).format(value);
+    }
+
+    function trackEvent(name, params = {}) {
+      if (typeof gtag !== "function") return;
+      gtag("event", name, params);
     }
 
     function clampRating(value) {
@@ -1868,6 +1883,15 @@
         return;
       }
 
+      trackEvent("recommendation_search", {
+        distance_km: distance,
+        rider_weight: weight,
+        budget,
+        speed,
+        usage_type: usageType,
+        priority
+      });
+
       const ranked = scooters
         .map((scooter) => estimateScooter(scooter, speed, weight))
         .map((scooter) => ({ ...scooter, score: scoreScooter(scooter, totalDistance, speed, budget, usageType, priority, weight) }))
@@ -1938,6 +1962,9 @@
     function toggleCompare() {
       const isOpen = els.comparePanel.classList.toggle("is-open");
       els.compareButton.textContent = isOpen ? "Masquer la comparaison" : "📊 Comparer les modèles";
+      trackEvent(isOpen ? "compare_models_open" : "compare_models_close", {
+        models_count: state.choices.length
+      });
     }
 
     function toggleWhyDetails(event) {
@@ -1951,6 +1978,9 @@
 
     function openCommunity(event) {
       event.preventDefault();
+      trackEvent("community_click", {
+        destination: "facebook_group"
+      });
       window.open("https://www.facebook.com/groups/843618944246747?locale=fr_FR", "_blank");
     }
 
