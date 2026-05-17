@@ -811,9 +811,9 @@
       display: none;
       width: 100%;
       max-width: 100%;
-      gap: 16px;
+      gap: 14px;
       margin-top: 16px;
-      padding: 4px 0 14px;
+      padding: 4px 8px 14px 0;
       overflow-x: auto;
       overscroll-behavior-x: contain;
       scroll-snap-type: x mandatory;
@@ -827,11 +827,52 @@
     }
 
     .compare-card {
-      flex: 0 0 100%;
-      max-width: 100%;
+      flex: 0 0 92%;
+      max-width: 92%;
       padding: 14px;
       scroll-snap-align: start;
       scroll-snap-stop: always;
+    }
+
+    .compare-hint {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin: 12px auto 0;
+      padding: 9px 12px;
+      width: fit-content;
+      max-width: 100%;
+      border: 1px solid rgba(56, 189, 248, 0.18);
+      border-radius: 999px;
+      color: #dbeafe;
+      background:
+        linear-gradient(135deg, rgba(56, 189, 248, 0.12), rgba(249, 115, 22, 0.08)),
+        rgba(15, 23, 42, 0.78);
+      font-size: 12px;
+      font-weight: 900;
+      text-align: center;
+    }
+
+    .compare-hint.is-visible {
+      display: flex;
+    }
+
+    .swipe-arrow {
+      display: inline-block;
+      color: #fed7aa;
+      animation: swipeNudge 1.25s ease-in-out infinite;
+    }
+
+    @keyframes swipeNudge {
+      0%, 100% {
+        transform: translateX(-3px);
+        opacity: 0.72;
+      }
+      50% {
+        transform: translateX(5px);
+        opacity: 1;
+      }
     }
 
     .compare-card h3 {
@@ -897,6 +938,11 @@
 
       .compare-card {
         flex-basis: auto;
+        max-width: 100%;
+      }
+
+      .compare-hint {
+        display: none !important;
       }
     }
 
@@ -1070,6 +1116,10 @@
       <div id="bestChoice"></div>
       <div id="alternatives" class="alternatives"></div>
       <button class="secondary" id="compareButton" type="button">📊 Comparer les modèles</button>
+      <div class="compare-hint" id="compareHint">
+        <span>👉 Glissez pour voir les autres modèles</span>
+        <span class="swipe-arrow">↔</span>
+      </div>
       <div class="compare" id="comparePanel"></div>
     </section>
 
@@ -1096,11 +1146,11 @@
       <span>Team Dualtron Victor Luxury Plus</span>
     </footer>
 
-    <div class="app-version" id="appVersion">🛴 Version 1.05</div>
+    <div class="app-version" id="appVersion">🛴 Version 1.06</div>
   </main>
 
   <script>
-    const APP_VERSION = "1.05";
+    const APP_VERSION = "1.06";
 
     const scooters = [
       { brand: "Angwatt", model: "CS1", range: 55, maxSpeed: 55, powerWatts: 2400, weightKg: 34, price: 899, category: "polyvalente" },
@@ -1271,6 +1321,7 @@
       bestChoice: document.getElementById("bestChoice"),
       alternatives: document.getElementById("alternatives"),
       compareButton: document.getElementById("compareButton"),
+      compareHint: document.getElementById("compareHint"),
       comparePanel: document.getElementById("comparePanel"),
       communityButton: document.getElementById("communityButton"),
       appVersion: document.getElementById("appVersion")
@@ -1381,13 +1432,66 @@
     function usageScore(scooter, usageType) {
       const r = scooter.ratings;
       const weights = {
-        city: { reliability: 1.55, comfort: 1.35, portability: 1.35, service: 1.25, value: 1.05, autonomy: 0.55, power: 0.15 },
-        versatile: { reliability: 0.95, comfort: 1.05, portability: 0.75, service: 0.8, value: 1.15, autonomy: 1.05, power: 0.95 },
-        sport: { power: 1.65, autonomy: 1.05, comfort: 1.05, reliability: 0.65, value: 0.85, portability: 0.05, service: 0.45 },
-        longRide: { autonomy: 1.8, comfort: 1.35, reliability: 0.95, service: 0.55, value: 0.75, power: 0.45, portability: 0.05 }
+        city: { reliability: 1.8, comfort: 1.55, portability: 1.75, service: 1.55, value: 1, autonomy: 0.45, power: 0.08 },
+        versatile: { reliability: 1.05, comfort: 1.18, portability: 0.9, service: 0.9, value: 1.35, autonomy: 1.18, power: 1.05 },
+        sport: { power: 2.15, autonomy: 0.95, comfort: 0.95, reliability: 0.5, value: 0.75, portability: 0, service: 0.35 },
+        longRide: { autonomy: 2.25, comfort: 1.6, reliability: 0.9, service: 0.45, value: 0.65, power: 0.25, portability: 0 }
       }[usageType];
 
-      return Object.entries(weights).reduce((sum, [key, weight]) => sum + r[key] * weight, 0) * 2.8;
+      return Object.entries(weights).reduce((sum, [key, weight]) => sum + r[key] * weight, 0) * 3.2;
+    }
+
+    function usageIntentScore(scooter, totalDistance, speed, usageType) {
+      let score = 0;
+      const r = scooter.ratings;
+
+      if (usageType === "city") {
+        score += r.reliability * 6 + r.service * 5 + r.comfort * 5 + r.portability * 5;
+        if (scooter.category === "urbaine") score += 58;
+        if (scooter.category === "polyvalente") score += 30;
+        if (scooter.category === "puissante") score -= 20;
+        if (scooter.category === "longue autonomie") score -= 34;
+        if (scooter.weightKg < 24) score += 38;
+        else if (scooter.weightKg < 32) score += 24;
+        else if (scooter.weightKg < 38) score += 8;
+        else score -= 38;
+        if (scooter.maxSpeed > 75) score -= 34;
+        if (totalDistance <= 20 && scooter.range > 100) score -= 24;
+      }
+
+      if (usageType === "versatile") {
+        const balance = Math.min(r.value, r.autonomy, r.comfort, r.power);
+        score += balance * 10 + r.value * 4 + r.comfort * 4;
+        if (scooter.category === "polyvalente") score += 58;
+        if (scooter.category === "urbaine" || scooter.category === "puissante") score += 18;
+        if (scooter.range >= 55 && scooter.range <= 95) score += 24;
+        if (scooter.weightKg >= 24 && scooter.weightKg <= 40) score += 14;
+        if (scooter.range > 130 || scooter.maxSpeed > 105) score -= 22;
+      }
+
+      if (usageType === "sport") {
+        score += r.power * 9 + Math.min(10, (scooter.powerWatts || 0) / 900) * 7;
+        if (scooter.category === "puissante") score += 64;
+        if (scooter.category === "longue autonomie") score += 32;
+        if (scooter.maxSpeed >= 70) score += 28;
+        if (scooter.maxSpeed >= 85) score += 20;
+        if (scooter.maxSpeed < Math.max(55, speed + 5)) score -= 52;
+        if (scooter.weightKg >= 35) score += 20;
+        if (scooter.weightKg >= 50 && scooter.maxSpeed >= 90) score += 8;
+      }
+
+      if (usageType === "longRide") {
+        score += r.autonomy * 10 + r.comfort * 7;
+        if (scooter.category === "longue autonomie") score += 72;
+        if (scooter.category === "puissante") score += 18;
+        if (scooter.estimatedRange >= totalDistance * 1.8) score += 34;
+        if (scooter.range >= 100) score += 30;
+        if (scooter.range < 80) score -= 60;
+        if (scooter.weightKg >= 35) score += 12;
+        if (scooter.maxSpeed >= 100 && speed <= 45) score -= 14;
+      }
+
+      return score;
     }
 
     function categoryFitScore(scooter, usageType, totalDistance) {
@@ -1543,6 +1647,7 @@
       score += budgetFitScore(scooter, budget, priority);
       score += weightSuitabilityScore(scooter, riderWeight, usageType, priority);
       score += usageScore(scooter, usageType);
+      score += usageIntentScore(scooter, totalDistance, speed, usageType);
       score += categoryFitScore(scooter, usageType, totalDistance);
       score += realWorldFitScore(scooter, totalDistance, speed, usageType);
       score += priorityScore(scooter, priority, totalDistance);
@@ -1937,6 +2042,7 @@
         els.alternatives.innerHTML = futureChoices.slice(1, 3).map((scooter, index) => altCard(scooter, index, totalDistance, speed, budget, usageType, weight, futureChoices[0])).join("");
         els.comparePanel.innerHTML = futureChoices.map(compareCard).join("");
         els.comparePanel.classList.remove("is-open");
+        els.compareHint.classList.remove("is-visible");
         els.compareButton.style.display = futureChoices.length ? "block" : "none";
         els.compareButton.textContent = "📊 Comparer les modèles";
         els.result.style.display = "block";
@@ -1953,6 +2059,7 @@
       els.alternatives.innerHTML = choices.slice(1, 3).map((scooter, index) => altCard(scooter, index, totalDistance, speed, budget, usageType, weight, choices[0])).join("");
       els.comparePanel.innerHTML = choices.map(compareCard).join("");
       els.comparePanel.classList.remove("is-open");
+      els.compareHint.classList.remove("is-visible");
       els.compareButton.style.display = "block";
       els.compareButton.textContent = "📊 Comparer les modèles";
       els.result.style.display = "block";
@@ -1961,6 +2068,7 @@
 
     function toggleCompare() {
       const isOpen = els.comparePanel.classList.toggle("is-open");
+      els.compareHint.classList.toggle("is-visible", isOpen && state.choices.length > 1);
       els.compareButton.textContent = isOpen ? "Masquer la comparaison" : "📊 Comparer les modèles";
       trackEvent(isOpen ? "compare_models_open" : "compare_models_close", {
         models_count: state.choices.length
