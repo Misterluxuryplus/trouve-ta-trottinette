@@ -161,6 +161,54 @@
       box-shadow: none;
     }
 
+    .advice-note {
+      margin-top: 16px;
+      padding: 16px;
+      color: #e0f2fe;
+      background:
+        radial-gradient(circle at 12% 0%, rgba(56, 189, 248, 0.18), transparent 34%),
+        linear-gradient(135deg, rgba(249, 115, 22, 0.12), rgba(56, 189, 248, 0.08)),
+        rgba(15, 23, 42, 0.78);
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      border-radius: 22px;
+      box-shadow: 0 18px 40px rgba(2, 6, 23, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .advice-note h2 {
+      margin: 0 0 11px;
+      color: #fed7aa;
+      font-size: 17px;
+      line-height: 1.2;
+    }
+
+    .advice-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 7px;
+      margin: 10px 0 12px;
+    }
+
+    .advice-chip {
+      padding: 8px 9px;
+      border: 1px solid rgba(148, 163, 184, 0.13);
+      border-radius: 14px;
+      color: #f8fafc;
+      background: rgba(255, 255, 255, 0.055);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .advice-note p {
+      margin: 9px 0 0;
+      color: #cbd5e1;
+    }
+
+    .advice-note strong {
+      color: #fff7ed;
+    }
+
     .public-speed {
       color: #fde68a;
       background:
@@ -1015,22 +1063,18 @@
       <div class="compare" id="comparePanel"></div>
     </section>
 
-    <section class="note">
-      ⚠️ Estimation donnée à titre informatif uniquement. L’autonomie réelle peut varier selon le poids, la température, l’état de la batterie, le vent, les montées, la pression des pneus, la vitesse et le style de conduite.
-    </section>
-
-    <section class="note">
-      ⚠️ Les modèles affichés ne sont pas classés du meilleur au moins bon.<br><br>
-      L’application recommande les trottinettes les plus adaptées selon :<br>
-      • votre trajet<br>
-      • votre budget<br>
-      • votre vitesse<br>
-      • votre utilisation<br><br>
-      💡 Une trott plus puissante ou plus chère n’est pas forcément le meilleur choix pour vos besoins.
-    </section>
-
-    <section class="note">
-      ⚠️ Les prix sont des prix moyens constatés et peuvent varier selon les boutiques, promotions et versions de batterie.
+    <section class="advice-note">
+      <h2>⚡ Conseils personnalisés</h2>
+      <p>L’application analyse :</p>
+      <div class="advice-grid">
+        <div class="advice-chip">🛣 votre trajet</div>
+        <div class="advice-chip">💸 votre budget</div>
+        <div class="advice-chip">⚡ vos besoins</div>
+        <div class="advice-chip">🛴 votre utilisation</div>
+      </div>
+      <p>afin de proposer les trottinettes les plus adaptées 😄</p>
+      <p><strong>💡 Plus puissante ou plus chère ne veut pas forcément dire meilleure pour vous.</strong></p>
+      <p>🔋 Les autonomies et prix peuvent varier selon la conduite, le terrain, la météo ou les versions batterie.</p>
     </section>
 
     <a class="community-link" id="communityButton" href="https://www.facebook.com/groups/843618944246747?locale=fr_FR" target="_blank" rel="noopener noreferrer">
@@ -1042,11 +1086,11 @@
       <span>Team Dualtron Victor Luxury Plus</span>
     </footer>
 
-    <div class="app-version" id="appVersion">🛴 Version 1.03</div>
+    <div class="app-version" id="appVersion">🛴 Version 1.04</div>
   </main>
 
   <script>
-    const APP_VERSION = "1.03";
+    const APP_VERSION = "1.04";
 
     const scooters = [
       { brand: "Angwatt", model: "CS1", range: 55, maxSpeed: 55, powerWatts: 2400, weightKg: 34, price: 899, category: "polyvalente" },
