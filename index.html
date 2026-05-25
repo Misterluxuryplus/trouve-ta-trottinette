@@ -983,6 +983,49 @@
       color: #fed7aa;
     }
 
+    .maintenance-info {
+      display: grid;
+      gap: 4px;
+      padding: 10px 11px;
+      border: 1px solid rgba(148, 163, 184, 0.14);
+      border-radius: 14px;
+      background: rgba(15, 23, 42, 0.72);
+      color: #dbeafe;
+      font-size: 12px;
+      line-height: 1.35;
+      font-weight: 850;
+    }
+
+    .maintenance-info strong {
+      font-size: 12.5px;
+      color: #f8fafc;
+    }
+
+    .maintenance-info span {
+      color: #cbd5e1;
+      font-weight: 750;
+    }
+
+    .maintenance-economic {
+      border-color: rgba(34, 197, 94, 0.32);
+      background: rgba(34, 197, 94, 0.11);
+    }
+
+    .maintenance-medium {
+      border-color: rgba(249, 115, 22, 0.34);
+      background: rgba(249, 115, 22, 0.12);
+    }
+
+    .maintenance-high {
+      border-color: rgba(239, 68, 68, 0.34);
+      background: rgba(239, 68, 68, 0.12);
+    }
+
+    .maintenance-check {
+      border-color: rgba(250, 204, 21, 0.36);
+      background: rgba(250, 204, 21, 0.11);
+    }
+
     @media (min-width: 760px) {
       .compare.is-open {
         display: grid;
@@ -1200,167 +1243,182 @@
       <span>Team Dualtron Victor Luxury Plus</span>
     </footer>
 
-    <div class="app-version" id="appVersion">🛴 Version 1.07</div>
+    <div class="app-version" id="appVersion">🛴 Version 1.08</div>
   </main>
 
   <script>
-    const APP_VERSION = "1.07";
+    const APP_VERSION = "1.08";
 
     const scooters = [
-      { brand: "Angwatt", model: "CS1", range: 55, maxSpeed: 55, powerWatts: 2400, weightKg: 34, price: 899, category: "polyvalente" },
-      { brand: "Angwatt", model: "CS1 Pro", range: 70, maxSpeed: 60, powerWatts: 3200, weightKg: 38, price: 1199, category: "polyvalente" },
-      { brand: "Angwatt", model: "T1", range: 60, maxSpeed: 55, powerWatts: 2600, weightKg: 36, price: 999, category: "polyvalente" },
-      { brand: "Angwatt", model: "T1 Pro", range: 75, maxSpeed: 65, powerWatts: 3600, weightKg: 41, price: 1299, category: "puissante" },
-      { brand: "Angwatt", model: "X1", range: 80, maxSpeed: 70, powerWatts: 4000, weightKg: 45, price: 1499, category: "puissante" },
-      { brand: "Angwatt", model: "X1 Pro", range: 95, maxSpeed: 85, powerWatts: 5600, weightKg: 52, price: 1799, category: "puissante" },
+      { brand: "Angwatt", model: "CS1", range: 55, maxSpeed: 55, powerWatts: 2400, weightKg: 34, price: 849, category: "polyvalente" },
+      { brand: "Angwatt", model: "CS1 Pro", range: 70, maxSpeed: 60, powerWatts: 3200, weightKg: 38, price: 1099, category: "polyvalente" },
+      { brand: "Angwatt", model: "T1", range: 60, maxSpeed: 55, powerWatts: 2600, weightKg: 36, price: 949, category: "polyvalente" },
+      { brand: "Angwatt", model: "T1 Pro", range: 75, maxSpeed: 65, powerWatts: 3600, weightKg: 41, price: 1199, category: "puissante" },
+      { brand: "Angwatt", model: "X1", range: 80, maxSpeed: 70, powerWatts: 4000, weightKg: 45, price: 1399, category: "puissante" },
+      { brand: "Angwatt", model: "X1 Pro", range: 95, maxSpeed: 85, powerWatts: 5600, weightKg: 52, price: 1699, category: "puissante" },
 
-      { brand: "Apollo", model: "Air", range: 45, maxSpeed: 35, powerWatts: 900, weightKg: 18, price: 999, category: "urbaine" },
-      { brand: "Apollo", model: "City", range: 55, maxSpeed: 50, powerWatts: 2000, weightKg: 29, price: 1499, category: "polyvalente" },
-      { brand: "Apollo", model: "Phantom", range: 75, maxSpeed: 65, powerWatts: 3200, weightKg: 35, price: 2299, category: "puissante" },
-      { brand: "Apollo", model: "Pro", range: 90, maxSpeed: 70, powerWatts: 6000, weightKg: 43, price: 3499, category: "puissante" },
+      { brand: "Apollo", model: "Air", range: 45, maxSpeed: 35, powerWatts: 900, weightKg: 18, price: 899, category: "urbaine" },
+      { brand: "Apollo", model: "City", range: 55, maxSpeed: 50, powerWatts: 2000, weightKg: 29, price: 1399, category: "polyvalente" },
+      { brand: "Apollo", model: "Phantom", range: 75, maxSpeed: 65, powerWatts: 3200, weightKg: 35, price: 2199, category: "puissante" },
+      { brand: "Apollo", model: "Pro", range: 90, maxSpeed: 70, powerWatts: 6000, weightKg: 43, price: 3299, category: "puissante" },
 
-      { brand: "Ausom", model: "DT1", range: 70, maxSpeed: 55, powerWatts: 2950, weightKg: 34, price: 899, category: "polyvalente", ratingsOverride: { autonomy: 7, power: 7, comfort: 7, reliability: 6, value: 9, portability: 5, service: 5 } },
-      { brand: "Ausom", model: "DT1 Pro", range: 85, maxSpeed: 65, powerWatts: 4000, weightKg: 39, price: 1199, category: "puissante", ratingsOverride: { autonomy: 8, power: 8, comfort: 8, reliability: 6, value: 9, portability: 4, service: 5 } },
-      { brand: "Ausom", model: "Gallop", range: 75, maxSpeed: 60, powerWatts: 3600, weightKg: 37, price: 999, category: "polyvalente", ratingsOverride: { autonomy: 7, power: 8, comfort: 7, reliability: 6, value: 9, portability: 5, service: 5 } },
-      { brand: "Ausom", model: "Leopard", range: 60, maxSpeed: 52, powerWatts: 2400, weightKg: 33, price: 799, category: "polyvalente", ratingsOverride: { autonomy: 6, power: 7, comfort: 7, reliability: 6, value: 9, portability: 6, service: 5 } },
+      { brand: "Ausom", model: "DT1", range: 70, maxSpeed: 55, powerWatts: 2950, weightKg: 34, price: 849, category: "polyvalente", ratingsOverride: { autonomy: 7, power: 7, comfort: 7, reliability: 6, value: 9, portability: 5, service: 5 } },
+      { brand: "Ausom", model: "DT1 Pro", range: 85, maxSpeed: 65, powerWatts: 4000, weightKg: 39, price: 1099, category: "puissante", ratingsOverride: { autonomy: 8, power: 8, comfort: 8, reliability: 6, value: 9, portability: 4, service: 5 } },
+      { brand: "Ausom", model: "Gallop", range: 75, maxSpeed: 60, powerWatts: 3600, weightKg: 37, price: 899, category: "polyvalente", ratingsOverride: { autonomy: 7, power: 8, comfort: 7, reliability: 6, value: 9, portability: 5, service: 5 } },
+      { brand: "Ausom", model: "Leopard", range: 60, maxSpeed: 52, powerWatts: 2400, weightKg: 33, price: 699, category: "polyvalente", ratingsOverride: { autonomy: 6, power: 7, comfort: 7, reliability: 6, value: 9, portability: 6, service: 5 } },
+      { brand: "Ausom", model: "L2", range: 70, maxSpeed: 55, powerWatts: 2600, weightKg: 32, price: 799, category: "polyvalente", ratingsOverride: { autonomy: 7, power: 7, comfort: 7, reliability: 6, value: 9, portability: 5, service: 5 } },
+      { brand: "Ausom", model: "L2 Max", range: 90, maxSpeed: 65, powerWatts: 3600, weightKg: 38, price: 999, category: "puissante", ratingsOverride: { autonomy: 8, power: 8, comfort: 8, reliability: 6, value: 9, portability: 4, service: 5 } },
 
-      { brand: "Arvala", model: "M11", range: 90, maxSpeed: 85, powerWatts: 6000, weightKg: 45, price: 1390, category: "puissante", market: "Marques alternatives / import", ratingsOverride: { autonomy: 8, power: 9, comfort: 7, reliability: 5, value: 9, portability: 3, service: 4 } },
+      { brand: "Arvala", model: "M11", range: 90, maxSpeed: 85, powerWatts: 6000, weightKg: 45, price: 1190, category: "puissante", market: "Marques alternatives / import", ratingsOverride: { autonomy: 8, power: 9, comfort: 7, reliability: 5, value: 9, portability: 3, service: 4 } },
 
-      { brand: "Boyueda", model: "5600W", range: 85, maxSpeed: 80, powerWatts: 5600, weightKg: 45, price: 1190, category: "puissante", market: "Marques alternatives / import", ratingsOverride: { autonomy: 8, power: 9, comfort: 7, reliability: 5, value: 9, portability: 3, service: 4 } },
-      { brand: "Boyueda", model: "S3", range: 70, maxSpeed: 65, powerWatts: 3200, weightKg: 38, price: 899, category: "polyvalente", market: "Marques alternatives / import", ratingsOverride: { autonomy: 7, power: 7, comfort: 6, reliability: 5, value: 9, portability: 4, service: 4 } },
+      { brand: "Boyueda", model: "5600W", range: 85, maxSpeed: 80, powerWatts: 5600, weightKg: 45, price: 1090, category: "puissante", market: "Marques alternatives / import", ratingsOverride: { autonomy: 8, power: 9, comfort: 7, reliability: 5, value: 9, portability: 3, service: 4 } },
+      { brand: "Boyueda", model: "S3", range: 70, maxSpeed: 65, powerWatts: 3200, weightKg: 38, price: 799, category: "polyvalente", market: "Marques alternatives / import", ratingsOverride: { autonomy: 7, power: 7, comfort: 6, reliability: 5, value: 9, portability: 4, service: 4 } },
 
-      { brand: "Currus", model: "NF 10", range: 75, maxSpeed: 70, powerWatts: 3600, weightKg: 38, price: 1790, category: "puissante" },
-      { brand: "Currus", model: "NF 11", range: 95, maxSpeed: 85, powerWatts: 5400, weightKg: 46, price: 2490, category: "puissante" },
-      { brand: "Currus", model: "Panther", range: 110, maxSpeed: 95, powerWatts: 6720, weightKg: 52, price: 3290, category: "longue autonomie" },
+      { brand: "Currus", model: "NF 10", range: 75, maxSpeed: 70, powerWatts: 3600, weightKg: 38, price: 1690, category: "puissante" },
+      { brand: "Currus", model: "NF 11", range: 95, maxSpeed: 85, powerWatts: 5400, weightKg: 46, price: 2290, category: "puissante" },
+      { brand: "Currus", model: "Panther", range: 110, maxSpeed: 95, powerWatts: 6720, weightKg: 52, price: 2990, category: "longue autonomie" },
 
-      { brand: "Dualtron", model: "Achilleus", range: 120, maxSpeed: 80, powerWatts: 4648, weightKg: 40, price: 2490, category: "longue autonomie" },
-      { brand: "Dualtron", model: "Alien", range: 125, maxSpeed: 110, powerWatts: 11800, weightKg: 60, price: 4190, category: "longue autonomie", ratingsOverride: { autonomy: 10, power: 10, comfort: 9, reliability: 7, value: 7, portability: 2, service: 8 } },
-      { brand: "Dualtron", model: "Aminia", range: 55, maxSpeed: 50, powerWatts: 1450, weightKg: 27, price: 1090, category: "polyvalente" },
-      { brand: "Dualtron", model: "City", range: 75, maxSpeed: 65, powerWatts: 4000, weightKg: 41, price: 1590, category: "polyvalente" },
-      { brand: "Dualtron", model: "Eagle Pro", range: 65, maxSpeed: 75, powerWatts: 3600, weightKg: 30, price: 1890, category: "puissante" },
-      { brand: "Dualtron", model: "Mini", range: 55, maxSpeed: 45, powerWatts: 1450, weightKg: 22, price: 1190, category: "urbaine" },
-      { brand: "Dualtron", model: "Oriens", range: 90, maxSpeed: 70, powerWatts: 3600, weightKg: 34, price: 1890, category: "polyvalente", ratingsOverride: { autonomy: 8, power: 8, comfort: 9, reliability: 7, value: 8, portability: 5, service: 8 } },
-      { brand: "Dualtron", model: "Pop", range: 40, maxSpeed: 40, powerWatts: 900, weightKg: 24, price: 799, category: "urbaine" },
-      { brand: "Dualtron", model: "Sonic", range: 105, maxSpeed: 90, powerWatts: 7200, weightKg: 47, price: 2990, category: "puissante" },
-      { brand: "Dualtron", model: "Spider", range: 85, maxSpeed: 70, powerWatts: 3600, weightKg: 26, price: 2190, category: "puissante" },
-      { brand: "Dualtron", model: "Spider Max", range: 95, maxSpeed: 80, powerWatts: 4500, weightKg: 34, price: 2490, category: "puissante" },
-      { brand: "Dualtron", model: "Storm", range: 100, maxSpeed: 85, powerWatts: 6640, weightKg: 46, price: 3490, category: "longue autonomie" },
-      { brand: "Dualtron", model: "Storm Limited", range: 125, maxSpeed: 100, powerWatts: 11500, weightKg: 52, price: 4290, category: "longue autonomie" },
-      { brand: "Dualtron", model: "Thunder", range: 120, maxSpeed: 85, powerWatts: 5400, weightKg: 43, price: 2990, category: "longue autonomie" },
-      { brand: "Dualtron", model: "Thunder 2", range: 125, maxSpeed: 100, powerWatts: 10080, weightKg: 47, price: 3990, category: "longue autonomie" },
-      { brand: "Dualtron", model: "Thunder 3", range: 125, maxSpeed: 105, powerWatts: 11000, weightKg: 50, price: 4290, category: "longue autonomie" },
-      { brand: "Dualtron", model: "Togo", range: 45, maxSpeed: 45, powerWatts: 900, weightKg: 25, price: 899, category: "urbaine" },
-      { brand: "Dualtron", model: "Togo Limited", range: 55, maxSpeed: 55, powerWatts: 1800, weightKg: 29, price: 899, category: "polyvalente" },
-      { brand: "Dualtron", model: "Togo Max", range: 65, maxSpeed: 60, powerWatts: 2000, weightKg: 32, price: 1190, category: "polyvalente" },
-      { brand: "Dualtron", model: "Ultra", range: 120, maxSpeed: 90, powerWatts: 6640, weightKg: 40, price: 3590, category: "longue autonomie" },
-      { brand: "Dualtron", model: "Ultra 2", range: 120, maxSpeed: 95, powerWatts: 6640, weightKg: 40, price: 3290, category: "longue autonomie" },
-      { brand: "Dualtron", model: "Victor", range: 85, maxSpeed: 80, powerWatts: 4000, weightKg: 33, price: 1790, category: "puissante" },
+      { brand: "Dualtron", model: "Achilleus", range: 120, maxSpeed: 80, powerWatts: 4648, weightKg: 40, price: 2290, category: "longue autonomie" },
+      { brand: "Dualtron", model: "Alien", range: 125, maxSpeed: 110, powerWatts: 11800, weightKg: 60, price: 3990, category: "longue autonomie", ratingsOverride: { autonomy: 10, power: 10, comfort: 9, reliability: 7, value: 7, portability: 2, service: 8 } },
+      { brand: "Dualtron", model: "Aminia", range: 55, maxSpeed: 50, powerWatts: 1450, weightKg: 27, price: 990, category: "polyvalente" },
+      { brand: "Dualtron", model: "City", range: 75, maxSpeed: 65, powerWatts: 4000, weightKg: 41, price: 1490, category: "polyvalente" },
+      { brand: "Dualtron", model: "Eagle Pro", range: 65, maxSpeed: 75, powerWatts: 3600, weightKg: 30, price: 1790, category: "puissante" },
+      { brand: "Dualtron", model: "Mini", range: 55, maxSpeed: 45, powerWatts: 1450, weightKg: 22, price: 1090, category: "urbaine" },
+      { brand: "Dualtron", model: "Oriens", range: 90, maxSpeed: 70, powerWatts: 3600, weightKg: 34, price: 1790, category: "polyvalente", ratingsOverride: { autonomy: 8, power: 8, comfort: 9, reliability: 7, value: 8, portability: 5, service: 8 } },
+      { brand: "Dualtron", model: "Pop", range: 40, maxSpeed: 40, powerWatts: 900, weightKg: 24, price: 699, category: "urbaine" },
+      { brand: "Dualtron", model: "Sonic", range: 105, maxSpeed: 90, powerWatts: 7200, weightKg: 47, price: 2790, category: "puissante" },
+      { brand: "Dualtron", model: "Spider", range: 85, maxSpeed: 70, powerWatts: 3600, weightKg: 26, price: 1990, category: "puissante" },
+      { brand: "Dualtron", model: "Spider Max", range: 95, maxSpeed: 80, powerWatts: 4500, weightKg: 34, price: 2290, category: "puissante" },
+      { brand: "Dualtron", model: "Storm", range: 100, maxSpeed: 85, powerWatts: 6640, weightKg: 46, price: 3190, category: "longue autonomie" },
+      { brand: "Dualtron", model: "Storm Limited", range: 125, maxSpeed: 100, powerWatts: 11500, weightKg: 52, price: 3990, category: "longue autonomie" },
+      { brand: "Dualtron", model: "Thunder", range: 120, maxSpeed: 85, powerWatts: 5400, weightKg: 43, price: 2690, category: "longue autonomie" },
+      { brand: "Dualtron", model: "Thunder 2", range: 125, maxSpeed: 100, powerWatts: 10080, weightKg: 47, price: 3490, category: "longue autonomie" },
+      { brand: "Dualtron", model: "Thunder 3", range: 125, maxSpeed: 105, powerWatts: 11000, weightKg: 50, price: 3890, category: "longue autonomie" },
+      { brand: "Dualtron", model: "Togo", range: 45, maxSpeed: 45, powerWatts: 900, weightKg: 25, price: 749, category: "urbaine" },
+      { brand: "Dualtron", model: "Togo Limited", range: 55, maxSpeed: 55, powerWatts: 1800, weightKg: 29, price: 849, category: "polyvalente" },
+      { brand: "Dualtron", model: "Togo Max", range: 65, maxSpeed: 60, powerWatts: 2000, weightKg: 32, price: 1090, category: "polyvalente" },
+      { brand: "Dualtron", model: "Ultra", range: 120, maxSpeed: 90, powerWatts: 6640, weightKg: 40, price: 3290, category: "longue autonomie" },
+      { brand: "Dualtron", model: "Ultra 2", range: 120, maxSpeed: 95, powerWatts: 6640, weightKg: 40, price: 2990, category: "longue autonomie" },
+      { brand: "Dualtron", model: "Victor", range: 85, maxSpeed: 80, powerWatts: 4000, weightKg: 33, price: 1690, category: "puissante" },
       { brand: "Dualtron", model: "Victor 2026", range: 85, maxSpeed: 80, powerWatts: 4200, weightKg: 34, price: 1790, category: "puissante" },
-      { brand: "Dualtron", model: "Victor Limited", range: 120, maxSpeed: 80, powerWatts: 5000, weightKg: 37, price: 2190, category: "longue autonomie", ratingsOverride: { autonomy: 9, power: 9, comfort: 8, reliability: 8, value: 9, portability: 4, service: 8 } },
-      { brand: "Dualtron", model: "Victor Luxury Plus", range: 120, maxSpeed: 80, powerWatts: 4300, weightKg: 35, price: 1890, category: "longue autonomie", ratingsOverride: { autonomy: 9, power: 8, comfort: 8, reliability: 8, value: 9, portability: 4, service: 8 } },
-      { brand: "Dualtron", model: "X Limited", range: 150, maxSpeed: 100, powerWatts: 12000, weightKg: 68, price: 4590, category: "longue autonomie" },
+      { brand: "Dualtron", model: "Victor Limited", range: 120, maxSpeed: 80, powerWatts: 5000, weightKg: 37, price: 2090, category: "longue autonomie", ratingsOverride: { autonomy: 9, power: 9, comfort: 8, reliability: 8, value: 9, portability: 4, service: 8 } },
+      { brand: "Dualtron", model: "Victor Luxury Plus", range: 120, maxSpeed: 80, powerWatts: 4300, weightKg: 35, price: 1749, category: "longue autonomie", ratingsOverride: { autonomy: 9, power: 8, comfort: 8, reliability: 8, value: 9, portability: 4, service: 8 } },
+      { brand: "Dualtron", model: "X Limited", range: 150, maxSpeed: 100, powerWatts: 12000, weightKg: 68, price: 4290, category: "longue autonomie" },
 
-      { brand: "E-Twow", model: "Booster GT", range: 45, maxSpeed: 45, powerWatts: 1000, weightKg: 13, price: 899, category: "urbaine", ratingsOverride: { autonomy: 5, power: 5, comfort: 5, reliability: 8, value: 7, portability: 10, service: 7 } },
-      { brand: "E-Twow", model: "GT Sport", range: 50, maxSpeed: 46, powerWatts: 1000, weightKg: 13, price: 999, category: "urbaine", ratingsOverride: { autonomy: 5, power: 5, comfort: 5, reliability: 8, value: 7, portability: 10, service: 7 } },
-      { brand: "E-Twow", model: "S2 Booster Plus", range: 35, maxSpeed: 35, powerWatts: 800, weightKg: 11, price: 649, category: "urbaine", ratingsOverride: { autonomy: 4, power: 4, comfort: 4, reliability: 8, value: 7, portability: 10, service: 7 } },
+      { brand: "E-Twow", model: "Booster GT", range: 45, maxSpeed: 45, powerWatts: 1000, weightKg: 13, price: 799, category: "urbaine", ratingsOverride: { autonomy: 5, power: 5, comfort: 5, reliability: 8, value: 7, portability: 10, service: 7 } },
+      { brand: "E-Twow", model: "GT Sport", range: 50, maxSpeed: 46, powerWatts: 1000, weightKg: 13, price: 899, category: "urbaine", ratingsOverride: { autonomy: 5, power: 5, comfort: 5, reliability: 8, value: 7, portability: 10, service: 7 } },
+      { brand: "E-Twow", model: "S2 Booster Plus", range: 35, maxSpeed: 35, powerWatts: 800, weightKg: 11, price: 599, category: "urbaine", ratingsOverride: { autonomy: 4, power: 4, comfort: 4, reliability: 8, value: 7, portability: 10, service: 7 } },
 
-      { brand: "Gunai", model: "GN88", range: 90, maxSpeed: 85, powerWatts: 5600, weightKg: 45, price: 1190, category: "puissante", market: "Marques alternatives / import", ratingsOverride: { autonomy: 8, power: 9, comfort: 7, reliability: 5, value: 9, portability: 3, service: 4 } },
+      { brand: "Gunai", model: "GN88", range: 90, maxSpeed: 85, powerWatts: 5600, weightKg: 45, price: 1090, category: "puissante", market: "Marques alternatives / import", ratingsOverride: { autonomy: 8, power: 9, comfort: 7, reliability: 5, value: 9, portability: 3, service: 4 } },
 
-      { brand: "Halo Knight", model: "T104", range: 80, maxSpeed: 75, powerWatts: 5600, weightKg: 43, price: 1290, category: "puissante", market: "Marques alternatives / import", ratingsOverride: { autonomy: 8, power: 9, comfort: 7, reliability: 5, value: 9, portability: 3, service: 4 } },
-      { brand: "Halo Knight", model: "T107 Pro", range: 100, maxSpeed: 85, powerWatts: 6000, weightKg: 48, price: 1590, category: "longue autonomie", market: "Marques alternatives / import", ratingsOverride: { autonomy: 9, power: 9, comfort: 8, reliability: 5, value: 9, portability: 3, service: 4 } },
+      { brand: "Halo Knight", model: "T104", range: 80, maxSpeed: 75, powerWatts: 5600, weightKg: 43, price: 1190, category: "puissante", market: "Marques alternatives / import", ratingsOverride: { autonomy: 8, power: 9, comfort: 7, reliability: 5, value: 9, portability: 3, service: 4 } },
+      { brand: "Halo Knight", model: "T107 Pro", range: 100, maxSpeed: 85, powerWatts: 6000, weightKg: 48, price: 1490, category: "longue autonomie", market: "Marques alternatives / import", ratingsOverride: { autonomy: 9, power: 9, comfort: 8, reliability: 5, value: 9, portability: 3, service: 4 } },
 
-      { brand: "Inmotion", model: "Climber", range: 45, maxSpeed: 25, powerWatts: 1500, weightKg: 21, price: 799, category: "urbaine" },
-      { brand: "Inmotion", model: "RS", range: 100, maxSpeed: 100, powerWatts: 8400, weightKg: 58, price: 3990, category: "puissante" },
-      { brand: "Inmotion", model: "S1", range: 50, maxSpeed: 30, powerWatts: 1000, weightKg: 24, price: 899, category: "urbaine" },
-      { brand: "Inmotion", model: "S1F", range: 55, maxSpeed: 40, powerWatts: 1000, weightKg: 24, price: 999, category: "polyvalente" },
+      { brand: "Inmotion", model: "Climber", range: 45, maxSpeed: 25, powerWatts: 1500, weightKg: 21, price: 699, category: "urbaine" },
+      { brand: "Inmotion", model: "RS", range: 100, maxSpeed: 100, powerWatts: 8400, weightKg: 58, price: 3490, category: "puissante" },
+      { brand: "Inmotion", model: "S1", range: 50, maxSpeed: 30, powerWatts: 1000, weightKg: 24, price: 799, category: "urbaine" },
+      { brand: "Inmotion", model: "S1F", range: 55, maxSpeed: 40, powerWatts: 1000, weightKg: 24, price: 899, category: "polyvalente" },
 
-      { brand: "Joyor", model: "S10-S", range: 75, maxSpeed: 60, powerWatts: 2000, weightKg: 27, price: 1199, category: "polyvalente" },
-      { brand: "Joyor", model: "Y8-S", range: 70, maxSpeed: 45, powerWatts: 1000, weightKg: 24, price: 799, category: "polyvalente" },
+      { brand: "Joyor", model: "S10-S", range: 75, maxSpeed: 60, powerWatts: 2000, weightKg: 27, price: 999, category: "polyvalente" },
+      { brand: "Joyor", model: "Y8-S", range: 70, maxSpeed: 45, powerWatts: 1000, weightKg: 24, price: 699, category: "polyvalente" },
 
-      { brand: "Kaabo", model: "Mantis 8", range: 50, maxSpeed: 45, powerWatts: 1600, weightKg: 27, price: 999, category: "polyvalente" },
-      { brand: "Kaabo", model: "Mantis 10", range: 75, maxSpeed: 60, powerWatts: 2000, weightKg: 30, price: 1490, category: "polyvalente" },
-      { brand: "Kaabo", model: "Mantis King GT", range: 75, maxSpeed: 70, powerWatts: 4200, weightKg: 33, price: 1890, category: "puissante" },
-      { brand: "Kaabo", model: "Wolf King GT", range: 110, maxSpeed: 100, powerWatts: 7200, weightKg: 52, price: 3290, category: "longue autonomie" },
-      { brand: "Kaabo", model: "Wolf King GTR", range: 115, maxSpeed: 105, powerWatts: 13440, weightKg: 62, price: 3990, category: "longue autonomie" },
-      { brand: "Kaabo", model: "Wolf King GTR Max", range: 130, maxSpeed: 115, powerWatts: 15000, weightKg: 64, price: 4590, category: "longue autonomie", ratingsOverride: { autonomy: 10, power: 10, comfort: 9, reliability: 7, value: 7, portability: 1, service: 7 } },
-      { brand: "Kaabo", model: "Wolf Warrior 11", range: 120, maxSpeed: 80, powerWatts: 5400, weightKg: 46, price: 2490, category: "longue autonomie" },
+      { brand: "Kaabo", model: "Mantis 8", range: 50, maxSpeed: 45, powerWatts: 1600, weightKg: 27, price: 899, category: "polyvalente" },
+      { brand: "Kaabo", model: "Mantis 10", range: 75, maxSpeed: 60, powerWatts: 2000, weightKg: 30, price: 1390, category: "polyvalente" },
+      { brand: "Kaabo", model: "Mantis King GT", range: 75, maxSpeed: 70, powerWatts: 4200, weightKg: 33, price: 1790, category: "puissante" },
+      { brand: "Kaabo", model: "Wolf King GT", range: 110, maxSpeed: 100, powerWatts: 7200, weightKg: 52, price: 2990, category: "longue autonomie" },
+      { brand: "Kaabo", model: "Wolf King GTR", range: 115, maxSpeed: 105, powerWatts: 13440, weightKg: 62, price: 3590, category: "longue autonomie" },
+      { brand: "Kaabo", model: "Wolf King GTR Max", range: 130, maxSpeed: 115, powerWatts: 15000, weightKg: 64, price: 4190, category: "longue autonomie", ratingsOverride: { autonomy: 10, power: 10, comfort: 9, reliability: 7, value: 7, portability: 1, service: 7 } },
+      { brand: "Kaabo", model: "Wolf Warrior 11", range: 120, maxSpeed: 80, powerWatts: 5400, weightKg: 46, price: 2290, category: "longue autonomie" },
 
-      { brand: "Kuickwheel", model: "Aspire Pro", range: 60, maxSpeed: 45, powerWatts: 1600, weightKg: 26, price: 1090, category: "polyvalente" },
-      { brand: "Kuickwheel", model: "M16 Pro", range: 75, maxSpeed: 65, powerWatts: 3200, weightKg: 34, price: 1490, category: "puissante" },
-      { brand: "Kuickwheel", model: "S9", range: 45, maxSpeed: 35, powerWatts: 1000, weightKg: 22, price: 799, category: "urbaine" },
+      { brand: "Kuickwheel", model: "Aspire Pro", range: 60, maxSpeed: 45, powerWatts: 1600, weightKg: 26, price: 999, category: "polyvalente" },
+      { brand: "Kuickwheel", model: "M16 Pro", range: 75, maxSpeed: 65, powerWatts: 3200, weightKg: 34, price: 1390, category: "puissante" },
+      { brand: "Kuickwheel", model: "S9", range: 45, maxSpeed: 35, powerWatts: 1000, weightKg: 22, price: 699, category: "urbaine" },
 
-      { brand: "Kukirin", model: "G2", range: 45, maxSpeed: 45, powerWatts: 1200, weightKg: 26, price: 499, category: "urbaine" },
-      { brand: "Kukirin", model: "G2 Max", range: 70, maxSpeed: 55, powerWatts: 1600, weightKg: 31, price: 699, category: "polyvalente" },
+      { brand: "Kukirin", model: "G2", range: 45, maxSpeed: 45, powerWatts: 1200, weightKg: 26, price: 449, category: "urbaine" },
+      { brand: "Kukirin", model: "G2 Max", range: 70, maxSpeed: 55, powerWatts: 1600, weightKg: 31, price: 649, category: "polyvalente" },
       { brand: "Kukirin", model: "G3", range: 60, maxSpeed: 50, powerWatts: 1200, weightKg: 25, price: 579, category: "polyvalente" },
-      { brand: "Kukirin", model: "G4", range: 75, maxSpeed: 70, powerWatts: 2000, weightKg: 37, price: 749, category: "puissante" },
+      { brand: "Kukirin", model: "G4", range: 75, maxSpeed: 70, powerWatts: 2000, weightKg: 37, price: 699, category: "puissante" },
+      { brand: "Kukirin", model: "G2 Master", range: 70, maxSpeed: 60, powerWatts: 2000, weightKg: 33, price: 749, category: "puissante", ratingsOverride: { autonomy: 7, power: 7, comfort: 7, reliability: 6, value: 9, portability: 5, service: 5 } },
+      { brand: "Kukirin", model: "G3 Pro", range: 70, maxSpeed: 65, powerWatts: 2400, weightKg: 39, price: 799, category: "puissante", ratingsOverride: { autonomy: 7, power: 8, comfort: 7, reliability: 6, value: 9, portability: 4, service: 5 } },
+      { brand: "Kukirin", model: "G4 Max", range: 95, maxSpeed: 85, powerWatts: 3200, weightKg: 45, price: 1199, category: "longue autonomie", ratingsOverride: { autonomy: 9, power: 8, comfort: 8, reliability: 6, value: 9, portability: 3, service: 5 } },
 
-      { brand: "Kugoo / Kugoo Kirin", model: "G-Booster", range: 55, maxSpeed: 55, powerWatts: 1600, weightKg: 30, price: 699, category: "polyvalente", market: "Marques alternatives / import", ratingsOverride: { autonomy: 6, power: 6, comfort: 6, reliability: 5, value: 8, portability: 5, service: 4 } },
-      { brand: "Kugoo / Kugoo Kirin", model: "G2 Pro", range: 50, maxSpeed: 50, powerWatts: 1200, weightKg: 26, price: 549, category: "polyvalente", market: "Marques alternatives / import", ratingsOverride: { autonomy: 5, power: 5, comfort: 5, reliability: 5, value: 8, portability: 6, service: 4 } },
-      { brand: "Kugoo / Kugoo Kirin", model: "M5 Pro", range: 60, maxSpeed: 55, powerWatts: 2000, weightKg: 34, price: 699, category: "polyvalente", market: "Marques alternatives / import", ratingsOverride: { autonomy: 6, power: 6, comfort: 6, reliability: 5, value: 9, portability: 5, service: 4 } },
+      { brand: "Kugoo / Kugoo Kirin", model: "G-Booster", range: 55, maxSpeed: 55, powerWatts: 1600, weightKg: 30, price: 649, category: "polyvalente", market: "Marques alternatives / import", ratingsOverride: { autonomy: 6, power: 6, comfort: 6, reliability: 5, value: 8, portability: 5, service: 4 } },
+      { brand: "Kugoo / Kugoo Kirin", model: "G2 Pro", range: 50, maxSpeed: 50, powerWatts: 1200, weightKg: 26, price: 499, category: "polyvalente", market: "Marques alternatives / import", ratingsOverride: { autonomy: 5, power: 5, comfort: 5, reliability: 5, value: 8, portability: 6, service: 4 } },
+      { brand: "Kugoo / Kugoo Kirin", model: "M5 Pro", range: 60, maxSpeed: 55, powerWatts: 2000, weightKg: 34, price: 649, category: "polyvalente", market: "Marques alternatives / import", ratingsOverride: { autonomy: 6, power: 6, comfort: 6, reliability: 5, value: 9, portability: 5, service: 4 } },
 
-      { brand: "Laotie", model: "ES18", range: 85, maxSpeed: 80, powerWatts: 5600, weightKg: 42, price: 1090, category: "puissante", market: "Marques alternatives / import", ratingsOverride: { autonomy: 8, power: 9, comfort: 7, reliability: 5, value: 9, portability: 3, service: 4 } },
-      { brand: "Laotie", model: "TI30", range: 110, maxSpeed: 85, powerWatts: 5600, weightKg: 50, price: 1390, category: "longue autonomie", market: "Marques alternatives / import", ratingsOverride: { autonomy: 9, power: 9, comfort: 7, reliability: 5, value: 9, portability: 2, service: 4 } },
+      { brand: "Laotie", model: "ES18", range: 85, maxSpeed: 80, powerWatts: 5600, weightKg: 42, price: 999, category: "puissante", market: "Marques alternatives / import", ratingsOverride: { autonomy: 8, power: 9, comfort: 7, reliability: 5, value: 9, portability: 3, service: 4 } },
+      { brand: "Laotie", model: "TI30", range: 110, maxSpeed: 85, powerWatts: 5600, weightKg: 50, price: 1290, category: "longue autonomie", market: "Marques alternatives / import", ratingsOverride: { autonomy: 9, power: 9, comfort: 7, reliability: 5, value: 9, portability: 2, service: 4 } },
 
-      { brand: "Langfeite", model: "C1", range: 80, maxSpeed: 70, powerWatts: 3200, weightKg: 35, price: 1290, category: "puissante" },
-      { brand: "Langfeite", model: "GT2", range: 100, maxSpeed: 85, powerWatts: 5600, weightKg: 48, price: 1890, category: "puissante", market: "Marques alternatives / import", ratingsOverride: { autonomy: 9, power: 9, comfort: 7, reliability: 5, value: 8, portability: 3, service: 4 } },
-      { brand: "Langfeite", model: "T8", range: 65, maxSpeed: 60, powerWatts: 2400, weightKg: 32, price: 1090, category: "polyvalente" },
+      { brand: "Langfeite", model: "C1", range: 80, maxSpeed: 70, powerWatts: 3200, weightKg: 35, price: 1190, category: "puissante" },
+      { brand: "Langfeite", model: "GT2", range: 100, maxSpeed: 85, powerWatts: 5600, weightKg: 48, price: 1490, category: "puissante", market: "Marques alternatives / import", ratingsOverride: { autonomy: 9, power: 9, comfort: 7, reliability: 5, value: 8, portability: 3, service: 4 } },
+      { brand: "Langfeite", model: "T8", range: 65, maxSpeed: 60, powerWatts: 2400, weightKg: 32, price: 999, category: "polyvalente" },
 
-      { brand: "Nanrobot", model: "D6+", range: 70, maxSpeed: 65, powerWatts: 2000, weightKg: 35, price: 1390, category: "polyvalente", market: "Marques alternatives / import", ratingsOverride: { autonomy: 7, power: 7, comfort: 7, reliability: 6, value: 7, portability: 4, service: 5 } },
+      { brand: "Nanrobot", model: "D6+", range: 70, maxSpeed: 65, powerWatts: 2000, weightKg: 35, price: 1190, category: "polyvalente", market: "Marques alternatives / import", ratingsOverride: { autonomy: 7, power: 7, comfort: 7, reliability: 6, value: 7, portability: 4, service: 5 } },
 
-      { brand: "Nami", model: "Burn-E 2", range: 95, maxSpeed: 90, powerWatts: 8400, weightKg: 47, price: 3490, category: "puissante" },
-      { brand: "Nami", model: "Burn-E 3", range: 105, maxSpeed: 95, powerWatts: 9000, weightKg: 50, price: 3790, category: "longue autonomie" },
-      { brand: "Nami", model: "Burn-E 3 Max", range: 130, maxSpeed: 105, powerWatts: 12000, weightKg: 53, price: 4890, category: "longue autonomie", ratingsOverride: { autonomy: 10, power: 10, comfort: 10, reliability: 7, value: 7, portability: 2, service: 6 } },
-      { brand: "Nami", model: "Burn-E Max", range: 120, maxSpeed: 100, powerWatts: 10000, weightKg: 49, price: 4490, category: "longue autonomie" },
-      { brand: "Nami", model: "Klima", range: 80, maxSpeed: 70, powerWatts: 5340, weightKg: 36, price: 2199, category: "puissante" },
-      { brand: "Nami", model: "Klima Max", range: 95, maxSpeed: 75, powerWatts: 5340, weightKg: 39, price: 2499, category: "longue autonomie" },
-      { brand: "Nami", model: "Stellar", range: 65, maxSpeed: 55, powerWatts: 2500, weightKg: 30, price: 1590, category: "polyvalente", ratingsOverride: { autonomy: 7, power: 7, comfort: 8, reliability: 7, value: 8, portability: 5, service: 6 } },
+      
+      { brand: "Navee", model: "V50i Pro", range: 50, maxSpeed: 25, powerWatts: 1000, weightKg: 17.5, price: 499, category: "urbaine", ratingsOverride: { autonomy: 5, power: 5, comfort: 6, reliability: 7, value: 8, portability: 8, service: 6 } },
+      { brand: "Navee", model: "S65C", range: 65, maxSpeed: 25, powerWatts: 1000, weightKg: 27, price: 699, category: "polyvalente", ratingsOverride: { autonomy: 7, power: 5, comfort: 8, reliability: 7, value: 8, portability: 5, service: 6 } },
+      { brand: "Navee", model: "ST3 Pro", range: 75, maxSpeed: 25, powerWatts: 1350, weightKg: 25.3, price: 799, category: "polyvalente", ratingsOverride: { autonomy: 8, power: 6, comfort: 8, reliability: 7, value: 8, portability: 5, service: 6 } },
 
-      { brand: "Obarter", model: "D5", range: 90, maxSpeed: 85, powerWatts: 5000, weightKg: 45, price: 1390, category: "puissante", market: "Marques alternatives / import", ratingsOverride: { autonomy: 8, power: 9, comfort: 7, reliability: 5, value: 9, portability: 3, service: 4 } },
-      { brand: "Obarter", model: "X3", range: 70, maxSpeed: 65, powerWatts: 2400, weightKg: 35, price: 999, category: "polyvalente", market: "Marques alternatives / import", ratingsOverride: { autonomy: 7, power: 7, comfort: 6, reliability: 5, value: 8, portability: 4, service: 4 } },
+      { brand: "Nami", model: "Burn-E 2", range: 95, maxSpeed: 90, powerWatts: 8400, weightKg: 47, price: 3290, category: "puissante" },
+      { brand: "Nami", model: "Burn-E 3", range: 105, maxSpeed: 95, powerWatts: 9000, weightKg: 50, price: 3590, category: "longue autonomie" },
+      { brand: "Nami", model: "Burn-E 3 Max", range: 130, maxSpeed: 105, powerWatts: 12000, weightKg: 53, price: 4590, category: "longue autonomie", ratingsOverride: { autonomy: 10, power: 10, comfort: 10, reliability: 7, value: 7, portability: 2, service: 6 } },
+      { brand: "Nami", model: "Burn-E Max", range: 120, maxSpeed: 100, powerWatts: 10000, weightKg: 49, price: 4190, category: "longue autonomie" },
+      { brand: "Nami", model: "Klima", range: 80, maxSpeed: 70, powerWatts: 5340, weightKg: 36, price: 1990, category: "puissante" },
+      { brand: "Nami", model: "Klima Max", range: 95, maxSpeed: 75, powerWatts: 5340, weightKg: 39, price: 2290, category: "longue autonomie" },
+      { brand: "Nami", model: "Stellar", range: 65, maxSpeed: 55, powerWatts: 2500, weightKg: 30, price: 1390, category: "polyvalente", ratingsOverride: { autonomy: 7, power: 7, comfort: 8, reliability: 7, value: 8, portability: 5, service: 6 } },
 
-      { brand: "RoadRunner", model: "RS5", range: 90, maxSpeed: 65, powerWatts: 3600, weightKg: 40, price: 2190, category: "polyvalente", market: "Marques alternatives / import", ratingsOverride: { autonomy: 8, power: 8, comfort: 8, reliability: 7, value: 6, portability: 3, service: 5 } },
+      { brand: "Obarter", model: "D5", range: 90, maxSpeed: 85, powerWatts: 5000, weightKg: 45, price: 1190, category: "puissante", market: "Marques alternatives / import", ratingsOverride: { autonomy: 8, power: 9, comfort: 7, reliability: 5, value: 9, portability: 3, service: 4 } },
+      { brand: "Obarter", model: "X3", range: 70, maxSpeed: 65, powerWatts: 2400, weightKg: 35, price: 899, category: "polyvalente", market: "Marques alternatives / import", ratingsOverride: { autonomy: 7, power: 7, comfort: 6, reliability: 5, value: 8, portability: 4, service: 4 } },
 
-      { brand: "Rovoron", model: "Kullter", range: 80, maxSpeed: 75, powerWatts: 4000, weightKg: 31, price: 1890, category: "puissante", ratingsOverride: { autonomy: 8, power: 8, comfort: 8, reliability: 6, value: 8, portability: 4, service: 5 } },
-      { brand: "Rovoron", model: "Kullter Luxury", range: 95, maxSpeed: 85, powerWatts: 5000, weightKg: 35, price: 2290, category: "puissante", ratingsOverride: { autonomy: 8, power: 9, comfort: 9, reliability: 6, value: 8, portability: 3, service: 5 } },
+      { brand: "RoadRunner", model: "RS5", range: 90, maxSpeed: 65, powerWatts: 3600, weightKg: 40, price: 1890, category: "polyvalente", market: "Marques alternatives / import", ratingsOverride: { autonomy: 8, power: 8, comfort: 8, reliability: 7, value: 6, portability: 3, service: 5 } },
+
+      { brand: "Rovoron", model: "Kullter", range: 80, maxSpeed: 75, powerWatts: 4000, weightKg: 31, price: 1690, category: "puissante", ratingsOverride: { autonomy: 8, power: 8, comfort: 8, reliability: 6, value: 8, portability: 4, service: 5 } },
+      { brand: "Rovoron", model: "Kullter Luxury", range: 95, maxSpeed: 85, powerWatts: 5000, weightKg: 35, price: 1990, category: "puissante", ratingsOverride: { autonomy: 8, power: 9, comfort: 9, reliability: 6, value: 8, portability: 3, service: 5 } },
       { brand: "Rovoron", model: "R7", range: 90, maxSpeed: 70, powerWatts: 3000, weightKg: 49.5, price: 999, category: "polyvalente", ratingsOverride: { autonomy: 8, power: 7, comfort: 8, reliability: 6, value: 9, portability: 3, service: 5 } },
-      { brand: "Rovoron", model: "R7 Pro", range: 125, maxSpeed: 70, powerWatts: 3000, weightKg: 49.6, price: 1499, category: "longue autonomie", ratingsOverride: { autonomy: 9, power: 7, comfort: 8, reliability: 6, value: 9, portability: 3, service: 5 } },
-      { brand: "Rovoron", model: "S7", range: 140, maxSpeed: 100, powerWatts: 7600, weightKg: 49.5, price: 2499, category: "longue autonomie", ratingsOverride: { autonomy: 10, power: 10, comfort: 9, reliability: 6, value: 8, portability: 2, service: 5 } },
+      { brand: "Rovoron", model: "R7 Pro", range: 125, maxSpeed: 70, powerWatts: 3000, weightKg: 49.6, price: 1390, category: "longue autonomie", ratingsOverride: { autonomy: 9, power: 7, comfort: 8, reliability: 6, value: 9, portability: 3, service: 5 } },
+      { brand: "Rovoron", model: "S7", range: 140, maxSpeed: 100, powerWatts: 7600, weightKg: 49.5, price: 2290, category: "longue autonomie", ratingsOverride: { autonomy: 10, power: 10, comfort: 9, reliability: 6, value: 8, portability: 2, service: 5 } },
 
-      { brand: "Segway / Ninebot", model: "F2", range: 40, maxSpeed: 25, powerWatts: 800, weightKg: 17, price: 549, category: "urbaine" },
-      { brand: "Segway / Ninebot", model: "F2 Pro", range: 55, maxSpeed: 25, powerWatts: 900, weightKg: 18.5, price: 649, category: "urbaine" },
-      { brand: "Segway / Ninebot", model: "GT1", range: 70, maxSpeed: 60, powerWatts: 3000, weightKg: 48, price: 2499, category: "puissante" },
-      { brand: "Segway / Ninebot", model: "GT2", range: 90, maxSpeed: 70, powerWatts: 6000, weightKg: 52, price: 3499, category: "puissante" },
-      { brand: "Segway / Ninebot", model: "GT3 Pro", range: 100, maxSpeed: 80, powerWatts: 7000, weightKg: 53, price: 3790, category: "puissante", ratingsOverride: { autonomy: 9, power: 9, comfort: 9, reliability: 9, value: 7, portability: 3, service: 9 } },
-      { brand: "Segway / Ninebot", model: "Max G2", range: 55, maxSpeed: 35, powerWatts: 1000, weightKg: 24, price: 799, category: "urbaine" },
+      { brand: "Segway / Ninebot", model: "F2", range: 40, maxSpeed: 25, powerWatts: 800, weightKg: 17, price: 499, category: "urbaine" },
+      { brand: "Segway / Ninebot", model: "F2 Pro", range: 55, maxSpeed: 25, powerWatts: 900, weightKg: 18.5, price: 599, category: "urbaine" },
+      { brand: "Segway / Ninebot", model: "GT1", range: 70, maxSpeed: 60, powerWatts: 3000, weightKg: 48, price: 2190, category: "puissante" },
+      { brand: "Segway / Ninebot", model: "GT2", range: 90, maxSpeed: 70, powerWatts: 6000, weightKg: 52, price: 2990, category: "puissante" },
+      { brand: "Segway / Ninebot", model: "GT3 Pro", range: 100, maxSpeed: 80, powerWatts: 7000, weightKg: 53, price: 3290, category: "puissante", ratingsOverride: { autonomy: 9, power: 9, comfort: 9, reliability: 9, value: 7, portability: 3, service: 9 } },
+      { brand: "Segway / Ninebot", model: "Max G2", range: 55, maxSpeed: 35, powerWatts: 1000, weightKg: 24, price: 699, category: "urbaine" },
+      { brand: "Segway / Ninebot", model: "F3 Pro", range: 60, maxSpeed: 25, powerWatts: 1200, weightKg: 20, price: 599, category: "urbaine", ratingsOverride: { autonomy: 6, power: 5, comfort: 7, reliability: 9, value: 8, portability: 7, service: 9 } },
+      { brand: "Segway / Ninebot", model: "Max G3", range: 65, maxSpeed: 25, powerWatts: 2000, weightKg: 24.3, price: 799, category: "polyvalente", ratingsOverride: { autonomy: 8, power: 7, comfort: 9, reliability: 9, value: 8, portability: 6, service: 9 } },
+      { brand: "Segway / Ninebot", model: "ZT3 Pro", range: 55, maxSpeed: 25, powerWatts: 1600, weightKg: 29.7, price: 699, category: "polyvalente", ratingsOverride: { autonomy: 6, power: 6, comfort: 8, reliability: 9, value: 8, portability: 5, service: 9 } },
 
-      { brand: "Teverun", model: "Blade Mini", range: 50, maxSpeed: 45, powerWatts: 1600, weightKg: 29, price: 1190, category: "polyvalente" },
-      { brand: "Teverun", model: "Fighter 11", range: 100, maxSpeed: 85, powerWatts: 5000, weightKg: 44, price: 2390, category: "puissante" },
-      { brand: "Teverun", model: "Fighter 11+", range: 105, maxSpeed: 90, powerWatts: 5600, weightKg: 46, price: 2690, category: "longue autonomie" },
-      { brand: "Teverun", model: "Fighter 7260R", range: 200, maxSpeed: 120, powerWatts: 15000, weightKg: 62, price: 3990, category: "longue autonomie", ratingsOverride: { autonomy: 10, power: 10, comfort: 9, reliability: 7, value: 8, portability: 1, service: 6 } },
-      { brand: "Teverun", model: "Fighter Mini", range: 65, maxSpeed: 60, powerWatts: 2950, weightKg: 29, price: 1590, category: "polyvalente" },
-      { brand: "Teverun", model: "Fighter Mini Eco", range: 55, maxSpeed: 50, powerWatts: 1600, weightKg: 27, price: 1290, category: "polyvalente" },
-      { brand: "Teverun", model: "Fighter Mini Pro", range: 75, maxSpeed: 65, powerWatts: 2950, weightKg: 31, price: 1790, category: "puissante" },
-      { brand: "Teverun", model: "Fighter Supreme", range: 110, maxSpeed: 100, powerWatts: 10000, weightKg: 58, price: 3990, category: "longue autonomie" },
-      { brand: "Teverun", model: "Tetra", range: 85, maxSpeed: 75, powerWatts: 4500, weightKg: 38, price: 2290, category: "puissante", ratingsOverride: { autonomy: 8, power: 8, comfort: 9, reliability: 7, value: 8, portability: 4, service: 6 } },
+      { brand: "Teverun", model: "Blade Mini", range: 50, maxSpeed: 45, powerWatts: 1600, weightKg: 29, price: 1090, category: "polyvalente" },
+      { brand: "Teverun", model: "Fighter 11", range: 100, maxSpeed: 85, powerWatts: 5000, weightKg: 44, price: 2190, category: "puissante" },
+      { brand: "Teverun", model: "Fighter 11+", range: 105, maxSpeed: 90, powerWatts: 5600, weightKg: 46, price: 2490, category: "longue autonomie" },
+      { brand: "Teverun", model: "Fighter 7260R", range: 200, maxSpeed: 120, powerWatts: 15000, weightKg: 62, price: 3790, category: "longue autonomie", ratingsOverride: { autonomy: 10, power: 10, comfort: 9, reliability: 7, value: 8, portability: 1, service: 6 } },
+      { brand: "Teverun", model: "Fighter Mini", range: 65, maxSpeed: 60, powerWatts: 2950, weightKg: 29, price: 1490, category: "polyvalente" },
+      { brand: "Teverun", model: "Fighter Mini Eco", range: 55, maxSpeed: 50, powerWatts: 1600, weightKg: 27, price: 1190, category: "polyvalente" },
+      { brand: "Teverun", model: "Fighter Mini Pro", range: 75, maxSpeed: 65, powerWatts: 2950, weightKg: 31, price: 1999, category: "puissante" },
+      { brand: "Teverun", model: "Fighter Supreme", range: 110, maxSpeed: 100, powerWatts: 10000, weightKg: 58, price: 3690, category: "longue autonomie" },
+      { brand: "Teverun", model: "Tetra", range: 85, maxSpeed: 75, powerWatts: 4500, weightKg: 38, price: 2090, category: "puissante", ratingsOverride: { autonomy: 8, power: 8, comfort: 9, reliability: 7, value: 8, portability: 4, service: 6 } },
 
-      { brand: "Toursor", model: "X14", range: 100, maxSpeed: 85, powerWatts: 6000, weightKg: 50, price: 1290, category: "longue autonomie", market: "Marques alternatives / import", ratingsOverride: { autonomy: 9, power: 9, comfort: 7, reliability: 5, value: 9, portability: 2, service: 4 } },
+      { brand: "Toursor", model: "X14", range: 100, maxSpeed: 85, powerWatts: 6000, weightKg: 50, price: 1190, category: "longue autonomie", market: "Marques alternatives / import", ratingsOverride: { autonomy: 9, power: 9, comfort: 7, reliability: 5, value: 9, portability: 2, service: 4 } },
 
-      { brand: "Vsett", model: "Vsett 8", range: 55, maxSpeed: 40, powerWatts: 1200, weightKg: 21, price: 799, category: "urbaine" },
-      { brand: "Vsett", model: "Vsett 9+", range: 60, maxSpeed: 55, powerWatts: 2400, weightKg: 25, price: 1190, category: "polyvalente" },
-      { brand: "Vsett", model: "Vsett 10+", range: 85, maxSpeed: 80, powerWatts: 2800, weightKg: 36, price: 1890, category: "puissante" },
-      { brand: "Vsett", model: "Vsett 11+", range: 95, maxSpeed: 85, powerWatts: 6000, weightKg: 58, price: 2490, category: "puissante" },
+      { brand: "Vsett", model: "Vsett 8", range: 55, maxSpeed: 40, powerWatts: 1200, weightKg: 21, price: 699, category: "urbaine" },
+      { brand: "Vsett", model: "Vsett 9+", range: 60, maxSpeed: 55, powerWatts: 2400, weightKg: 25, price: 1090, category: "polyvalente" },
+      { brand: "Vsett", model: "Vsett 10+", range: 85, maxSpeed: 80, powerWatts: 2800, weightKg: 36, price: 1690, category: "puissante" },
+      { brand: "Vsett", model: "Vsett 11+", range: 95, maxSpeed: 85, powerWatts: 6000, weightKg: 58, price: 2290, category: "puissante" },
 
-      { brand: "Weped", model: "Dark Knight", range: 110, maxSpeed: 100, powerWatts: 12000, weightKg: 55, price: 5990, category: "longue autonomie", ratingsOverride: { autonomy: 9, power: 10, comfort: 8, reliability: 6, value: 5, portability: 1, service: 4 } },
-      { brand: "Weped", model: "Fold", range: 80, maxSpeed: 80, powerWatts: 5400, weightKg: 42, price: 3290, category: "puissante", ratingsOverride: { autonomy: 8, power: 9, comfort: 7, reliability: 6, value: 5, portability: 3, service: 4 } },
-      { brand: "Weped", model: "SST", range: 120, maxSpeed: 110, powerWatts: 12000, weightKg: 65, price: 6990, category: "longue autonomie", ratingsOverride: { autonomy: 10, power: 10, comfort: 8, reliability: 6, value: 4, portability: 1, service: 4 } },
+      { brand: "Weped", model: "Dark Knight", range: 110, maxSpeed: 100, powerWatts: 12000, weightKg: 55, price: 5490, category: "longue autonomie", ratingsOverride: { autonomy: 9, power: 10, comfort: 8, reliability: 6, value: 5, portability: 1, service: 4 } },
+      { brand: "Weped", model: "Fold", range: 80, maxSpeed: 80, powerWatts: 5400, weightKg: 42, price: 2990, category: "puissante", ratingsOverride: { autonomy: 8, power: 9, comfort: 7, reliability: 6, value: 5, portability: 3, service: 4 } },
+      { brand: "Weped", model: "SST", range: 120, maxSpeed: 110, powerWatts: 12000, weightKg: 65, price: 6490, category: "longue autonomie", ratingsOverride: { autonomy: 10, power: 10, comfort: 8, reliability: 6, value: 4, portability: 1, service: 4 } },
 
-      { brand: "Xiaomi", model: "M365", range: 25, maxSpeed: 25, powerWatts: 500, weightKg: 12.5, price: 350, category: "urbaine" },
-      { brand: "Xiaomi", model: "Pro 2", range: 40, maxSpeed: 25, powerWatts: 600, weightKg: 14.2, price: 499, category: "urbaine" },
-      { brand: "Xiaomi", model: "4 Ultra", range: 45, maxSpeed: 25, powerWatts: 940, weightKg: 25, price: 899, category: "urbaine" },
+      { brand: "Xiaomi", model: "M365", range: 25, maxSpeed: 25, powerWatts: 500, weightKg: 12.5, price: 300, category: "urbaine" },
+      { brand: "Xiaomi", model: "Pro 2", range: 40, maxSpeed: 25, powerWatts: 600, weightKg: 14.2, price: 449, category: "urbaine" },
+      { brand: "Xiaomi", model: "4 Ultra", range: 45, maxSpeed: 25, powerWatts: 940, weightKg: 25, price: 499, category: "urbaine" },
+      { brand: "Xiaomi", model: "5 Pro", range: 55, maxSpeed: 25, powerWatts: 1000, weightKg: 22, price: 549, category: "urbaine", ratingsOverride: { autonomy: 6, power: 5, comfort: 7, reliability: 8, value: 8, portability: 7, service: 8 } },
+      { brand: "Xiaomi", model: "5 Max", range: 60, maxSpeed: 25, powerWatts: 1000, weightKg: 22.3, price: 699, category: "polyvalente", ratingsOverride: { autonomy: 7, power: 5, comfort: 8, reliability: 8, value: 7, portability: 7, service: 8 } },
 
-      { brand: "Yume", model: "Hawk", range: 80, maxSpeed: 80, powerWatts: 6000, weightKg: 44, price: 1890, category: "puissante", market: "Marques alternatives / import", ratingsOverride: { autonomy: 8, power: 9, comfort: 7, reliability: 5, value: 8, portability: 3, service: 4 } },
-      { brand: "Yume", model: "Predator", range: 110, maxSpeed: 95, powerWatts: 8000, weightKg: 58, price: 2590, category: "longue autonomie" },
-      { brand: "Yume", model: "Y11+", range: 95, maxSpeed: 85, powerWatts: 6000, weightKg: 50, price: 1690, category: "puissante", market: "Marques alternatives / import", ratingsOverride: { autonomy: 8, power: 9, comfort: 7, reliability: 5, value: 8, portability: 2, service: 4 } }
+      { brand: "Yume", model: "Hawk", range: 80, maxSpeed: 80, powerWatts: 6000, weightKg: 44, price: 1690, category: "puissante", market: "Marques alternatives / import", ratingsOverride: { autonomy: 8, power: 9, comfort: 7, reliability: 5, value: 8, portability: 3, service: 4 } },
+      { brand: "Yume", model: "Predator", range: 110, maxSpeed: 95, powerWatts: 8000, weightKg: 58, price: 2390, category: "longue autonomie" },
+      { brand: "Yume", model: "Y11+", range: 95, maxSpeed: 85, powerWatts: 6000, weightKg: 50, price: 1490, category: "puissante", market: "Marques alternatives / import", ratingsOverride: { autonomy: 8, power: 9, comfort: 7, reliability: 5, value: 8, portability: 2, service: 4 } }
     ];
 
     const speedFactors = { 25: 1, 45: 0.95, 55: 0.9 };
@@ -1787,6 +1845,65 @@
       `;
     }
 
+    function maintenanceInfo(scooter) {
+      const compactBrands = ["Xiaomi", "Segway / Ninebot", "E-Twow", "Navee"];
+      const simpleValueBrands = ["Kukirin", "Joyor", "Inmotion", "Vsett"];
+      const highMaintenanceBrands = ["Weped"];
+      const highMaintenanceModels = /Thunder|Storm|Ultra|X Limited|Alien|Sonic|Burn-E|Wolf King|Wolf Warrior|Fighter 7260R|Fighter Supreme|RS|SST|Dark Knight/i;
+      const isImport = scooter.market === "Marques alternatives / import";
+      const isVeryComplex = scooter.weightKg >= 48 || scooter.powerWatts >= 6500 || scooter.maxSpeed >= 90 || highMaintenanceModels.test(scooter.model);
+      const isSporty = scooter.weightKg >= 38 || scooter.powerWatts >= 3500 || scooter.maxSpeed >= 70;
+
+      if (isImport) {
+        return {
+          tone: "check",
+          label: "⚠️ SAV / pièces à vérifier",
+          detail: "Marque import ou pièces parfois difficiles à obtenir."
+        };
+      }
+
+      if (highMaintenanceBrands.includes(scooter.brand) || isVeryComplex) {
+        return {
+          tone: "high",
+          label: "🔴 Entretien élevé",
+          detail: "Pneus, freins, pièces ou entretien souvent coûteux."
+        };
+      }
+
+      if (compactBrands.includes(scooter.brand) && !isSporty) {
+        return {
+          tone: "economic",
+          label: "🟢 Entretien économique",
+          detail: "Pièces simples et peu coûteuses."
+        };
+      }
+
+      if (simpleValueBrands.includes(scooter.brand) && scooter.weightKg < 36 && scooter.powerWatts < 3200) {
+        return {
+          tone: "economic",
+          label: "🟢 Entretien économique",
+          detail: "Pièces assez courantes et coût contenu."
+        };
+      }
+
+      return {
+        tone: "medium",
+        label: "🟠 Entretien moyen",
+        detail: "Certaines pièces peuvent coûter plus cher."
+      };
+    }
+
+    function maintenanceBlock(scooter) {
+      const maintenance = maintenanceInfo(scooter);
+
+      return `
+        <div class="maintenance-info maintenance-${maintenance.tone}">
+          <strong>${maintenance.label}</strong>
+          <span>${maintenance.detail}</span>
+        </div>
+      `;
+    }
+
     function smartReasons(scooter, totalDistance, speed, budget, usageType, riderWeight) {
       const remaining = ((scooter.estimatedRange - totalDistance) / scooter.estimatedRange) * 100;
       const reasons = [];
@@ -2011,6 +2128,7 @@
             <div class="rating-pill"><span>${icon("reliability")} Fiabilité</span>${scoreBadge(scooter.ratings.reliability)}</div>
             <div class="rating-pill"><span>${icon("price")} Qualité/prix</span>${scoreBadge(scooter.ratings.value)}</div>
           </div>
+          ${maintenanceBlock(scooter)}
           ${heavyWarning(scooter)}
           ${importNotice(scooter)}
         </article>
