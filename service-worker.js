@@ -1,5 +1,5 @@
-// Change only this value on each release: v1-23, v1-24, v1-25...
-const CACHE_NAME = "trouve-ta-trott-v1-23";
+// Change only this value on each release: v1-24, v1-25, v1-26...
+const CACHE_NAME = "trouve-ta-trott-v1-24";
 
 const APP_SHELL = [
   "./",
@@ -7,6 +7,7 @@ const APP_SHELL = [
   "./manifest.json",
   "./service-worker.js",
   "./assets/trouve-ta-trott-watt-the-trott.png",
+  "./assets/trouve-ta-trott-watt-the-trott.webp",
   "./icons/icon.svg",
   "./icons/icon-192.png",
   "./icons/icon-512.png"
