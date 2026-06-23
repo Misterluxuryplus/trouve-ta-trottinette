@@ -1280,19 +1280,19 @@
     </section>
 
     <a class="community-link" id="communityButton" href="https://www.facebook.com/groups/843618944246747?locale=fr_FR" target="_blank" rel="noopener noreferrer">
-      🔥 Rejoindre la communauté
+      🔥 Rejoindre Watt The Trott
     </a>
 
     <footer class="creator-signature" aria-label="Signature">
-      <strong>🛴 Créé par Mister Luxuryplus</strong>
-      <span>Team Dualtron Victor Luxury Plus</span>
+      <strong>🛴 Watt The Trott</strong>
+      <span>Créé par Mister Luxuryplus</span>
     </footer>
 
-    <div class="app-version" id="appVersion">🛴 Version 1.10</div>
+    <div class="app-version" id="appVersion">🛴 Version 1.12</div>
   </main>
 
   <script>
-    const APP_VERSION = "1.10";
+    const APP_VERSION = "1.12";
 
     const scooters = [
       { brand: "Angwatt", model: "CS1", range: 55, maxSpeed: 55, powerWatts: 2400, weightKg: 34, price: 849, category: "polyvalente" },
@@ -2370,6 +2370,21 @@
         navigator.serviceWorker.register("./service-worker.js", { updateViaCache: "none" })
           .then((registration) => {
             registration.update();
+
+            if (registration.waiting) {
+              registration.waiting.postMessage({ type: "SKIP_WAITING" });
+            }
+
+            registration.addEventListener("updatefound", () => {
+              const newWorker = registration.installing;
+              if (!newWorker) return;
+
+              newWorker.addEventListener("statechange", () => {
+                if (newWorker.state === "installed" && navigator.serviceWorker.controller) {
+                  newWorker.postMessage({ type: "SKIP_WAITING" });
+                }
+              });
+            });
           })
           .catch(() => {});
       });
