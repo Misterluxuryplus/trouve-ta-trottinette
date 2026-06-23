@@ -1,0 +1,2379 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Autonomie Trott</title>
+  <meta name="description" content="Trouve la trottinette électrique idéale selon ton trajet, ton budget et ton usage." />
+  <meta name="theme-color" content="#0f172a" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="Autonomie Trott" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-6VRKQ8S6E4"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+    gtag("config", "G-6VRKQ8S6E4");
+  </script>
+
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #050814;
+      --panel: rgba(15, 23, 42, 0.88);
+      --panel-strong: rgba(2, 6, 23, 0.94);
+      --line: rgba(148, 163, 184, 0.18);
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --blue: #38bdf8;
+      --blue-strong: #0ea5e9;
+      --orange: #f97316;
+      --orange-soft: #fed7aa;
+      --yellow: #facc15;
+      --shadow: 0 24px 70px rgba(0, 0, 0, 0.48);
+      --glow-blue: 0 0 28px rgba(56, 189, 248, 0.18);
+      --glow-orange: 0 0 28px rgba(249, 115, 22, 0.18);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      padding: 14px;
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at 14% -4%, rgba(56, 189, 248, 0.28), transparent 28%),
+        radial-gradient(circle at 88% 12%, rgba(249, 115, 22, 0.22), transparent 30%),
+        radial-gradient(circle at 50% 106%, rgba(14, 165, 233, 0.13), transparent 32%),
+        linear-gradient(165deg, #050814, #0f172a 48%, #030712);
+      background-attachment: fixed;
+    }
+
+    .app {
+      width: min(100%, 520px);
+      margin: 0 auto;
+      padding-bottom: 28px;
+    }
+
+    .hero,
+    .panel,
+    .result,
+    .note,
+    .install-prompt {
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 26px 20px 24px;
+      text-align: center;
+      background:
+        linear-gradient(145deg, rgba(56, 189, 248, 0.22), rgba(249, 115, 22, 0.13)),
+        rgba(15, 23, 42, 0.92);
+      box-shadow: var(--shadow), var(--glow-blue);
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+      transform: translateX(-80%);
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 14px;
+      padding: 7px 12px;
+      border: 1px solid rgba(56, 189, 248, 0.28);
+      border-radius: 999px;
+      color: #dbeafe;
+      background: rgba(2, 6, 23, 0.38);
+      box-shadow: inset 0 0 18px rgba(56, 189, 248, 0.08);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .hero-mark {
+      display: grid;
+      place-items: center;
+      width: 66px;
+      height: 66px;
+      margin: 0 auto 14px;
+      border: 1px solid rgba(249, 115, 22, 0.42);
+      border-radius: 22px;
+      color: #07111f;
+      background:
+        radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.35), transparent 30%),
+        linear-gradient(135deg, var(--orange), var(--blue));
+      box-shadow:
+        0 0 30px rgba(249, 115, 22, 0.24),
+        0 16px 38px rgba(56, 189, 248, 0.18);
+      font-size: 32px;
+      font-weight: 900;
+    }
+
+    h1 {
+      max-width: 340px;
+      margin: 0 auto;
+      color: #f8fafc;
+      font-size: clamp(31px, 8.8vw, 43px);
+      line-height: 1;
+      letter-spacing: 0;
+      text-transform: uppercase;
+      text-align: center;
+      text-shadow:
+        0 0 28px rgba(56, 189, 248, 0.34),
+        0 0 38px rgba(249, 115, 22, 0.18);
+    }
+
+    .subtitle {
+      margin: 12px auto 0;
+      color: #e0f2fe;
+      font-size: 14px;
+      font-weight: 800;
+      line-height: 1.4;
+    }
+
+    .note {
+      margin-top: 14px;
+      padding: 15px;
+      color: var(--orange-soft);
+      background:
+        linear-gradient(135deg, rgba(249, 115, 22, 0.13), rgba(56, 189, 248, 0.06)),
+        rgba(15, 23, 42, 0.74);
+      font-size: 13px;
+      line-height: 1.45;
+      box-shadow: none;
+    }
+
+    .advice-note {
+      margin-top: 16px;
+      padding: 16px;
+      color: #e0f2fe;
+      background:
+        radial-gradient(circle at 12% 0%, rgba(56, 189, 248, 0.18), transparent 34%),
+        linear-gradient(135deg, rgba(249, 115, 22, 0.12), rgba(56, 189, 248, 0.08)),
+        rgba(15, 23, 42, 0.78);
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      border-radius: 22px;
+      box-shadow: 0 18px 40px rgba(2, 6, 23, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .advice-note h2 {
+      margin: 0 0 11px;
+      color: #fed7aa;
+      font-size: 17px;
+      line-height: 1.2;
+    }
+
+    .advice-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 7px;
+      margin: 10px 0 12px;
+    }
+
+    .advice-chip {
+      padding: 8px 9px;
+      border: 1px solid rgba(148, 163, 184, 0.13);
+      border-radius: 14px;
+      color: #f8fafc;
+      background: rgba(255, 255, 255, 0.055);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .advice-note p {
+      margin: 9px 0 0;
+      color: #cbd5e1;
+    }
+
+    .advice-note strong {
+      color: #fff7ed;
+    }
+
+    .public-speed {
+      color: #fde68a;
+      background:
+        linear-gradient(135deg, rgba(250, 204, 21, 0.12), rgba(249, 115, 22, 0.08)),
+        rgba(15, 23, 42, 0.74);
+      border-color: rgba(250, 204, 21, 0.28);
+    }
+
+    .panel {
+      margin-top: 16px;
+      padding: 14px;
+      display: grid;
+      gap: 12px;
+      background:
+        linear-gradient(180deg, rgba(56, 189, 248, 0.07), transparent 32%),
+        rgba(15, 23, 42, 0.9);
+    }
+
+    .row {
+      display: grid;
+      gap: 12px;
+    }
+
+    .question-card {
+      position: relative;
+      overflow: hidden;
+      padding: 15px;
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      border-radius: 24px;
+      background:
+        linear-gradient(145deg, rgba(56, 189, 248, 0.105), rgba(249, 115, 22, 0.07)),
+        rgba(2, 6, 23, 0.5);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.05),
+        0 12px 28px rgba(2, 6, 23, 0.22);
+    }
+
+    .question-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.12), transparent 42%, rgba(249, 115, 22, 0.1));
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    label,
+    .question-title {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 10px;
+      color: #f8fafc;
+      font-size: 15.5px;
+      font-weight: 900;
+      line-height: 1.25;
+    }
+
+    .question-icon {
+      flex: none;
+      display: grid;
+      place-items: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 12px;
+      background: rgba(56, 189, 248, 0.12);
+      box-shadow: inset 0 0 18px rgba(56, 189, 248, 0.08);
+    }
+
+    input {
+      position: relative;
+      width: 100%;
+      min-height: 58px;
+      padding: 0 16px;
+      border: 1px solid rgba(148, 163, 184, 0.26);
+      border-radius: 18px;
+      outline: none;
+      color: white;
+      background: rgba(15, 23, 42, 0.9);
+      font-size: 17px;
+      font-weight: 800;
+    }
+
+    input:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.16), var(--glow-blue);
+    }
+
+    .distance-help {
+      display: grid;
+      gap: 5px;
+      margin-top: 10px;
+      color: #93c5fd;
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .choice-grid {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+
+    .choice-grid.three {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .choice input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .choice span {
+      min-height: 48px;
+      display: grid;
+      place-items: center;
+      padding: 8px;
+      border: 1px solid rgba(148, 163, 184, 0.22);
+      border-radius: 16px;
+      color: #cbd5e1;
+      background: rgba(15, 23, 42, 0.9);
+      font-size: 13px;
+      font-weight: 800;
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+    }
+
+    .choice input:checked + span {
+      color: #07111f;
+      border-color: transparent;
+      background: linear-gradient(135deg, var(--blue), var(--orange));
+      box-shadow: 0 10px 22px rgba(56, 189, 248, 0.16);
+      transform: translateY(-1px);
+    }
+
+    button,
+    .community-link {
+      width: 100%;
+      min-height: 58px;
+      border: 0;
+      border-radius: 20px;
+      color: white;
+      background: linear-gradient(135deg, var(--orange), #0284c7);
+      box-shadow: 0 16px 34px rgba(249, 115, 22, 0.24), var(--glow-blue);
+      font-size: 17px;
+      font-weight: 900;
+      cursor: pointer;
+      user-select: none;
+      transform: translateZ(0);
+      will-change: transform;
+      transition: transform 0.2s ease, filter 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+
+    button {
+      margin-top: 4px;
+    }
+
+    button:hover,
+    .community-link:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.06);
+      box-shadow: 0 18px 38px rgba(249, 115, 22, 0.3), var(--glow-blue);
+    }
+
+    button:active,
+    .community-link:active {
+      transform: translateY(1px) scale(0.985);
+      filter: brightness(0.98);
+    }
+
+    button:focus-visible,
+    .community-link:focus-visible,
+    .why-toggle:focus-visible {
+      outline: 2px solid rgba(56, 189, 248, 0.7);
+      outline-offset: 3px;
+    }
+
+    button.secondary {
+      margin-top: 16px;
+      color: #fff7ed;
+      background: linear-gradient(135deg, rgba(249, 115, 22, 0.95), rgba(14, 165, 233, 0.95));
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      box-shadow: 0 14px 28px rgba(14, 165, 233, 0.18), 0 14px 28px rgba(249, 115, 22, 0.14);
+    }
+
+    .result {
+      display: none;
+      margin-top: 18px;
+      padding: 14px;
+      scroll-margin-top: 12px;
+      background:
+        linear-gradient(180deg, rgba(56, 189, 248, 0.16), transparent 42%),
+        radial-gradient(circle at 92% 0%, rgba(249, 115, 22, 0.14), transparent 32%),
+        rgba(2, 6, 23, 0.96);
+    }
+
+    .result.is-visible {
+      animation: resultAppear 0.42s ease both;
+    }
+
+    @keyframes resultAppear {
+      from {
+        opacity: 0;
+        transform: translateY(14px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .result-title {
+      text-align: center;
+      color: #e0f2fe;
+      font-size: 13px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .result-summary {
+      margin-top: 12px;
+      padding: 14px;
+      border: 1px solid rgba(56, 189, 248, 0.18);
+      border-radius: 18px;
+      color: #e0f2fe;
+      background:
+        linear-gradient(135deg, rgba(56, 189, 248, 0.11), rgba(249, 115, 22, 0.08)),
+        rgba(15, 23, 42, 0.7);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+      text-align: center;
+      font-size: 14px;
+      line-height: 1.4;
+      font-weight: 800;
+    }
+
+    .best-card,
+    .alt-card,
+    .compare-card {
+      display: grid;
+      gap: 14px;
+      border: 1px solid rgba(148, 163, 184, 0.16);
+      border-radius: 24px;
+      background:
+        linear-gradient(145deg, rgba(56, 189, 248, 0.09), rgba(249, 115, 22, 0.07)),
+        #020617;
+      box-shadow: 0 16px 42px rgba(0, 0, 0, 0.26);
+    }
+
+    .best-card {
+      position: relative;
+      overflow: hidden;
+      margin-top: 14px;
+      padding: 24px 18px 21px;
+      border-color: rgba(56, 189, 248, 0.48);
+      background:
+        radial-gradient(circle at 48% 0%, rgba(56, 189, 248, 0.31), transparent 48%),
+        radial-gradient(circle at 95% 18%, rgba(249, 115, 22, 0.24), transparent 32%),
+        linear-gradient(145deg, rgba(56, 189, 248, 0.16), rgba(249, 115, 22, 0.12)),
+        #020617;
+      box-shadow:
+        0 26px 64px rgba(0, 0, 0, 0.42),
+        0 0 34px rgba(56, 189, 248, 0.18),
+        0 0 28px rgba(249, 115, 22, 0.14);
+    }
+
+    .best-card::after {
+      content: "";
+      position: absolute;
+      inset: auto 18px 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.5), rgba(249, 115, 22, 0.45), transparent);
+    }
+
+    .future-mode {
+      border-color: rgba(250, 204, 21, 0.35);
+      background:
+        linear-gradient(180deg, rgba(250, 204, 21, 0.11), transparent 44%),
+        rgba(2, 6, 23, 0.96);
+    }
+
+    .honest-message {
+      margin-top: 12px;
+      padding: 16px;
+      border-radius: 20px;
+      color: #fde68a;
+      background: rgba(250, 204, 21, 0.12);
+      border: 1px solid rgba(250, 204, 21, 0.34);
+      text-align: center;
+      line-height: 1.45;
+      font-weight: 800;
+    }
+
+    .heavy-warning {
+      padding: 12px;
+      border: 1px solid rgba(250, 204, 21, 0.42);
+      border-radius: 16px;
+      color: #fde68a;
+      background:
+        linear-gradient(135deg, rgba(250, 204, 21, 0.14), rgba(249, 115, 22, 0.08)),
+        rgba(15, 23, 42, 0.76);
+      font-size: 12px;
+      line-height: 1.4;
+      font-weight: 800;
+      text-align: left;
+    }
+
+    .import-notice {
+      padding: 10px 11px;
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      border-radius: 14px;
+      color: #bae6fd;
+      background:
+        linear-gradient(135deg, rgba(56, 189, 248, 0.1), rgba(249, 115, 22, 0.06)),
+        rgba(15, 23, 42, 0.72);
+      font-size: 11.5px;
+      line-height: 1.35;
+      font-weight: 800;
+      text-align: left;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      width: fit-content;
+      padding: 6px 10px;
+      border-radius: 999px;
+      color: #07111f;
+      background: linear-gradient(135deg, var(--blue), var(--orange));
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .best-card .badge {
+      padding: 7px 12px;
+      color: #fff7ed;
+      background:
+        linear-gradient(135deg, rgba(249, 115, 22, 0.92), rgba(14, 165, 233, 0.9));
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      box-shadow: 0 0 20px rgba(56, 189, 248, 0.16), 0 0 16px rgba(249, 115, 22, 0.14);
+    }
+
+    .ui-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.15em;
+      height: 1.15em;
+      color: currentColor;
+      vertical-align: -0.18em;
+    }
+
+    .ui-icon svg {
+      width: 100%;
+      height: 100%;
+      stroke: currentColor;
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+    }
+
+    .brand {
+      margin-top: 6px;
+      color: #7dd3fc;
+      font-size: 13px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .model {
+      margin-top: 3px;
+      font-size: clamp(25px, 7vw, 33px);
+      line-height: 1.05;
+      font-weight: 900;
+    }
+
+    .reason {
+      margin: 4px 0 0;
+      color: #e2e8f0;
+      font-size: 14px;
+      line-height: 1.35;
+      font-weight: 700;
+    }
+
+    .why-box {
+      padding: 11px;
+      border: 1px solid rgba(56, 189, 248, 0.16);
+      border-radius: 16px;
+      background: rgba(15, 23, 42, 0.66);
+    }
+
+    .why-toggle {
+      min-height: 44px;
+      margin: 0;
+      border-radius: 14px;
+      color: #fff7ed;
+      background:
+        linear-gradient(135deg, rgba(249, 115, 22, 0.26), rgba(56, 189, 248, 0.2)),
+        rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(249, 115, 22, 0.24);
+      box-shadow: none;
+      font-size: 14px;
+    }
+
+    .why-toggle:hover {
+      border-color: rgba(56, 189, 248, 0.32);
+      box-shadow: 0 10px 22px rgba(14, 165, 233, 0.11);
+    }
+
+    .why-content {
+      display: grid;
+      grid-template-rows: 0fr;
+      opacity: 0;
+      transition: grid-template-rows 0.22s ease, opacity 0.22s ease, margin-top 0.22s ease;
+      margin-top: 0;
+    }
+
+    .why-box.open .why-content {
+      grid-template-rows: 1fr;
+      opacity: 1;
+      margin-top: 10px;
+    }
+
+    .why-content-inner {
+      overflow: hidden;
+    }
+
+    .why-title {
+      display: block;
+      color: #fed7aa;
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .model-summary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: fit-content;
+      max-width: 100%;
+      padding: 8px 11px;
+      border: 1px solid rgba(56, 189, 248, 0.18);
+      border-radius: 999px;
+      color: #e0f2fe;
+      background:
+        linear-gradient(135deg, rgba(56, 189, 248, 0.11), rgba(249, 115, 22, 0.08)),
+        rgba(15, 23, 42, 0.72);
+      font-size: 12px;
+      font-weight: 900;
+      line-height: 1.2;
+    }
+
+    .choice-summary {
+      margin: 5px 0 0;
+      color: #e0f2fe;
+      font-size: 13.5px;
+      line-height: 1.45;
+      font-weight: 850;
+    }
+
+    .strength-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .strength-badge {
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      max-width: 100%;
+      padding: 7px 9px;
+      border: 1px solid rgba(56, 189, 248, 0.16);
+      border-radius: 999px;
+      color: #dbeafe;
+      background:
+        linear-gradient(135deg, rgba(56, 189, 248, 0.11), rgba(249, 115, 22, 0.08)),
+        rgba(15, 23, 42, 0.72);
+      font-size: 11.5px;
+      font-weight: 900;
+      line-height: 1.1;
+    }
+
+    .comparison-note {
+      margin-top: 10px;
+      padding: 10px;
+      border: 1px solid rgba(249, 115, 22, 0.18);
+      border-radius: 14px;
+      color: #fed7aa;
+      background: rgba(249, 115, 22, 0.08);
+      font-size: 12px;
+      line-height: 1.35;
+      font-weight: 800;
+      text-align: left;
+    }
+
+    .reason-list {
+      display: grid;
+      gap: 8px;
+      margin-top: 11px;
+    }
+
+    .reason-chip {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 10px 11px;
+      border: 1px solid rgba(56, 189, 248, 0.13);
+      border-radius: 14px;
+      color: #dbeafe;
+      background: rgba(255, 255, 255, 0.045);
+      font-size: 12.2px;
+      line-height: 1.35;
+      font-weight: 800;
+      text-align: left;
+    }
+
+    .reason-chip span {
+      flex: none;
+      color: #22c55e;
+    }
+
+    .result-lines {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 9px;
+    }
+
+    .result-line {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 13px 12px;
+      border: 1px solid rgba(148, 163, 184, 0.12);
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.06);
+      text-align: left;
+    }
+
+    .result-line span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .result-line strong {
+      display: block;
+      margin-top: 0;
+      font-size: 17px;
+      color: #f8fafc;
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .score-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 54px;
+      padding: 6px 9px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .score-good {
+      color: #bbf7d0;
+      background: rgba(34, 197, 94, 0.16);
+      border-color: rgba(34, 197, 94, 0.32);
+    }
+
+    .score-mid {
+      color: #fed7aa;
+      background: rgba(249, 115, 22, 0.16);
+      border-color: rgba(249, 115, 22, 0.32);
+    }
+
+    .score-low {
+      color: #fecaca;
+      background: rgba(239, 68, 68, 0.16);
+      border-color: rgba(239, 68, 68, 0.32);
+    }
+
+    .alternatives {
+      display: grid;
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .alt-card {
+      padding: 18px 16px;
+      border-color: rgba(249, 115, 22, 0.18);
+      background:
+        linear-gradient(145deg, rgba(56, 189, 248, 0.06), rgba(249, 115, 22, 0.08)),
+        rgba(2, 6, 23, 0.94);
+    }
+
+    .card-head {
+      display: grid;
+      gap: 6px;
+    }
+
+    .alt-card .card-title {
+      display: grid;
+      gap: 5px;
+    }
+
+    .alt-card .brand {
+      margin-top: 8px;
+    }
+
+    .alt-card .model {
+      font-size: 24px;
+    }
+
+    .compare-card {
+      width: 100%;
+      min-width: 0;
+      max-width: 100%;
+      padding: 14px;
+      background:
+        linear-gradient(145deg, rgba(15, 23, 42, 0.94), rgba(2, 6, 23, 0.94)),
+        #020617;
+    }
+
+    .alt-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    .pill {
+      flex: none;
+      padding: 6px 8px;
+      border-radius: 999px;
+      color: #fed7aa;
+      background: rgba(249, 115, 22, 0.13);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .compare {
+      display: none;
+      width: 100%;
+      max-width: 100%;
+      gap: 14px;
+      margin-top: 16px;
+      padding: 4px 8px 14px 0;
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(56, 189, 248, 0.45) rgba(15, 23, 42, 0.6);
+    }
+
+    .compare.is-open {
+      display: flex;
+      flex-wrap: nowrap;
+    }
+
+    .compare-card {
+      flex: 0 0 92%;
+      max-width: 92%;
+      padding: 14px;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+    }
+
+    .compare-hint {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin: 12px auto 0;
+      padding: 9px 12px;
+      width: fit-content;
+      max-width: 100%;
+      border: 1px solid rgba(56, 189, 248, 0.18);
+      border-radius: 999px;
+      color: #dbeafe;
+      background:
+        linear-gradient(135deg, rgba(56, 189, 248, 0.12), rgba(249, 115, 22, 0.08)),
+        rgba(15, 23, 42, 0.78);
+      font-size: 12px;
+      font-weight: 900;
+      text-align: center;
+    }
+
+    .compare-hint.is-visible {
+      display: flex;
+    }
+
+    .swipe-arrow {
+      display: inline-block;
+      color: #fed7aa;
+      animation: swipeNudge 1.25s ease-in-out infinite;
+    }
+
+    @keyframes swipeNudge {
+      0%, 100% {
+        transform: translateX(-3px);
+        opacity: 0.72;
+      }
+      50% {
+        transform: translateX(5px);
+        opacity: 1;
+      }
+    }
+
+    .compare-card h3 {
+      margin: 0 0 10px;
+      font-size: 17px;
+      line-height: 1.15;
+      overflow-wrap: anywhere;
+    }
+
+    .rating-grid {
+      display: grid;
+      gap: 8px;
+    }
+
+    .rating-pill,
+    .rating-line {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 8px 10px;
+      border: 1px solid rgba(148, 163, 184, 0.14);
+      border-radius: 14px;
+      color: #dbeafe;
+      background: rgba(15, 23, 42, 0.72);
+      font-size: 12px;
+      font-weight: 900;
+      min-width: 0;
+    }
+
+    .rating-pill .score-badge,
+    .rating-line .score-badge {
+      flex: none;
+      margin-left: auto;
+    }
+
+    .rating-pill span,
+    .rating-line span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      min-width: 0;
+      overflow-wrap: anywhere;
+    }
+
+    .rating-pill strong,
+    .rating-line strong {
+      flex: none;
+      white-space: nowrap;
+    }
+
+    .price-line {
+      width: 100%;
+      margin-top: 0;
+      border-radius: 16px;
+      background: rgba(249, 115, 22, 0.11);
+      color: #fed7aa;
+    }
+
+    .maintenance-info {
+      display: grid;
+      gap: 4px;
+      padding: 10px 11px;
+      border: 1px solid rgba(148, 163, 184, 0.14);
+      border-radius: 14px;
+      background: rgba(15, 23, 42, 0.72);
+      color: #dbeafe;
+      font-size: 12px;
+      line-height: 1.35;
+      font-weight: 850;
+    }
+
+    .maintenance-info strong {
+      font-size: 12.5px;
+      color: #f8fafc;
+    }
+
+    .maintenance-info span {
+      color: #cbd5e1;
+      font-weight: 750;
+    }
+
+    .maintenance-mini {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 10px;
+      padding: 9px 10px;
+      border: 1px solid rgba(148, 163, 184, 0.14);
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.72);
+      color: #e5e7eb;
+      font-size: 12px;
+      font-weight: 900;
+      text-align: center;
+    }
+
+    .maintenance-economic {
+      border-color: rgba(34, 197, 94, 0.32);
+      background: rgba(34, 197, 94, 0.11);
+    }
+
+    .maintenance-medium {
+      border-color: rgba(249, 115, 22, 0.34);
+      background: rgba(249, 115, 22, 0.12);
+    }
+
+    .maintenance-high {
+      border-color: rgba(239, 68, 68, 0.34);
+      background: rgba(239, 68, 68, 0.12);
+    }
+
+    .maintenance-check {
+      border-color: rgba(250, 204, 21, 0.36);
+      background: rgba(250, 204, 21, 0.11);
+    }
+
+    @media (min-width: 760px) {
+      .compare.is-open {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        overflow-x: visible;
+      }
+
+      .compare-card {
+        flex-basis: auto;
+        max-width: 100%;
+      }
+
+      .compare-hint {
+        display: none !important;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.001ms !important;
+      }
+    }
+
+    .community-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 18px;
+      text-decoration: none;
+    }
+
+    .creator-signature {
+      margin-top: 18px;
+      padding: 16px 10px 4px;
+      color: rgba(203, 213, 225, 0.78);
+      text-align: center;
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .creator-signature strong {
+      display: block;
+      color: rgba(226, 232, 240, 0.9);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .creator-signature span {
+      display: block;
+      margin-top: 2px;
+      color: rgba(56, 189, 248, 0.72);
+      font-weight: 700;
+    }
+
+    .app-version {
+      margin-top: 12px;
+      color: rgba(148, 163, 184, 0.72);
+      text-align: center;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+
+    @media (max-width: 390px) {
+      body {
+        padding: 10px;
+      }
+
+      .hero,
+      .panel {
+        border-radius: 18px;
+        padding: 16px;
+      }
+
+      .choice-grid.three {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="app">
+    <section class="hero">
+      <div class="hero-badge">⚡ Conseiller trottinette intelligent</div>
+      <div class="hero-mark" aria-hidden="true">⚡</div>
+      <h1>TROUVE TA TROTT</h1>
+      <p class="subtitle">Trouvez la trottinette la plus adaptée à votre besoin</p>
+    </section>
+
+    <section class="note public-speed">
+      ⚠️ La vitesse maximale autorisée sur voie publique est de 25 km/h. Les autres vitesses sont affichées uniquement à titre indicatif.
+    </section>
+
+    <section class="panel">
+      <div class="row">
+        <div class="question-card">
+          <label class="question-title" for="distance"><span class="question-icon">🛴</span>Combien de kilomètres allez-vous faire par jour en aller-retour ?</label>
+          <input id="distance" type="number" min="0.1" step="0.1" placeholder="Ex : 25" />
+          <div class="distance-help">
+            <span>Exemples :</span>
+            <span>• 10 km = petits trajets</span>
+            <span>• 30 km = trajet travail + loisirs</span>
+            <span>• 60 km = longues balades</span>
+          </div>
+        </div>
+
+        <div class="question-card">
+          <label class="question-title" for="weight"><span class="question-icon">⚖️</span>Votre poids</label>
+          <input id="weight" type="number" min="30" step="1" placeholder="Ex : 85" />
+        </div>
+      </div>
+
+      <div class="question-card">
+        <span class="question-title"><span class="question-icon">🚀</span>Vitesse souhaitée</span>
+        <div class="choice-grid three">
+          <label class="choice">
+            <input type="radio" name="speed" value="25" checked />
+            <span>25 km/h</span>
+          </label>
+          <label class="choice">
+            <input type="radio" name="speed" value="45" />
+            <span>45 km/h</span>
+          </label>
+          <label class="choice">
+            <input type="radio" name="speed" value="55" />
+            <span>55 km/h</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="question-card">
+        <label class="question-title" for="budget"><span class="question-icon">💸</span>Budget maximum</label>
+        <input id="budget" type="number" min="100" step="50" placeholder="Ex : 2500" />
+      </div>
+
+      <div class="question-card">
+        <span class="question-title"><span class="question-icon">🎯</span>Type d’utilisation</span>
+        <div class="choice-grid">
+          <label class="choice">
+            <input type="radio" name="usageType" value="city" checked />
+            <span>🏙 Trajets quotidiens</span>
+          </label>
+          <label class="choice">
+            <input type="radio" name="usageType" value="versatile" />
+            <span>🛴 Un peu de tout</span>
+          </label>
+          <label class="choice">
+            <input type="radio" name="usageType" value="sport" />
+            <span>⚡ Sensations / Performance</span>
+          </label>
+          <label class="choice">
+            <input type="radio" name="usageType" value="longRide" />
+            <span>🌄 Grandes balades</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="question-card">
+        <span class="question-title"><span class="question-icon">🎯</span>Votre priorité ?</span>
+        <div class="choice-grid">
+          <label class="choice">
+            <input type="radio" name="priority" value="price" />
+            <span>💸 Prix</span>
+          </label>
+          <label class="choice">
+            <input type="radio" name="priority" value="range" />
+            <span>🔋 Autonomie</span>
+          </label>
+          <label class="choice">
+            <input type="radio" name="priority" value="performance" />
+            <span>⚡ Performance</span>
+          </label>
+          <label class="choice">
+            <input type="radio" name="priority" value="comfort" />
+            <span>🛋 Confort</span>
+          </label>
+          <label class="choice">
+            <input type="radio" name="priority" value="balance" checked />
+            <span>⚖️ Équilibre général</span>
+          </label>
+        </div>
+      </div>
+
+      <button id="recommendButton" type="button">Trouver ma trott idéale ⚡</button>
+    </section>
+
+    <section class="result" id="result">
+      <div class="result-title">Résultat personnalisé</div>
+      <div class="result-summary" id="resultSummary"></div>
+      <div id="bestChoice"></div>
+      <div id="alternatives" class="alternatives"></div>
+      <button class="secondary" id="compareButton" type="button">Comparer les modèles</button>
+      <div class="compare-hint" id="compareHint">
+        <span>👉 Glissez pour voir les autres modèles</span>
+        <span class="swipe-arrow">↔</span>
+      </div>
+      <div class="compare" id="comparePanel"></div>
+    </section>
+
+    <section class="advice-note">
+      <h2>⚡ Conseils personnalisés</h2>
+      <p>L’application analyse :</p>
+      <div class="advice-grid">
+        <div class="advice-chip">🛣 votre trajet</div>
+        <div class="advice-chip">💸 votre budget</div>
+        <div class="advice-chip">⚡ vos besoins</div>
+        <div class="advice-chip">🛴 votre utilisation</div>
+      </div>
+      <p>afin de proposer les trottinettes les plus adaptées 😄</p>
+      <p><strong>💡 Plus puissante ou plus chère ne veut pas forcément dire meilleure pour vous.</strong></p>
+      <p>🔋 Les autonomies et prix peuvent varier selon la conduite, le terrain, la météo ou les versions batterie.</p>
+    </section>
+
+    <a class="community-link" id="communityButton" href="https://www.facebook.com/groups/843618944246747?locale=fr_FR" target="_blank" rel="noopener noreferrer">
+      🔥 Rejoindre la communauté
+    </a>
+
+    <footer class="creator-signature" aria-label="Signature">
+      <strong>🛴 Créé par Mister Luxuryplus</strong>
+      <span>Watt The Trott</span>
+    </footer>
+
+    <div class="app-version" id="appVersion">🛴 Version 1.11</div>
+  </main>
+
+  <script>
+    const APP_VERSION = "1.11";
+
+    const scooters = [
+      { brand: "Angwatt", model: "CS1", range: 55, maxSpeed: 55, powerWatts: 2400, weightKg: 34, price: 849, category: "polyvalente" },
+      { brand: "Angwatt", model: "CS1 Pro", range: 70, maxSpeed: 60, powerWatts: 3200, weightKg: 38, price: 1099, category: "polyvalente" },
+      { brand: "Angwatt", model: "T1", range: 60, maxSpeed: 55, powerWatts: 2600, weightKg: 36, price: 949, category: "polyvalente" },
+      { brand: "Angwatt", model: "T1 Pro", range: 75, maxSpeed: 65, powerWatts: 3600, weightKg: 41, price: 1199, category: "puissante" },
+      { brand: "Angwatt", model: "X1", range: 80, maxSpeed: 70, powerWatts: 4000, weightKg: 45, price: 1399, category: "puissante" },
+      { brand: "Angwatt", model: "X1 Pro", range: 95, maxSpeed: 85, powerWatts: 5600, weightKg: 52, price: 1699, category: "puissante" },
+
+      { brand: "Apollo", model: "Air", range: 45, maxSpeed: 35, powerWatts: 900, weightKg: 18, price: 899, category: "urbaine" },
+      { brand: "Apollo", model: "City", range: 55, maxSpeed: 50, powerWatts: 2000, weightKg: 29, price: 1399, category: "polyvalente" },
+      { brand: "Apollo", model: "Phantom", range: 75, maxSpeed: 65, powerWatts: 3200, weightKg: 35, price: 2199, category: "puissante" },
+      { brand: "Apollo", model: "Pro", range: 90, maxSpeed: 70, powerWatts: 6000, weightKg: 43, price: 3299, category: "puissante" },
+
+      { brand: "Ausom", model: "DT1", range: 70, maxSpeed: 55, powerWatts: 2950, weightKg: 34, price: 849, category: "polyvalente", ratingsOverride: { autonomy: 7, power: 7, comfort: 7, reliability: 6, value: 9, portability: 5, service: 5 } },
+      { brand: "Ausom", model: "DT1 Pro", range: 85, maxSpeed: 65, powerWatts: 4000, weightKg: 39, price: 1099, category: "puissante", ratingsOverride: { autonomy: 8, power: 8, comfort: 8, reliability: 6, value: 9, portability: 4, service: 5 } },
+      { brand: "Ausom", model: "Gallop", range: 75, maxSpeed: 60, powerWatts: 3600, weightKg: 37, price: 899, category: "polyvalente", ratingsOverride: { autonomy: 7, power: 8, comfort: 7, reliability: 6, value: 9, portability: 5, service: 5 } },
+      { brand: "Ausom", model: "Leopard", range: 60, maxSpeed: 52, powerWatts: 2400, weightKg: 33, price: 699, category: "polyvalente", ratingsOverride: { autonomy: 6, power: 7, comfort: 7, reliability: 6, value: 9, portability: 6, service: 5 } },
+      { brand: "Ausom", model: "L2", range: 70, maxSpeed: 55, powerWatts: 2600, weightKg: 32, price: 799, category: "polyvalente", ratingsOverride: { autonomy: 7, power: 7, comfort: 7, reliability: 6, value: 9, portability: 5, service: 5 } },
+      { brand: "Ausom", model: "L2 Max", range: 90, maxSpeed: 65, powerWatts: 3600, weightKg: 38, price: 999, category: "puissante", ratingsOverride: { autonomy: 8, power: 8, comfort: 8, reliability: 6, value: 9, portability: 4, service: 5 } },
+
+      { brand: "Arvala", model: "M11", range: 90, maxSpeed: 85, powerWatts: 6000, weightKg: 45, price: 1190, category: "puissante", market: "Marques alternatives / import", ratingsOverride: { autonomy: 8, power: 9, comfort: 7, reliability: 5, value: 9, portability: 3, service: 4 } },
+
+      { brand: "Boyueda", model: "5600W", range: 85, maxSpeed: 80, powerWatts: 5600, weightKg: 45, price: 1090, category: "puissante", market: "Marques alternatives / import", ratingsOverride: { autonomy: 8, power: 9, comfort: 7, reliability: 5, value: 9, portability: 3, service: 4 } },
+      { brand: "Boyueda", model: "S3", range: 70, maxSpeed: 65, powerWatts: 3200, weightKg: 38, price: 799, category: "polyvalente", market: "Marques alternatives / import", ratingsOverride: { autonomy: 7, power: 7, comfort: 6, reliability: 5, value: 9, portability: 4, service: 4 } },
+
+      { brand: "Currus", model: "NF 10", range: 75, maxSpeed: 70, powerWatts: 3600, weightKg: 38, price: 1690, category: "puissante" },
+      { brand: "Currus", model: "NF 11", range: 95, maxSpeed: 85, powerWatts: 5400, weightKg: 46, price: 2290, category: "puissante" },
+      { brand: "Currus", model: "Panther", range: 110, maxSpeed: 95, powerWatts: 6720, weightKg: 52, price: 2990, category: "longue autonomie" },
+
+      { brand: "Dualtron", model: "Achilleus", range: 120, maxSpeed: 80, powerWatts: 4648, weightKg: 40, price: 2290, category: "longue autonomie" },
+      { brand: "Dualtron", model: "Alien", range: 125, maxSpeed: 110, powerWatts: 11800, weightKg: 60, price: 3990, category: "longue autonomie", ratingsOverride: { autonomy: 10, power: 10, comfort: 9, reliability: 7, value: 7, portability: 2, service: 8 } },
+      { brand: "Dualtron", model: "Aminia", range: 55, maxSpeed: 50, powerWatts: 1450, weightKg: 27, price: 990, category: "polyvalente" },
+      { brand: "Dualtron", model: "City", range: 75, maxSpeed: 65, powerWatts: 4000, weightKg: 41, price: 1490, category: "polyvalente" },
+      { brand: "Dualtron", model: "Eagle Pro", range: 65, maxSpeed: 75, powerWatts: 3600, weightKg: 30, price: 1790, category: "puissante" },
+      { brand: "Dualtron", model: "Mini", range: 55, maxSpeed: 45, powerWatts: 1450, weightKg: 22, price: 1090, category: "urbaine" },
+      { brand: "Dualtron", model: "Oriens", range: 90, maxSpeed: 70, powerWatts: 3600, weightKg: 34, price: 1790, category: "polyvalente", ratingsOverride: { autonomy: 8, power: 8, comfort: 9, reliability: 7, value: 8, portability: 5, service: 8 } },
+      { brand: "Dualtron", model: "Pop", range: 40, maxSpeed: 40, powerWatts: 900, weightKg: 24, price: 699, category: "urbaine" },
+      { brand: "Dualtron", model: "Sonic", range: 105, maxSpeed: 90, powerWatts: 7200, weightKg: 47, price: 2790, category: "puissante" },
+      { brand: "Dualtron", model: "Spider", range: 85, maxSpeed: 70, powerWatts: 3600, weightKg: 26, price: 1990, category: "puissante" },
+      { brand: "Dualtron", model: "Spider Max", range: 95, maxSpeed: 80, powerWatts: 4500, weightKg: 34, price: 2290, category: "puissante" },
+      { brand: "Dualtron", model: "Storm", range: 100, maxSpeed: 85, powerWatts: 6640, weightKg: 46, price: 3190, category: "longue autonomie" },
+      { brand: "Dualtron", model: "Storm Limited", range: 125, maxSpeed: 100, powerWatts: 11500, weightKg: 52, price: 3990, category: "longue autonomie" },
+      { brand: "Dualtron", model: "Thunder", range: 120, maxSpeed: 85, powerWatts: 5400, weightKg: 43, price: 2690, category: "longue autonomie" },
+      { brand: "Dualtron", model: "Thunder 2", range: 125, maxSpeed: 100, powerWatts: 10080, weightKg: 47, price: 3490, category: "longue autonomie" },
+      { brand: "Dualtron", model: "Thunder 3", range: 125, maxSpeed: 105, powerWatts: 11000, weightKg: 50, price: 3890, category: "longue autonomie" },
+      { brand: "Dualtron", model: "Togo", range: 45, maxSpeed: 45, powerWatts: 900, weightKg: 25, price: 749, category: "urbaine" },
+      { brand: "Dualtron", model: "Togo Limited", range: 55, maxSpeed: 55, powerWatts: 1800, weightKg: 29, price: 849, category: "polyvalente" },
+      { brand: "Dualtron", model: "Togo Max", range: 65, maxSpeed: 60, powerWatts: 2000, weightKg: 32, price: 1090, category: "polyvalente" },
+      { brand: "Dualtron", model: "Ultra", range: 120, maxSpeed: 90, powerWatts: 6640, weightKg: 40, price: 3290, category: "longue autonomie" },
+      { brand: "Dualtron", model: "Ultra 2", range: 120, maxSpeed: 95, powerWatts: 6640, weightKg: 40, price: 2990, category: "longue autonomie" },
+      { brand: "Dualtron", model: "Victor", range: 85, maxSpeed: 80, powerWatts: 4000, weightKg: 33, price: 1690, category: "puissante" },
+      { brand: "Dualtron", model: "Victor 2026", range: 85, maxSpeed: 80, powerWatts: 4200, weightKg: 34, price: 1790, category: "puissante" },
+      { brand: "Dualtron", model: "Victor Limited", range: 120, maxSpeed: 80, powerWatts: 5000, weightKg: 37, price: 2090, category: "longue autonomie", ratingsOverride: { autonomy: 9, power: 9, comfort: 8, reliability: 8, value: 9, portability: 4, service: 8 } },
+      { brand: "Dualtron", model: "Victor Luxury Plus", range: 120, maxSpeed: 80, powerWatts: 4300, weightKg: 35, price: 1749, category: "longue autonomie", ratingsOverride: { autonomy: 9, power: 8, comfort: 8, reliability: 8, value: 9, portability: 4, service: 8 } },
+      { brand: "Dualtron", model: "X Limited", range: 150, maxSpeed: 100, powerWatts: 12000, weightKg: 68, price: 4290, category: "longue autonomie" },
+
+      { brand: "E-Twow", model: "Booster GT", range: 45, maxSpeed: 45, powerWatts: 1000, weightKg: 13, price: 799, category: "urbaine", ratingsOverride: { autonomy: 5, power: 5, comfort: 5, reliability: 8, value: 7, portability: 10, service: 7 } },
+      { brand: "E-Twow", model: "GT Sport", range: 50, maxSpeed: 46, powerWatts: 1000, weightKg: 13, price: 899, category: "urbaine", ratingsOverride: { autonomy: 5, power: 5, comfort: 5, reliability: 8, value: 7, portability: 10, service: 7 } },
+      { brand: "E-Twow", model: "S2 Booster Plus", range: 35, maxSpeed: 35, powerWatts: 800, weightKg: 11, price: 599, category: "urbaine", ratingsOverride: { autonomy: 4, power: 4, comfort: 4, reliability: 8, value: 7, portability: 10, service: 7 } },
+
+      { brand: "Gunai", model: "GN88", range: 90, maxSpeed: 85, powerWatts: 5600, weightKg: 45, price: 1090, category: "puissante", market: "Marques alternatives / import", ratingsOverride: { autonomy: 8, power: 9, comfort: 7, reliability: 5, value: 9, portability: 3, service: 4 } },
+
+      { brand: "Halo Knight", model: "T104", range: 80, maxSpeed: 75, powerWatts: 5600, weightKg: 43, price: 1190, category: "puissante", market: "Marques alternatives / import", ratingsOverride: { autonomy: 8, power: 9, comfort: 7, reliability: 5, value: 9, portability: 3, service: 4 } },
+      { brand: "Halo Knight", model: "T107 Pro", range: 100, maxSpeed: 85, powerWatts: 6000, weightKg: 48, price: 1490, category: "longue autonomie", market: "Marques alternatives / import", ratingsOverride: { autonomy: 9, power: 9, comfort: 8, reliability: 5, value: 9, portability: 3, service: 4 } },
+
+      { brand: "Inmotion", model: "Climber", range: 45, maxSpeed: 25, powerWatts: 1500, weightKg: 21, price: 699, category: "urbaine" },
+      { brand: "Inmotion", model: "RS", range: 100, maxSpeed: 100, powerWatts: 8400, weightKg: 58, price: 3490, category: "puissante" },
+      { brand: "Inmotion", model: "S1", range: 50, maxSpeed: 30, powerWatts: 1000, weightKg: 24, price: 799, category: "urbaine" },
+      { brand: "Inmotion", model: "S1F", range: 55, maxSpeed: 40, powerWatts: 1000, weightKg: 24, price: 899, category: "polyvalente" },
+
+      { brand: "Joyor", model: "S10-S", range: 75, maxSpeed: 60, powerWatts: 2000, weightKg: 27, price: 999, category: "polyvalente" },
+      { brand: "Joyor", model: "Y8-S", range: 70, maxSpeed: 45, powerWatts: 1000, weightKg: 24, price: 699, category: "polyvalente" },
+
+      { brand: "Kaabo", model: "Mantis 8", range: 50, maxSpeed: 45, powerWatts: 1600, weightKg: 27, price: 899, category: "polyvalente" },
+      { brand: "Kaabo", model: "Mantis 10", range: 75, maxSpeed: 60, powerWatts: 2000, weightKg: 30, price: 1390, category: "polyvalente" },
+      { brand: "Kaabo", model: "Mantis King GT", range: 75, maxSpeed: 70, powerWatts: 4200, weightKg: 33, price: 1790, category: "puissante" },
+      { brand: "Kaabo", model: "Wolf King GT", range: 110, maxSpeed: 100, powerWatts: 7200, weightKg: 52, price: 2990, category: "longue autonomie" },
+      { brand: "Kaabo", model: "Wolf King GTR", range: 115, maxSpeed: 105, powerWatts: 13440, weightKg: 62, price: 3590, category: "longue autonomie" },
+      { brand: "Kaabo", model: "Wolf King GTR Max", range: 130, maxSpeed: 115, powerWatts: 15000, weightKg: 64, price: 4190, category: "longue autonomie", ratingsOverride: { autonomy: 10, power: 10, comfort: 9, reliability: 7, value: 7, portability: 1, service: 7 } },
+      { brand: "Kaabo", model: "Wolf Warrior 11", range: 120, maxSpeed: 80, powerWatts: 5400, weightKg: 46, price: 2290, category: "longue autonomie" },
+
+      { brand: "Kuickwheel", model: "Aspire Pro", range: 60, maxSpeed: 45, powerWatts: 1600, weightKg: 26, price: 999, category: "polyvalente" },
+      { brand: "Kuickwheel", model: "M16 Pro", range: 75, maxSpeed: 65, powerWatts: 3200, weightKg: 34, price: 1390, category: "puissante" },
+      { brand: "Kuickwheel", model: "S9", range: 45, maxSpeed: 35, powerWatts: 1000, weightKg: 22, price: 699, category: "urbaine" },
+
+      { brand: "Kukirin", model: "G2", range: 45, maxSpeed: 45, powerWatts: 1200, weightKg: 26, price: 449, category: "urbaine" },
+      { brand: "Kukirin", model: "G2 Max", range: 70, maxSpeed: 55, powerWatts: 1600, weightKg: 31, price: 649, category: "polyvalente" },
+      { brand: "Kukirin", model: "G3", range: 60, maxSpeed: 50, powerWatts: 1200, weightKg: 25, price: 579, category: "polyvalente" },
+      { brand: "Kukirin", model: "G4", range: 75, maxSpeed: 70, powerWatts: 2000, weightKg: 37, price: 699, category: "puissante" },
+      { brand: "Kukirin", model: "G2 Master", range: 70, maxSpeed: 60, powerWatts: 2000, weightKg: 33, price: 749, category: "puissante", ratingsOverride: { autonomy: 7, power: 7, comfort: 7, reliability: 6, value: 9, portability: 5, service: 5 } },
+      { brand: "Kukirin", model: "G3 Pro", range: 70, maxSpeed: 65, powerWatts: 2400, weightKg: 39, price: 799, category: "puissante", ratingsOverride: { autonomy: 7, power: 8, comfort: 7, reliability: 6, value: 9, portability: 4, service: 5 } },
+      { brand: "Kukirin", model: "G4 Max", range: 95, maxSpeed: 85, powerWatts: 3200, weightKg: 45, price: 1199, category: "longue autonomie", ratingsOverride: { autonomy: 9, power: 8, comfort: 8, reliability: 6, value: 9, portability: 3, service: 5 } },
+
+      { brand: "Kugoo / Kugoo Kirin", model: "G-Booster", range: 55, maxSpeed: 55, powerWatts: 1600, weightKg: 30, price: 649, category: "polyvalente", market: "Marques alternatives / import", ratingsOverride: { autonomy: 6, power: 6, comfort: 6, reliability: 5, value: 8, portability: 5, service: 4 } },
+      { brand: "Kugoo / Kugoo Kirin", model: "G2 Pro", range: 50, maxSpeed: 50, powerWatts: 1200, weightKg: 26, price: 499, category: "polyvalente", market: "Marques alternatives / import", ratingsOverride: { autonomy: 5, power: 5, comfort: 5, reliability: 5, value: 8, portability: 6, service: 4 } },
+      { brand: "Kugoo / Kugoo Kirin", model: "M5 Pro", range: 60, maxSpeed: 55, powerWatts: 2000, weightKg: 34, price: 649, category: "polyvalente", market: "Marques alternatives / import", ratingsOverride: { autonomy: 6, power: 6, comfort: 6, reliability: 5, value: 9, portability: 5, service: 4 } },
+
+      { brand: "Laotie", model: "ES18", range: 85, maxSpeed: 80, powerWatts: 5600, weightKg: 42, price: 999, category: "puissante", market: "Marques alternatives / import", ratingsOverride: { autonomy: 8, power: 9, comfort: 7, reliability: 5, value: 9, portability: 3, service: 4 } },
+      { brand: "Laotie", model: "TI30", range: 110, maxSpeed: 85, powerWatts: 5600, weightKg: 50, price: 1290, category: "longue autonomie", market: "Marques alternatives / import", ratingsOverride: { autonomy: 9, power: 9, comfort: 7, reliability: 5, value: 9, portability: 2, service: 4 } },
+
+      { brand: "Langfeite", model: "C1", range: 80, maxSpeed: 70, powerWatts: 3200, weightKg: 35, price: 1190, category: "puissante" },
+      { brand: "Langfeite", model: "GT2", range: 100, maxSpeed: 85, powerWatts: 5600, weightKg: 48, price: 1490, category: "puissante", market: "Marques alternatives / import", ratingsOverride: { autonomy: 9, power: 9, comfort: 7, reliability: 5, value: 8, portability: 3, service: 4 } },
+      { brand: "Langfeite", model: "T8", range: 65, maxSpeed: 60, powerWatts: 2400, weightKg: 32, price: 999, category: "polyvalente" },
+
+      { brand: "Nanrobot", model: "D6+", range: 70, maxSpeed: 65, powerWatts: 2000, weightKg: 35, price: 1190, category: "polyvalente", market: "Marques alternatives / import", ratingsOverride: { autonomy: 7, power: 7, comfort: 7, reliability: 6, value: 7, portability: 4, service: 5 } },
+
+      
+      { brand: "Navee", model: "V50i Pro", range: 50, maxSpeed: 25, powerWatts: 1000, weightKg: 17.5, price: 499, category: "urbaine", ratingsOverride: { autonomy: 5, power: 5, comfort: 6, reliability: 7, value: 8, portability: 8, service: 6 } },
+      { brand: "Navee", model: "S65C", range: 65, maxSpeed: 25, powerWatts: 1000, weightKg: 27, price: 699, category: "polyvalente", ratingsOverride: { autonomy: 7, power: 5, comfort: 8, reliability: 7, value: 8, portability: 5, service: 6 } },
+      { brand: "Navee", model: "ST3 Pro", range: 75, maxSpeed: 25, powerWatts: 1350, weightKg: 25.3, price: 799, category: "polyvalente", ratingsOverride: { autonomy: 8, power: 6, comfort: 8, reliability: 7, value: 8, portability: 5, service: 6 } },
+
+      { brand: "Nami", model: "Burn-E 2", range: 95, maxSpeed: 90, powerWatts: 8400, weightKg: 47, price: 3290, category: "puissante" },
+      { brand: "Nami", model: "Burn-E 3", range: 105, maxSpeed: 95, powerWatts: 9000, weightKg: 50, price: 3590, category: "longue autonomie" },
+      { brand: "Nami", model: "Burn-E 3 Max", range: 130, maxSpeed: 105, powerWatts: 12000, weightKg: 53, price: 4590, category: "longue autonomie", ratingsOverride: { autonomy: 10, power: 10, comfort: 10, reliability: 7, value: 7, portability: 2, service: 6 } },
+      { brand: "Nami", model: "Burn-E Max", range: 120, maxSpeed: 100, powerWatts: 10000, weightKg: 49, price: 4190, category: "longue autonomie" },
+      { brand: "Nami", model: "Klima", range: 80, maxSpeed: 70, powerWatts: 5340, weightKg: 36, price: 1990, category: "puissante" },
+      { brand: "Nami", model: "Klima Max", range: 95, maxSpeed: 75, powerWatts: 5340, weightKg: 39, price: 2290, category: "longue autonomie" },
+      { brand: "Nami", model: "Stellar", range: 65, maxSpeed: 55, powerWatts: 2500, weightKg: 30, price: 1390, category: "polyvalente", ratingsOverride: { autonomy: 7, power: 7, comfort: 8, reliability: 7, value: 8, portability: 5, service: 6 } },
+
+      { brand: "Obarter", model: "D5", range: 90, maxSpeed: 85, powerWatts: 5000, weightKg: 45, price: 1190, category: "puissante", market: "Marques alternatives / import", ratingsOverride: { autonomy: 8, power: 9, comfort: 7, reliability: 5, value: 9, portability: 3, service: 4 } },
+      { brand: "Obarter", model: "X3", range: 70, maxSpeed: 65, powerWatts: 2400, weightKg: 35, price: 899, category: "polyvalente", market: "Marques alternatives / import", ratingsOverride: { autonomy: 7, power: 7, comfort: 6, reliability: 5, value: 8, portability: 4, service: 4 } },
+
+      { brand: "RoadRunner", model: "RS5", range: 90, maxSpeed: 65, powerWatts: 3600, weightKg: 40, price: 1890, category: "polyvalente", market: "Marques alternatives / import", ratingsOverride: { autonomy: 8, power: 8, comfort: 8, reliability: 7, value: 6, portability: 3, service: 5 } },
+
+      { brand: "Rovoron", model: "Kullter", range: 80, maxSpeed: 75, powerWatts: 4000, weightKg: 31, price: 1690, category: "puissante", ratingsOverride: { autonomy: 8, power: 8, comfort: 8, reliability: 6, value: 8, portability: 4, service: 5 } },
+      { brand: "Rovoron", model: "Kullter Luxury", range: 95, maxSpeed: 85, powerWatts: 5000, weightKg: 35, price: 1990, category: "puissante", ratingsOverride: { autonomy: 8, power: 9, comfort: 9, reliability: 6, value: 8, portability: 3, service: 5 } },
+      { brand: "Rovoron", model: "R7", range: 90, maxSpeed: 70, powerWatts: 3000, weightKg: 49.5, price: 999, category: "polyvalente", ratingsOverride: { autonomy: 8, power: 7, comfort: 8, reliability: 6, value: 9, portability: 3, service: 5 } },
+      { brand: "Rovoron", model: "R7 Pro", range: 125, maxSpeed: 70, powerWatts: 3000, weightKg: 49.6, price: 1390, category: "longue autonomie", ratingsOverride: { autonomy: 9, power: 7, comfort: 8, reliability: 6, value: 9, portability: 3, service: 5 } },
+      { brand: "Rovoron", model: "S7", range: 140, maxSpeed: 100, powerWatts: 7600, weightKg: 49.5, price: 2290, category: "longue autonomie", ratingsOverride: { autonomy: 10, power: 10, comfort: 9, reliability: 6, value: 8, portability: 2, service: 5 } },
+
+      { brand: "Segway / Ninebot", model: "F2", range: 40, maxSpeed: 25, powerWatts: 800, weightKg: 17, price: 499, category: "urbaine" },
+      { brand: "Segway / Ninebot", model: "F2 Pro", range: 55, maxSpeed: 25, powerWatts: 900, weightKg: 18.5, price: 599, category: "urbaine" },
+      { brand: "Segway / Ninebot", model: "GT1", range: 70, maxSpeed: 60, powerWatts: 3000, weightKg: 48, price: 2190, category: "puissante" },
+      { brand: "Segway / Ninebot", model: "GT2", range: 90, maxSpeed: 70, powerWatts: 6000, weightKg: 52, price: 2990, category: "puissante" },
+      { brand: "Segway / Ninebot", model: "GT3 Pro", range: 100, maxSpeed: 80, powerWatts: 7000, weightKg: 53, price: 3290, category: "puissante", ratingsOverride: { autonomy: 9, power: 9, comfort: 9, reliability: 9, value: 7, portability: 3, service: 9 } },
+      { brand: "Segway / Ninebot", model: "Max G2", range: 55, maxSpeed: 35, powerWatts: 1000, weightKg: 24, price: 699, category: "urbaine" },
+      { brand: "Segway / Ninebot", model: "F3 Pro", range: 60, maxSpeed: 25, powerWatts: 1200, weightKg: 20, price: 599, category: "urbaine", ratingsOverride: { autonomy: 6, power: 5, comfort: 7, reliability: 9, value: 8, portability: 7, service: 9 } },
+      { brand: "Segway / Ninebot", model: "Max G3", range: 65, maxSpeed: 25, powerWatts: 2000, weightKg: 24.3, price: 799, category: "polyvalente", ratingsOverride: { autonomy: 8, power: 7, comfort: 9, reliability: 9, value: 8, portability: 6, service: 9 } },
+      { brand: "Segway / Ninebot", model: "ZT3 Pro", range: 55, maxSpeed: 25, powerWatts: 1600, weightKg: 29.7, price: 699, category: "polyvalente", ratingsOverride: { autonomy: 6, power: 6, comfort: 8, reliability: 9, value: 8, portability: 5, service: 9 } },
+
+      { brand: "Teverun", model: "Blade Mini", range: 50, maxSpeed: 45, powerWatts: 1600, weightKg: 29, price: 1090, category: "polyvalente" },
+      { brand: "Teverun", model: "Fighter 11", range: 100, maxSpeed: 85, powerWatts: 5000, weightKg: 44, price: 2190, category: "puissante" },
+      { brand: "Teverun", model: "Fighter 11+", range: 105, maxSpeed: 90, powerWatts: 5600, weightKg: 46, price: 2490, category: "longue autonomie" },
+      { brand: "Teverun", model: "Fighter 7260R", range: 200, maxSpeed: 120, powerWatts: 15000, weightKg: 62, price: 3790, category: "longue autonomie", ratingsOverride: { autonomy: 10, power: 10, comfort: 9, reliability: 7, value: 8, portability: 1, service: 6 } },
+      { brand: "Teverun", model: "Fighter Mini", range: 65, maxSpeed: 60, powerWatts: 2950, weightKg: 29, price: 1490, category: "polyvalente" },
+      { brand: "Teverun", model: "Fighter Mini Eco", range: 55, maxSpeed: 50, powerWatts: 1600, weightKg: 27, price: 1190, category: "polyvalente" },
+      { brand: "Teverun", model: "Fighter Mini Pro", range: 75, maxSpeed: 65, powerWatts: 2950, weightKg: 31, price: 1999, category: "puissante" },
+      { brand: "Teverun", model: "Fighter Supreme", range: 110, maxSpeed: 100, powerWatts: 10000, weightKg: 58, price: 3690, category: "longue autonomie" },
+      { brand: "Teverun", model: "Tetra", range: 85, maxSpeed: 75, powerWatts: 4500, weightKg: 38, price: 2090, category: "puissante", ratingsOverride: { autonomy: 8, power: 8, comfort: 9, reliability: 7, value: 8, portability: 4, service: 6 } },
+
+      { brand: "Toursor", model: "X14", range: 100, maxSpeed: 85, powerWatts: 6000, weightKg: 50, price: 1190, category: "longue autonomie", market: "Marques alternatives / import", ratingsOverride: { autonomy: 9, power: 9, comfort: 7, reliability: 5, value: 9, portability: 2, service: 4 } },
+
+      { brand: "Vsett", model: "Vsett 8", range: 55, maxSpeed: 40, powerWatts: 1200, weightKg: 21, price: 699, category: "urbaine" },
+      { brand: "Vsett", model: "Vsett 9+", range: 60, maxSpeed: 55, powerWatts: 2400, weightKg: 25, price: 1090, category: "polyvalente" },
+      { brand: "Vsett", model: "Vsett 10+", range: 85, maxSpeed: 80, powerWatts: 2800, weightKg: 36, price: 1690, category: "puissante" },
+      { brand: "Vsett", model: "Vsett 11+", range: 95, maxSpeed: 85, powerWatts: 6000, weightKg: 58, price: 2290, category: "puissante" },
+
+      { brand: "Weped", model: "Dark Knight", range: 110, maxSpeed: 100, powerWatts: 12000, weightKg: 55, price: 5490, category: "longue autonomie", ratingsOverride: { autonomy: 9, power: 10, comfort: 8, reliability: 6, value: 5, portability: 1, service: 4 } },
+      { brand: "Weped", model: "Fold", range: 80, maxSpeed: 80, powerWatts: 5400, weightKg: 42, price: 2990, category: "puissante", ratingsOverride: { autonomy: 8, power: 9, comfort: 7, reliability: 6, value: 5, portability: 3, service: 4 } },
+      { brand: "Weped", model: "SST", range: 120, maxSpeed: 110, powerWatts: 12000, weightKg: 65, price: 6490, category: "longue autonomie", ratingsOverride: { autonomy: 10, power: 10, comfort: 8, reliability: 6, value: 4, portability: 1, service: 4 } },
+
+      { brand: "Xiaomi", model: "M365", range: 25, maxSpeed: 25, powerWatts: 500, weightKg: 12.5, price: 300, category: "urbaine" },
+      { brand: "Xiaomi", model: "Pro 2", range: 40, maxSpeed: 25, powerWatts: 600, weightKg: 14.2, price: 449, category: "urbaine" },
+      { brand: "Xiaomi", model: "4 Ultra", range: 45, maxSpeed: 25, powerWatts: 940, weightKg: 25, price: 499, category: "urbaine" },
+      { brand: "Xiaomi", model: "5 Pro", range: 55, maxSpeed: 25, powerWatts: 1000, weightKg: 22, price: 549, category: "urbaine", ratingsOverride: { autonomy: 6, power: 5, comfort: 7, reliability: 8, value: 8, portability: 7, service: 8 } },
+      { brand: "Xiaomi", model: "5 Max", range: 60, maxSpeed: 25, powerWatts: 1000, weightKg: 22.3, price: 699, category: "polyvalente", ratingsOverride: { autonomy: 7, power: 5, comfort: 8, reliability: 8, value: 7, portability: 7, service: 8 } },
+
+      { brand: "Yume", model: "Hawk", range: 80, maxSpeed: 80, powerWatts: 6000, weightKg: 44, price: 1690, category: "puissante", market: "Marques alternatives / import", ratingsOverride: { autonomy: 8, power: 9, comfort: 7, reliability: 5, value: 8, portability: 3, service: 4 } },
+      { brand: "Yume", model: "Predator", range: 110, maxSpeed: 95, powerWatts: 8000, weightKg: 58, price: 2390, category: "longue autonomie" },
+      { brand: "Yume", model: "Y11+", range: 95, maxSpeed: 85, powerWatts: 6000, weightKg: 50, price: 1490, category: "puissante", market: "Marques alternatives / import", ratingsOverride: { autonomy: 8, power: 9, comfort: 7, reliability: 5, value: 8, portability: 2, service: 4 } }
+    ];
+
+    const speedFactors = { 25: 1, 45: 0.95, 55: 0.9 };
+    const state = { choices: [] };
+
+    const els = {
+      distance: document.getElementById("distance"),
+      weight: document.getElementById("weight"),
+      budget: document.getElementById("budget"),
+      result: document.getElementById("result"),
+      resultSummary: document.getElementById("resultSummary"),
+      bestChoice: document.getElementById("bestChoice"),
+      alternatives: document.getElementById("alternatives"),
+      compareButton: document.getElementById("compareButton"),
+      compareHint: document.getElementById("compareHint"),
+      comparePanel: document.getElementById("comparePanel"),
+      communityButton: document.getElementById("communityButton"),
+      appVersion: document.getElementById("appVersion")
+    };
+
+    els.appVersion.textContent = `🛴 Version ${APP_VERSION}`;
+    els.compareButton.innerHTML = compareButtonLabel(false);
+
+    document.getElementById("recommendButton").addEventListener("click", recommendScooters);
+    els.compareButton.addEventListener("click", toggleCompare);
+    els.communityButton.addEventListener("click", openCommunity);
+    els.result.addEventListener("click", toggleWhyDetails);
+
+    function selectedValue(name) {
+      return document.querySelector(`input[name="${name}"]:checked`).value;
+    }
+
+    function weightFactor(weight) {
+      if (weight > 115) return 0.93;
+      if (weight >= 90) return 0.97;
+      return 1;
+    }
+
+    function euro(value) {
+      return new Intl.NumberFormat("fr-FR", {
+        style: "currency",
+        currency: "EUR",
+        maximumFractionDigits: 0
+      }).format(value);
+    }
+
+    function trackEvent(name, params = {}) {
+      if (typeof gtag !== "function") return;
+      gtag("event", name, params);
+    }
+
+    function icon(name) {
+      const icons = {
+        battery: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="16" height="10" rx="2"></rect><path d="M21 11v2"></path><path d="M7 11h5"></path></svg>',
+        weight: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 8h10l2 12H5L7 8Z"></path><path d="M9 8a3 3 0 0 1 6 0"></path></svg>',
+        speed: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 14a8 8 0 1 1 16 0"></path><path d="M12 14l4-4"></path><path d="M8 18h8"></path></svg>',
+        price: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 7.5a4 4 0 1 0 0 9"></path><path d="M5 10h8"></path><path d="M5 14h8"></path></svg>',
+        comfort: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12V7a3 3 0 0 1 6 0v5"></path><path d="M13 12V8a3 3 0 0 1 6 0v4"></path><path d="M4 12h16v7H4z"></path></svg>',
+        reliability: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 3v5c0 5-3 8-7 10-4-2-7-5-7-10V6l7-3Z"></path><path d="M9 12l2 2 4-5"></path></svg>',
+        compare: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4v16"></path><path d="M17 4v16"></path><path d="M4 8h6"></path><path d="M14 16h6"></path></svg>',
+        power: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2L4 14h7l-1 8 10-13h-7l1-7Z"></path></svg>'
+      };
+
+      return `<span class="ui-icon">${icons[name] || ""}</span>`;
+    }
+
+    function compareButtonLabel(isOpen = false) {
+      return isOpen ? "Masquer la comparaison" : `${icon("compare")} Comparer les modèles`;
+    }
+
+    function clampRating(value) {
+      return Math.max(1, Math.min(10, Math.round(value)));
+    }
+
+    function getRatings(scooter) {
+      const reliabilityByBrand = {
+        Xiaomi: 9,
+        "Segway / Ninebot": 9,
+        "E-Twow": 8,
+        Inmotion: 8,
+        Vsett: 8,
+        Dualtron: 7,
+        Kaabo: 7,
+        Nami: 7,
+        Apollo: 7,
+        Currus: 7,
+        Teverun: 6,
+        Kukirin: 6,
+        Kuickwheel: 6,
+        Langfeite: 6,
+        Joyor: 6,
+        Angwatt: 6,
+        Ausom: 6,
+        Rovoron: 6,
+        Weped: 6,
+        Yume: 5
+      };
+
+      const savByBrand = {
+        Xiaomi: 9,
+        "Segway / Ninebot": 9,
+        "E-Twow": 8,
+        Inmotion: 8,
+        Dualtron: 8,
+        Vsett: 7,
+        Kaabo: 7,
+        Apollo: 6,
+        Nami: 6,
+        Currus: 6,
+        Teverun: 6,
+        Kukirin: 5,
+        Kuickwheel: 5,
+        Langfeite: 5,
+        Joyor: 5,
+        Angwatt: 5,
+        Ausom: 5,
+        Rovoron: 5,
+        Weped: 4,
+        Yume: 4
+      };
+
+      return {
+        autonomy: clampRating(scooter.range / 12),
+        power: clampRating((scooter.maxSpeed / 12) + ((scooter.powerWatts || scooter.maxSpeed * 55) / 2200)),
+        comfort: clampRating(4 + scooter.range / 35 + scooter.maxSpeed / 45),
+        reliability: reliabilityByBrand[scooter.brand] || 6,
+        value: clampRating((scooter.range / Math.max(1, scooter.price / 1000)) / 8 + 2),
+        portability: clampRating(11 - scooter.range / 25 - scooter.maxSpeed / 45),
+        service: savByBrand[scooter.brand] || 5,
+        ...scooter.ratingsOverride
+      };
+    }
+
+    function estimateScooter(scooter, speed, weight) {
+      const estimatedRange = scooter.range * speedFactors[speed] * weightFactor(weight);
+      return { ...scooter, estimatedRange, ratings: getRatings(scooter) };
+    }
+
+    function remainingPercent(scooter, totalDistance) {
+      return ((scooter.estimatedRange - totalDistance) / scooter.estimatedRange) * 100;
+    }
+
+    function usageScore(scooter, usageType) {
+      const r = scooter.ratings;
+      const weights = {
+        city: { reliability: 1.8, comfort: 1.55, portability: 1.75, service: 1.55, value: 1, autonomy: 0.45, power: 0.08 },
+        versatile: { reliability: 1.05, comfort: 1.18, portability: 0.9, service: 0.9, value: 1.35, autonomy: 1.18, power: 1.05 },
+        sport: { power: 2.15, autonomy: 0.95, comfort: 0.95, reliability: 0.5, value: 0.75, portability: 0, service: 0.35 },
+        longRide: { autonomy: 2.25, comfort: 1.6, reliability: 0.9, service: 0.45, value: 0.65, power: 0.25, portability: 0 }
+      }[usageType];
+
+      return Object.entries(weights).reduce((sum, [key, weight]) => sum + r[key] * weight, 0) * 3.2;
+    }
+
+    function usageIntentScore(scooter, totalDistance, speed, usageType) {
+      let score = 0;
+      const r = scooter.ratings;
+
+      if (usageType === "city") {
+        score += r.reliability * 6 + r.service * 5 + r.comfort * 5 + r.portability * 5;
+        if (scooter.category === "urbaine") score += 58;
+        if (scooter.category === "polyvalente") score += 30;
+        if (scooter.category === "puissante") score -= 20;
+        if (scooter.category === "longue autonomie") score -= 34;
+        if (scooter.weightKg < 24) score += 38;
+        else if (scooter.weightKg < 32) score += 24;
+        else if (scooter.weightKg < 38) score += 8;
+        else score -= 38;
+        if (scooter.maxSpeed > 75) score -= 34;
+        if (totalDistance <= 20 && scooter.range > 100) score -= 24;
+      }
+
+      if (usageType === "versatile") {
+        const balance = Math.min(r.value, r.autonomy, r.comfort, r.power);
+        score += balance * 10 + r.value * 4 + r.comfort * 4;
+        if (scooter.category === "polyvalente") score += 58;
+        if (scooter.category === "urbaine" || scooter.category === "puissante") score += 18;
+        if (scooter.range >= 55 && scooter.range <= 95) score += 24;
+        if (scooter.weightKg >= 24 && scooter.weightKg <= 40) score += 14;
+        if (scooter.range > 130 || scooter.maxSpeed > 105) score -= 22;
+      }
+
+      if (usageType === "sport") {
+        score += r.power * 9 + Math.min(10, (scooter.powerWatts || 0) / 900) * 7;
+        if (scooter.category === "puissante") score += 64;
+        if (scooter.category === "longue autonomie") score += 32;
+        if (scooter.maxSpeed >= 70) score += 28;
+        if (scooter.maxSpeed >= 85) score += 20;
+        if (scooter.maxSpeed < Math.max(55, speed + 5)) score -= 52;
+        if (scooter.weightKg >= 35) score += 20;
+        if (scooter.weightKg >= 50 && scooter.maxSpeed >= 90) score += 8;
+      }
+
+      if (usageType === "longRide") {
+        score += r.autonomy * 10 + r.comfort * 7;
+        if (scooter.category === "longue autonomie") score += 72;
+        if (scooter.category === "puissante") score += 18;
+        if (scooter.estimatedRange >= totalDistance * 1.8) score += 34;
+        if (scooter.range >= 100) score += 30;
+        if (scooter.range < 80) score -= 60;
+        if (scooter.weightKg >= 35) score += 12;
+        if (scooter.maxSpeed >= 100 && speed <= 45) score -= 14;
+      }
+
+      return score;
+    }
+
+    function categoryFitScore(scooter, usageType, totalDistance) {
+      let score = 0;
+
+      if (usageType === "city") {
+        if (scooter.category === "urbaine") score += 38;
+        if (scooter.category === "polyvalente") score += 22;
+        if (scooter.price <= 1200) score += 12;
+        if (scooter.maxSpeed > 70) score -= 35;
+        if (scooter.range > 95 && totalDistance <= 25) score -= 32;
+        if (scooter.weightKg >= 35 && totalDistance <= 30 && scooter.maxSpeed <= 45) score -= 20;
+        if (scooter.weightKg >= 35 && totalDistance <= 30 && scooter.estimatedRange >= totalDistance * 2.4) score -= 10;
+        if (scooter.weightKg >= 45 && totalDistance <= 40) score -= 10;
+      }
+
+      if (usageType === "versatile") {
+        if (scooter.category === "polyvalente") score += 36;
+        if (scooter.category === "urbaine" || scooter.category === "puissante") score += 14;
+        if (scooter.range >= 55 && scooter.range <= 95) score += 12;
+        if (scooter.range > 115 && totalDistance <= 25) score -= 24;
+      }
+
+      if (usageType === "sport") {
+        if (scooter.category === "puissante") score += 32;
+        if (scooter.category === "longue autonomie") score += 24;
+        if (scooter.maxSpeed >= 70) score += 14;
+        if (scooter.maxSpeed < 55) score -= 30;
+        if (scooter.maxSpeed > 95 && totalDistance < 35) score -= 18;
+      }
+
+      if (usageType === "longRide") {
+        if (scooter.category === "longue autonomie") score += 40;
+        if (scooter.range >= 90) score += 20;
+        if (scooter.range < 65) score -= 28;
+      }
+
+      return score;
+    }
+
+    function realWorldFitScore(scooter, totalDistance, speed, usageType) {
+      const remaining = remainingPercent(scooter, totalDistance);
+      let score = 0;
+
+      if (remaining >= 28 && remaining <= 72) score += 24;
+      if (remaining > 88 && totalDistance < 30 && usageType !== "longRide") score -= 24;
+
+      if (speed >= 45 && totalDistance >= 20) {
+        if (scooter.estimatedRange >= totalDistance * 1.45 && scooter.maxSpeed >= speed + 10) score += 18;
+        if (scooter.ratings.comfort >= 8 && scooter.ratings.autonomy >= 8) score += usageType === "city" ? 8 : 14;
+        if (usageType === "sport" && scooter.ratings.power >= 7 && scooter.ratings.autonomy >= 7) score += 18;
+      }
+
+      score += Math.min(scooter.ratings.power, scooter.ratings.autonomy) * (usageType === "sport" ? 3.2 : 2.2);
+      return score;
+    }
+
+    function priorityScore(scooter, priority, totalDistance) {
+      const remaining = remainingPercent(scooter, totalDistance);
+
+      if (priority === "price") return scooter.ratings.value * 5 + (scooter.price <= 1000 ? 18 : 0) + (scooter.price <= 1500 ? 8 : 0);
+      if (priority === "range") return scooter.ratings.autonomy * 5 + Math.min(24, Math.max(0, remaining - 25) / 2.4);
+      if (priority === "performance") return scooter.ratings.power * 5 + (scooter.maxSpeed >= 70 ? 14 : 0) + (scooter.maxSpeed >= 85 ? 8 : 0);
+      if (priority === "comfort") return scooter.ratings.comfort * 5 + (scooter.weightKg < 35 ? 7 : 0) + (scooter.ratings.reliability >= 7 ? 5 : 0);
+      return Math.min(scooter.ratings.value, scooter.ratings.autonomy, scooter.ratings.comfort) * 3.6 + (scooter.weightKg < 35 ? 8 : 0);
+    }
+
+    function budgetFitScore(scooter, budget, priority) {
+      const ratio = scooter.price / budget;
+      let score = 0;
+
+      if (ratio <= 0.55) score += priority === "price" ? 26 : 12;
+      else if (ratio <= 0.8) score += priority === "price" ? 34 : 22;
+      else if (ratio <= 1) score += 18;
+
+      if (budget <= 900) score += scooter.ratings.value * 5 + (scooter.price <= budget * 0.95 ? 12 : 0);
+      if (budget <= 1400) score += scooter.ratings.value * 3.2;
+      if (budget >= 2500 && ratio < 0.45 && priority !== "price") score -= 10;
+
+      return score;
+    }
+
+    function distanceFitScore(scooter, totalDistance, usageType, priority) {
+      const remaining = remainingPercent(scooter, totalDistance);
+      let score = 0;
+
+      if (remaining < 10) return -220;
+      if (remaining < 20) score -= 80;
+      else if (remaining < 30) score -= 24;
+      else if (remaining <= 55) score += usageType === "city" ? 36 : 30;
+      else if (remaining <= 80) score += usageType === "longRide" || priority === "range" ? 36 : 18;
+      else score += usageType === "longRide" || priority === "range" ? 28 : -18;
+
+      if (totalDistance >= 45) score += scooter.ratings.autonomy * 5 + (scooter.estimatedRange >= totalDistance * 1.55 ? 22 : 0);
+      if (totalDistance <= 18 && scooter.estimatedRange > totalDistance * 5 && usageType !== "longRide" && priority !== "range") score -= 30;
+      if (totalDistance <= 30 && scooter.range > 125 && usageType !== "longRide" && priority !== "range") score -= 24;
+
+      return score;
+    }
+
+    function speedFitScore(scooter, speed, usageType, priority) {
+      let score = 0;
+      const speedMargin = scooter.maxSpeed - speed;
+
+      if (speedMargin < 0) return -220;
+      if (speed === 25) {
+        if (scooter.maxSpeed <= 45) score += 24;
+        if (scooter.maxSpeed >= 80 && usageType === "city" && priority !== "performance") score -= 28;
+      }
+
+      if (speed === 45) {
+        if (speedMargin >= 5 && speedMargin <= 30) score += 26;
+        if (speedMargin > 45 && usageType !== "sport" && priority !== "performance") score -= 18;
+      }
+
+      if (speed === 55) {
+        if (speedMargin >= 10) score += 28;
+        score += scooter.ratings.power * (usageType === "sport" || priority === "performance" ? 4 : 2);
+      }
+
+      return score;
+    }
+
+    function weightSuitabilityScore(scooter, riderWeight, usageType, priority) {
+      let score = 0;
+
+      if (riderWeight >= 95) score += scooter.ratings.power * 2.8 + scooter.ratings.comfort * 1.8;
+      if (riderWeight < 75 && scooter.weightKg >= 45 && usageType === "city") score -= 26;
+
+      if (usageType === "city") {
+        if (scooter.weightKg < 25) score += 20;
+        else if (scooter.weightKg < 35) score += 10;
+        else if (priority !== "performance" && priority !== "range") score -= 28;
+      }
+
+      if (usageType === "versatile" && scooter.weightKg < 38) score += 10;
+      if ((usageType === "sport" || usageType === "longRide") && scooter.weightKg >= 35) score += 6;
+
+      return score;
+    }
+
+    function scoreScooter(scooter, totalDistance, speed, budget, usageType, priority, riderWeight) {
+      const remaining = remainingPercent(scooter, totalDistance);
+      const spareRange = scooter.estimatedRange - totalDistance;
+      let score = 0;
+
+      if (scooter.price > budget) return -10000 - (scooter.price - budget);
+      if (scooter.maxSpeed < speed) return -9000 - (speed - scooter.maxSpeed) * 100;
+      if (remaining < 10) return -8000 + remaining;
+
+      score += distanceFitScore(scooter, totalDistance, usageType, priority);
+      score += speedFitScore(scooter, speed, usageType, priority);
+      score += budgetFitScore(scooter, budget, priority);
+      score += weightSuitabilityScore(scooter, riderWeight, usageType, priority);
+      score += usageScore(scooter, usageType);
+      score += usageIntentScore(scooter, totalDistance, speed, usageType);
+      score += categoryFitScore(scooter, usageType, totalDistance);
+      score += realWorldFitScore(scooter, totalDistance, speed, usageType);
+      score += priorityScore(scooter, priority, totalDistance);
+
+      if (remaining >= 30 && remaining <= 75) score += 16;
+      if (remaining > 85 && totalDistance <= 20 && usageType !== "longRide" && priority !== "range") score -= 30;
+      if (spareRange > 90 && totalDistance <= 25 && usageType !== "longRide" && priority !== "range") score -= 34;
+      if (usageType === "city" && scooter.weightKg >= 35 && speed <= 45 && totalDistance <= 35) score -= 22;
+      if (scooter.market === "Marques alternatives / import") score -= usageType === "city" ? 8 : 4;
+      if (scooter.weightKg >= 35 && scooter.maxSpeed >= speed + 20 && remaining >= 40) score += 10;
+      if (scooter.weightKg >= 35 && scooter.ratings.value >= 9 && scooter.ratings.autonomy >= 8) score += 10;
+      if ((usageType === "sport" || usageType === "longRide") && scooter.weightKg >= 35 && remaining >= 30 && scooter.maxSpeed >= speed) score += 10;
+
+      return score;
+    }
+
+    function reasonFor(scooter, totalDistance) {
+      const reserve = Math.max(0, Math.round(((scooter.estimatedRange - totalDistance) / scooter.estimatedRange) * 100));
+      if (reserve >= 30) return `Adaptée à ton trajet avec environ ${reserve} % de marge estimée.`;
+      return "C’est le choix le plus proche, mais la marge reste courte.";
+    }
+
+    function quickStats(scooter) {
+      return `
+        <div class="result-lines">
+          <div class="result-line"><span>${icon("price")} Prix</span><strong>${euro(scooter.price)}</strong></div>
+          <div class="result-line"><span>${icon("battery")} Autonomie</span><strong>${Math.round(scooter.estimatedRange)} km</strong></div>
+        </div>
+      `;
+    }
+
+    function formatWeight(weightKg) {
+      return `${Number(weightKg).toLocaleString("fr-FR", { maximumFractionDigits: 1 })} kg`;
+    }
+
+    function scoreTone(score) {
+      if (score >= 8) return "score-good";
+      if (score >= 5) return "score-mid";
+      return "score-low";
+    }
+
+    function scoreBadge(score) {
+      return `<strong class="score-badge ${scoreTone(score)}">${score}/10</strong>`;
+    }
+
+    function heavyWarning(scooter) {
+      if (scooter.weightKg < 35) return "";
+
+      return `
+        <div class="heavy-warning">
+          ⚠️ Modèle lourd : à partir de 35 kg, la trott peut être difficile à porter ou transporter au quotidien.
+        </div>
+      `;
+    }
+
+    function importNotice(scooter) {
+      if (scooter.market !== "Marques alternatives / import") return "";
+
+      return `
+        <div class="import-notice">
+          Marque alternative / import : bien vérifier le SAV, les pièces disponibles et les retours utilisateurs avant achat.
+        </div>
+      `;
+    }
+
+    function maintenanceInfo(scooter) {
+      const compactBrands = ["Xiaomi", "Segway / Ninebot", "E-Twow", "Navee"];
+      const simpleValueBrands = ["Kukirin", "Joyor", "Inmotion", "Vsett"];
+      const highMaintenanceBrands = ["Weped"];
+      const highMaintenanceModels = /Thunder|Storm|Ultra|X Limited|Alien|Sonic|Burn-E|Wolf King|Wolf Warrior|Fighter 7260R|Fighter Supreme|RS|SST|Dark Knight/i;
+      const isImport = scooter.market === "Marques alternatives / import";
+      const isVeryComplex = scooter.weightKg >= 48 || scooter.powerWatts >= 6500 || scooter.maxSpeed >= 90 || highMaintenanceModels.test(scooter.model);
+      const isSporty = scooter.weightKg >= 38 || scooter.powerWatts >= 3500 || scooter.maxSpeed >= 70;
+
+      if (isImport) {
+        return {
+          tone: "check",
+          label: "⚠️ SAV / pièces à vérifier",
+          detail: "Marque import ou pièces parfois difficiles à obtenir."
+        };
+      }
+
+      if (highMaintenanceBrands.includes(scooter.brand) || isVeryComplex) {
+        return {
+          tone: "high",
+          label: "🔴 Entretien élevé",
+          detail: "Pneus, freins, pièces ou entretien souvent coûteux."
+        };
+      }
+
+      if (compactBrands.includes(scooter.brand) && !isSporty) {
+        return {
+          tone: "economic",
+          label: "🟢 Entretien économique",
+          detail: "Pièces simples et peu coûteuses."
+        };
+      }
+
+      if (simpleValueBrands.includes(scooter.brand) && scooter.weightKg < 36 && scooter.powerWatts < 3200) {
+        return {
+          tone: "economic",
+          label: "🟢 Entretien économique",
+          detail: "Pièces assez courantes et coût contenu."
+        };
+      }
+
+      return {
+        tone: "medium",
+        label: "🟠 Entretien moyen",
+        detail: "Certaines pièces peuvent coûter plus cher."
+      };
+    }
+
+    function maintenanceBlock(scooter) {
+      const maintenance = maintenanceInfo(scooter);
+
+      return `
+        <div class="maintenance-info maintenance-${maintenance.tone}">
+          <strong>${maintenance.label}</strong>
+          <span>${maintenance.detail}</span>
+        </div>
+      `;
+    }
+
+    function maintenanceMiniBlock(scooter) {
+      const maintenance = maintenanceInfo(scooter);
+
+      return `
+        <div class="maintenance-mini maintenance-${maintenance.tone}">
+          <span>${maintenance.label}</span>
+        </div>
+      `;
+    }
+
+    function smartReasons(scooter, totalDistance, speed, budget, usageType, riderWeight) {
+      const remaining = ((scooter.estimatedRange - totalDistance) / scooter.estimatedRange) * 100;
+      const reasons = [];
+
+      const add = (text) => {
+        if (!reasons.includes(text) && reasons.length < 5) reasons.push(text);
+      };
+
+      if (remaining >= 45) add("Bonne autonomie pour votre trajet");
+      if (remaining >= 30 && remaining < 45) add("Marge de batterie rassurante");
+      if (scooter.price <= budget * 0.82 && scooter.ratings.value >= 7) add("Très bon rapport qualité/prix");
+      if (scooter.ratings.value >= 9) add("Prix cohérent pour ses prestations");
+
+      if (usageType === "city") {
+        add("Plus pratique pour une utilisation quotidienne");
+        if (scooter.weightKg < 30) add("Poids raisonnable au quotidien");
+        if (scooter.weightKg < 35 && scooter.ratings.power < 9) add("Plus adaptée qu’une grosse trott trop lourde");
+        if (scooter.ratings.reliability >= 8) add("Fiable pour rouler souvent");
+      }
+
+      if (usageType === "versatile") {
+        add("Modèle polyvalent et facile à conseiller");
+        if (scooter.ratings.comfort >= 7 && scooter.ratings.power >= 6) add("Bon équilibre confort / puissance");
+        if (scooter.ratings.autonomy >= 7 && scooter.ratings.value >= 7) add("Bon compromis autonomie / budget");
+      }
+
+      if (usageType === "sport") {
+        if (scooter.ratings.power >= 8) add("Bonne puissance pour les sensations");
+        if (scooter.maxSpeed >= speed + 10) add("Garde une marge de performance");
+        if (scooter.ratings.comfort >= 7) add("Bon équilibre entre stabilité et puissance");
+        add("Adaptée à un usage plus dynamique");
+      }
+
+      if (usageType === "longRide") {
+        add("Adaptée aux longues balades");
+        if (scooter.ratings.comfort >= 8) add("Confort intéressant sur la durée");
+        if (scooter.ratings.autonomy >= 9) add("Grosse réserve d’autonomie");
+        if (remaining >= 35) add("Bonne marge pour rouler sereinement");
+      }
+
+      if (speed >= 45 && scooter.ratings.power >= 7) add("Assez performante pour la vitesse souhaitée");
+      if (scooter.ratings.comfort >= 8) add("Très bon confort");
+      if (scooter.ratings.reliability >= 8) add("Modèle rassurant et fiable");
+      if (riderWeight >= 90 && scooter.ratings.power >= 7) add("Puissance adaptée à votre gabarit");
+      if (scooter.weightKg < 35 && scooter.category !== "longue autonomie") add("Poids raisonnable pour sa catégorie");
+      if (scooter.weightKg >= 35 && (usageType === "sport" || usageType === "longRide")) add("Poids cohérent avec ses performances");
+      if (scooter.market === "Marques alternatives / import" && scooter.ratings.value >= 8) add("Prix attractif, SAV à vérifier avant achat");
+
+      add("Cohérente avec votre budget et votre trajet");
+      return reasons.slice(0, 5);
+    }
+
+    function modelSummary(scooter, totalDistance, usageType) {
+      const remaining = ((scooter.estimatedRange - totalDistance) / scooter.estimatedRange) * 100;
+
+      if (scooter.ratings.value >= 9 && scooter.price <= 1500) return "💸 Très bon rapport qualité/prix";
+      if (scooter.ratings.autonomy >= 9 && remaining >= 45) return "🔋 Excellente autonomie";
+      if (scooter.ratings.power >= 9 && scooter.weightKg >= 35) return "⚡ Plus performante mais plus lourde";
+      if (usageType === "city" && scooter.weightKg < 35 && scooter.ratings.reliability >= 7) return "⚖️ Choix le plus équilibré";
+      if (scooter.ratings.comfort >= 8 && scooter.ratings.autonomy >= 8) return "⚖️ Choix le plus équilibré";
+      return "🛴 Choix cohérent pour votre besoin";
+    }
+
+    function strengthBadges(scooter, totalDistance, budget, usageType) {
+      const remaining = ((scooter.estimatedRange - totalDistance) / scooter.estimatedRange) * 100;
+      const badges = [];
+      const add = (text) => {
+        if (!badges.includes(text) && badges.length < 2) badges.push(text);
+      };
+
+      if (scooter.price <= budget * 0.78 || scooter.ratings.value >= 9) add("💸 Meilleur budget");
+      if (scooter.ratings.autonomy >= 9 || remaining >= 60) add("🔋 Grosse autonomie");
+      if (scooter.ratings.power >= 9 || scooter.maxSpeed >= 85) add("⚡ Très performante");
+      if (usageType === "city" && scooter.weightKg < 35) add("🏙 Idéale quotidien");
+      if (scooter.ratings.comfort >= 9) add("🛋 Très confortable");
+      if (scooter.ratings.value >= 8 && scooter.ratings.comfort >= 8 && scooter.ratings.autonomy >= 8) add("⚖️ Bon équilibre");
+      return badges;
+    }
+
+    function badgesBlock(scooter, totalDistance, budget, usageType) {
+      const badges = strengthBadges(scooter, totalDistance, budget, usageType);
+      if (!badges.length) return "";
+      return `<div class="strength-badges">${badges.map((badge) => `<span class="strength-badge">${badge}</span>`).join("")}</div>`;
+    }
+
+    function comparisonExplanation(current, reference, totalDistance, usageType) {
+      if (!reference || current.model === reference.model && current.brand === reference.brand) return "";
+
+      const morePowerful = current.ratings.power > reference.ratings.power || current.maxSpeed > reference.maxSpeed;
+      const cheaper = current.price < reference.price;
+      const moreRange = current.estimatedRange > reference.estimatedRange + 8;
+      const heavier = current.weightKg >= reference.weightKg + 5;
+      const lessDaily = usageType === "city" && current.weightKg >= 35;
+
+      if ((morePowerful || moreRange) && (heavier || lessDaily)) {
+        return "Malgré sa puissance et son autonomie supérieures, ce modèle est plus lourd et moins adapté à un usage quotidien.";
+      }
+
+      if (cheaper && current.ratings.comfort < reference.ratings.comfort) {
+        return "Moins chère, mais le confort est moins intéressant que le premier choix.";
+      }
+
+      if (cheaper && current.estimatedRange < reference.estimatedRange - 10) {
+        return "Plus abordable, mais avec moins de marge d’autonomie.";
+      }
+
+      if (morePowerful && current.price > reference.price) {
+        return "Plus performante, mais moins pertinente si vous cherchez surtout un choix équilibré.";
+      }
+
+      if (current.weightKg > reference.weightKg + 8) {
+        return "Bon modèle, mais plus lourd à transporter que le premier choix.";
+      }
+
+      return "";
+    }
+
+    function reasonsBlock(scooter, totalDistance, speed, budget, usageType, riderWeight, referenceScooter = null) {
+      const reasons = smartReasons(scooter, totalDistance, speed, budget, usageType, riderWeight).slice(0, 3);
+      const comparison = comparisonExplanation(scooter, referenceScooter, totalDistance, usageType);
+
+      return `
+        <div class="why-box">
+          <button class="why-toggle" type="button">💡 Pourquoi ce choix ?</button>
+          <div class="why-content">
+            <div class="why-content-inner">
+              <span class="why-title">💡 Pourquoi cette trott ?</span>
+              <div class="model-summary">${modelSummary(scooter, totalDistance, usageType)}</div>
+              ${comparison ? `<div class="comparison-note">${comparison}</div>` : ""}
+              <div class="reason-list">
+                ${reasons.map((reason) => `<div class="reason-chip"><span>✅</span>${reason}</div>`).join("")}
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function resultSummaryText(totalDistance, budget, usageType, hasAccessibleFits) {
+      if (!hasAccessibleFits) {
+        if (budget < 1000) return "💡 Votre budget semble un peu juste pour ce besoin. Voici des modèles cohérents à viser.";
+        return "⚠️ Votre besoin demande une trottinette plus solide. Voici les objectifs les plus adaptés.";
+      }
+
+      if (usageType === "city") {
+        if (totalDistance <= 20) return "🔋 Ces modèles semblent les plus adaptés à vos trajets quotidiens.";
+        return "🛴 Nous avons trouvé des modèles pratiques pour vos trajets réguliers.";
+      }
+
+      if (usageType === "versatile") {
+        return "💡 Voici les trottinettes qui correspondent le mieux à votre budget et votre utilisation.";
+      }
+
+      if (usageType === "sport") {
+        return "⚡ Voici les modèles les plus cohérents pour garder de bonnes sensations.";
+      }
+
+      if (usageType === "longRide") {
+        return "🌄 Voici les modèles les plus adaptés pour rouler plus longtemps avec une bonne marge.";
+      }
+
+      return "🛴 Nous avons trouvé plusieurs trottinettes adaptées à votre besoin.";
+    }
+
+    function bestCard(scooter, totalDistance, speed, budget, usageType, riderWeight) {
+      return `
+        <article class="best-card">
+          <div class="card-head">
+            <span class="badge">🥇 Meilleur choix</span>
+            <div class="brand">${scooter.brand}</div>
+            <div class="model">${scooter.model}</div>
+            ${badgesBlock(scooter, totalDistance, budget, usageType)}
+            <p class="choice-summary">${modelSummary(scooter, totalDistance, usageType)}</p>
+          </div>
+          ${quickStats(scooter)}
+          ${maintenanceMiniBlock(scooter)}
+          ${reasonsBlock(scooter, totalDistance, speed, budget, usageType, riderWeight)}
+          ${importNotice(scooter)}
+        </article>
+      `;
+    }
+
+    function futureCard(scooter, totalDistance, speed, budget, usageType, riderWeight) {
+      return `
+        <article class="best-card">
+          <div class="card-head">
+            <span class="badge">🎯 Objectif futur</span>
+            <div class="brand">${scooter.brand}</div>
+            <div class="model">${scooter.model}</div>
+            ${badgesBlock(scooter, totalDistance, budget, usageType)}
+            <p class="choice-summary">${modelSummary(scooter, totalDistance, usageType)}</p>
+          </div>
+          ${quickStats(scooter)}
+          ${maintenanceMiniBlock(scooter)}
+          ${reasonsBlock(scooter, totalDistance, speed, budget, usageType, riderWeight)}
+          ${importNotice(scooter)}
+        </article>
+      `;
+    }
+
+    function altCard(scooter, index = 0, totalDistance = 0, speed = 25, budget = 0, usageType = "city", riderWeight = 0, referenceScooter = null) {
+      const medal = index === 0 ? "🥈 2e choix" : "🥉 3e choix";
+      const comparison = comparisonExplanation(scooter, referenceScooter, totalDistance, usageType);
+      return `
+        <article class="alt-card">
+          <div class="card-head">
+            <div class="card-title">
+              <span class="badge">${medal}</span>
+              <div class="brand">${scooter.brand}</div>
+              <div class="model">${scooter.model}</div>
+              ${badgesBlock(scooter, totalDistance, budget, usageType)}
+              <p class="choice-summary">${comparison || modelSummary(scooter, totalDistance, usageType)}</p>
+            </div>
+          </div>
+          ${quickStats(scooter)}
+          ${maintenanceMiniBlock(scooter)}
+          ${reasonsBlock(scooter, totalDistance, speed, budget, usageType, riderWeight, referenceScooter)}
+          ${importNotice(scooter)}
+        </article>
+      `;
+    }
+
+    function compareCard(scooter) {
+      return `
+        <article class="compare-card">
+          <h3>${scooter.brand} ${scooter.model}</h3>
+          <div class="rating-grid">
+            <div class="rating-line price-line"><span>${icon("price")} Prix</span><strong>${euro(scooter.price)}</strong></div>
+            <div class="rating-pill"><span>${icon("battery")} Autonomie</span><strong>${Math.round(scooter.estimatedRange)} km</strong></div>
+            <div class="rating-pill"><span>${icon("weight")} Poids</span><strong>${formatWeight(scooter.weightKg)}</strong></div>
+            <div class="rating-pill"><span>${icon("speed")} Vitesse</span><strong>${scooter.maxSpeed} km/h</strong></div>
+            <div class="rating-pill"><span>${icon("power")} Puissance</span>${scoreBadge(scooter.ratings.power)}</div>
+            <div class="rating-pill"><span>${icon("comfort")} Confort</span>${scoreBadge(scooter.ratings.comfort)}</div>
+            <div class="rating-pill"><span>${icon("reliability")} Fiabilité</span>${scoreBadge(scooter.ratings.reliability)}</div>
+            <div class="rating-pill"><span>${icon("price")} Qualité/prix</span>${scoreBadge(scooter.ratings.value)}</div>
+          </div>
+          ${maintenanceBlock(scooter)}
+          ${heavyWarning(scooter)}
+          ${importNotice(scooter)}
+        </article>
+      `;
+    }
+
+    function revealResults() {
+      els.result.classList.remove("is-visible");
+      els.result.style.display = "block";
+      void els.result.offsetWidth;
+      els.result.classList.add("is-visible");
+      els.result.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    function selectDiverseChoices(candidates, limit = 3) {
+      const choices = [];
+      const closeEnough = candidates.length ? candidates[0].score - 34 : 0;
+
+      for (const scooter of candidates) {
+        if (choices.length >= limit) break;
+
+        const sameBrand = choices.some((choice) => choice.brand === scooter.brand);
+        const sameCategory = choices.some((choice) => choice.category === scooter.category);
+        const isClose = scooter.score >= closeEnough;
+
+        if (!sameBrand || choices.length === 0) {
+          choices.push(scooter);
+          continue;
+        }
+
+        if (isClose && !sameCategory && choices.length < limit) {
+          choices.push(scooter);
+        }
+      }
+
+      for (const scooter of candidates) {
+        if (choices.length >= limit) break;
+        if (!choices.some((choice) => choice.brand === scooter.brand && choice.model === scooter.model)) {
+          choices.push(scooter);
+        }
+      }
+
+      return choices;
+    }
+
+    function recommendScooters() {
+      const distance = Number(els.distance.value);
+      const weight = Number(els.weight.value);
+      const budget = Number(els.budget.value);
+      const speed = Number(selectedValue("speed"));
+      const usageType = selectedValue("usageType");
+      const priority = selectedValue("priority");
+      const totalDistance = distance;
+
+      if (!distance || !weight || !budget) {
+        alert("Merci de renseigner la distance, le poids et le budget.");
+        return;
+      }
+
+      trackEvent("recommendation_search", {
+        distance_km: distance,
+        rider_weight: weight,
+        budget,
+        speed,
+        usage_type: usageType,
+        priority
+      });
+
+      const ranked = scooters
+        .map((scooter) => estimateScooter(scooter, speed, weight))
+        .map((scooter) => ({ ...scooter, score: scoreScooter(scooter, totalDistance, speed, budget, usageType, priority, weight) }))
+        .sort((a, b) => b.score - a.score || a.price - b.price || a.brand.localeCompare(b.brand) || a.model.localeCompare(b.model));
+
+      const accessibleFits = ranked.filter((scooter) => {
+        const remaining = remainingPercent(scooter, totalDistance);
+        return scooter.price <= budget && scooter.maxSpeed >= speed && remaining >= 20;
+      });
+
+      const strongAccessibleFits = accessibleFits.filter((scooter) => {
+        const remaining = remainingPercent(scooter, totalDistance);
+        return remaining >= 30 && scooter.score > 0;
+      });
+
+      const recommendationPool = strongAccessibleFits.length ? strongAccessibleFits : accessibleFits;
+
+      const futureFits = scooters
+        .map((scooter) => estimateScooter(scooter, speed, weight))
+        .filter((scooter) => {
+          const remaining = remainingPercent(scooter, totalDistance);
+          return scooter.price > budget && scooter.maxSpeed >= speed && remaining >= 30;
+        })
+        .map((scooter) => ({
+          ...scooter,
+          score: scoreScooter(scooter, totalDistance, speed, scooter.price, usageType, priority, weight) - Math.min(70, (scooter.price - budget) / 45)
+        }))
+        .sort((a, b) => b.score - a.score || a.price - b.price || a.brand.localeCompare(b.brand) || a.model.localeCompare(b.model));
+
+      if (!recommendationPool.length) {
+        const futureChoices = selectDiverseChoices(futureFits, 3);
+        state.choices = futureChoices;
+        els.result.classList.add("future-mode");
+        els.resultSummary.textContent = "";
+        els.resultSummary.style.display = "none";
+        els.bestChoice.innerHTML = `
+          <div class="honest-message">
+            ⚠️ Votre budget semble un peu limité pour ce niveau de performance.<br><br>
+            💡 Il peut être intéressant d’économiser un peu plus pour obtenir plus d’autonomie, un meilleur confort et une meilleure fiabilité.
+          </div>
+          ${futureChoices.length ? futureCard(futureChoices[0], totalDistance, speed, budget, usageType, weight) : ""}
+        `;
+        els.alternatives.innerHTML = futureChoices.slice(1, 3).map((scooter, index) => altCard(scooter, index, totalDistance, speed, budget, usageType, weight, futureChoices[0])).join("");
+        els.comparePanel.innerHTML = futureChoices.map(compareCard).join("");
+        els.comparePanel.classList.remove("is-open");
+        els.compareHint.classList.remove("is-visible");
+        els.compareButton.style.display = futureChoices.length ? "block" : "none";
+        els.compareButton.innerHTML = compareButtonLabel(false);
+        revealResults();
+        return;
+      }
+
+      const choices = selectDiverseChoices(recommendationPool, 3);
+      state.choices = choices;
+      els.result.classList.remove("future-mode");
+      els.resultSummary.style.display = "block";
+      els.resultSummary.textContent = resultSummaryText(totalDistance, budget, usageType, true);
+      els.bestChoice.innerHTML = bestCard(choices[0], totalDistance, speed, budget, usageType, weight);
+      els.alternatives.innerHTML = choices.slice(1, 3).map((scooter, index) => altCard(scooter, index, totalDistance, speed, budget, usageType, weight, choices[0])).join("");
+      els.comparePanel.innerHTML = choices.map(compareCard).join("");
+      els.comparePanel.classList.remove("is-open");
+      els.compareHint.classList.remove("is-visible");
+      els.compareButton.style.display = "block";
+      els.compareButton.innerHTML = compareButtonLabel(false);
+      revealResults();
+    }
+
+    function toggleCompare() {
+      const isOpen = els.comparePanel.classList.toggle("is-open");
+      els.compareHint.classList.toggle("is-visible", isOpen && state.choices.length > 1);
+      els.compareButton.innerHTML = compareButtonLabel(isOpen);
+      trackEvent(isOpen ? "compare_models_open" : "compare_models_close", {
+        models_count: state.choices.length
+      });
+    }
+
+    function toggleWhyDetails(event) {
+      const button = event.target.closest(".why-toggle");
+      if (!button) return;
+
+      const box = button.closest(".why-box");
+      const isOpen = box.classList.toggle("open");
+      button.textContent = isOpen ? "Masquer l’explication" : "💡 Pourquoi ce choix ?";
+    }
+
+    function openCommunity(event) {
+      event.preventDefault();
+      trackEvent("community_click", {
+        destination: "facebook_group"
+      });
+      window.open("https://www.facebook.com/groups/843618944246747?locale=fr_FR", "_blank");
+    }
+
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        let refreshing = false;
+
+        navigator.serviceWorker.addEventListener("controllerchange", () => {
+          if (refreshing) return;
+          refreshing = true;
+          window.location.reload();
+        });
+
+        navigator.serviceWorker.register("./service-worker.js", { updateViaCache: "none" })
+          .then((registration) => {
+            registration.update();
+          })
+          .catch(() => {});
+      });
+    }
+  </script>
+</body>
+</html>
