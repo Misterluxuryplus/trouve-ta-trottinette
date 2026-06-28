@@ -1733,13 +1733,14 @@
     }
 
     #catalogSection .catalog-filters,
-    #catalogSection .selected-compare {
+    #catalogSection .catalog-sort,
+    #catalogSection .selected-compare,
+    #catalogSection .catalog-table-wrap {
       display: none;
     }
 
-    #catalogSection:not(.is-expanded) .catalog-sort,
     #catalogSection:not(.is-expanded) .catalog-meta,
-    #catalogSection:not(.is-expanded) .catalog-table-wrap {
+    #catalogSection:not(.is-expanded) .catalog-card-list {
       display: none;
     }
 
@@ -1760,6 +1761,161 @@
       font-size: 13px;
       line-height: 1.45;
       text-align: center;
+    }
+
+    .advanced-toggle {
+      width: 100%;
+      margin-top: 14px;
+      min-height: 48px;
+      border-radius: 16px;
+      border: 1px solid rgba(56, 189, 248, 0.24);
+      color: #e0f2fe;
+      background: rgba(14, 165, 233, 0.1);
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .advanced-panel {
+      display: none;
+      margin-top: 13px;
+      padding: 13px;
+      border-radius: 18px;
+      background: rgba(2, 6, 23, 0.34);
+      border: 1px solid rgba(148, 163, 184, 0.13);
+    }
+
+    .advanced-panel.is-open {
+      display: block;
+    }
+
+    .model-browser {
+      margin-top: 18px;
+    }
+
+    .browser-meta {
+      margin-top: 12px;
+      padding: 12px 13px;
+      border-radius: 16px;
+      color: #bfdbfe;
+      background: rgba(14, 165, 233, 0.1);
+      border: 1px solid rgba(56, 189, 248, 0.18);
+      text-align: center;
+      font-size: 13px;
+      font-weight: 850;
+    }
+
+    .brand-group {
+      margin-top: 18px;
+    }
+
+    .brand-group-title {
+      margin: 0 0 10px;
+      color: #f97316;
+      font-size: 18px;
+      font-weight: 950;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      text-shadow: 0 0 18px rgba(249, 115, 22, 0.22);
+    }
+
+    .model-card-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .model-card {
+      padding: 15px;
+      border-radius: 20px;
+      background: rgba(15, 23, 42, 0.92);
+      border: 1px solid rgba(56, 189, 248, 0.16);
+      box-shadow: 0 14px 34px rgba(2, 6, 23, 0.28);
+    }
+
+    .model-card-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: flex-start;
+      margin-bottom: 10px;
+    }
+
+    .model-card-brand {
+      color: #93c5fd;
+      font-size: 12px;
+      font-weight: 950;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .model-card h3 {
+      margin: 4px 0 0;
+      color: #ffffff;
+      font-size: 20px;
+      line-height: 1.12;
+    }
+
+    .model-card-usage {
+      flex: 0 0 auto;
+      padding: 7px 9px;
+      border-radius: 999px;
+      color: #fed7aa;
+      background: rgba(249, 115, 22, 0.12);
+      border: 1px solid rgba(249, 115, 22, 0.22);
+      font-size: 11px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .model-card-main {
+      display: grid;
+      gap: 8px;
+      margin: 12px 0;
+    }
+
+    .model-detail-toggle {
+      width: 100%;
+      min-height: 44px;
+      margin-top: 12px;
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      border-radius: 15px;
+      color: #ffffff;
+      background: linear-gradient(135deg, rgba(249, 115, 22, 0.78), rgba(2, 132, 199, 0.78));
+      font-weight: 950;
+      cursor: pointer;
+      transition: transform 0.16s ease, filter 0.16s ease;
+    }
+
+    .model-detail-toggle:hover {
+      filter: brightness(1.06);
+    }
+
+    .model-detail-toggle:active {
+      transform: translateY(1px);
+    }
+
+    .model-details {
+      display: none;
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 16px;
+      background: rgba(2, 6, 23, 0.46);
+      border: 1px solid rgba(148, 163, 184, 0.12);
+      color: #dbeafe;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .model-details.is-open {
+      display: grid;
+      gap: 8px;
+    }
+
+    .model-details strong {
+      color: #ffffff;
+    }
+
+    .catalog-card-list {
+      margin-top: 14px;
     }
 
     @media (max-width: 390px) {
@@ -1804,13 +1960,13 @@
 
     <section class="simple-section" aria-labelledby="simpleSearchTitle">
       <h2 id="simpleSearchTitle">Je cherche ma trott</h2>
-      <p>Répondez à quelques critères simples. L’application affiche seulement les modèles les plus cohérents.</p>
+      <p>Choisissez une marque, un tri et quelques critères simples. Les modèles se mettent à jour automatiquement.</p>
 
       <div class="simple-form">
         <div class="simple-field">
-          <label for="simpleBrand">Marque souhaitée</label>
+          <label for="simpleBrand">Marque</label>
           <select id="simpleBrand">
-            <option value="all">Toutes marques</option>
+            <option value="all">Toutes les marques</option>
             <option value="Dualtron">Dualtron</option>
             <option value="Kaabo">Kaabo</option>
             <option value="Nami">Nami</option>
@@ -1825,8 +1981,23 @@
         </div>
 
         <div class="simple-field">
+          <label for="simpleSort">Trier par</label>
+          <select id="simpleSort">
+            <option value="priceAsc">Prix : moins cher au plus cher</option>
+            <option value="priceDesc">Prix : plus cher au moins cher</option>
+            <option value="rangeAsc">Autonomie : faible à forte</option>
+            <option value="rangeDesc">Autonomie : forte à faible</option>
+            <option value="weightAsc">Poids : léger à lourd</option>
+            <option value="weightDesc">Poids : lourd à léger</option>
+            <option value="maintenance">Entretien : faible à élevé</option>
+            <option value="reliability">Fiabilité : meilleure en premier</option>
+          </select>
+        </div>
+
+        <div class="simple-field">
           <label for="simpleBudget">Budget</label>
           <select id="simpleBudget">
+            <option value="all">Tous budgets</option>
             <option value="lt1000">Moins de 1000 €</option>
             <option value="1000-2000" selected>1000 à 2000 €</option>
             <option value="2000-3000">2000 à 3000 €</option>
@@ -1835,18 +2006,9 @@
         </div>
 
         <div class="simple-field">
-          <label for="simpleRange">Autonomie souhaitée</label>
-          <select id="simpleRange">
-            <option value="lt40">Moins de 40 km</option>
-            <option value="40-70" selected>40 à 70 km</option>
-            <option value="70-100">70 à 100 km</option>
-            <option value="gt100">Plus de 100 km</option>
-          </select>
-        </div>
-
-        <div class="simple-field">
           <label for="simpleUsage">Usage principal</label>
           <select id="simpleUsage">
+            <option value="all">Tous usages</option>
             <option value="city">Ville</option>
             <option value="ride" selected>Balade</option>
             <option value="long">Longue distance</option>
@@ -1860,7 +2022,61 @@
         </div>
       </div>
 
-      <button class="simple-button" id="simpleSearchButton" type="button">Voir les meilleurs modèles</button>
+      <button class="advanced-toggle" id="advancedToggle" type="button">Filtres avancés</button>
+      <div class="advanced-panel" id="advancedPanel">
+        <div class="simple-form">
+          <div class="simple-field">
+            <label for="simpleRange">Autonomie souhaitée</label>
+            <select id="simpleRange">
+              <option value="all">Toutes autonomies</option>
+              <option value="lt40">Moins de 40 km</option>
+              <option value="40-70" selected>40 à 70 km</option>
+              <option value="70-100">70 à 100 km</option>
+              <option value="gt100">Plus de 100 km</option>
+            </select>
+          </div>
+
+          <div class="simple-field">
+            <label for="simpleWeight">Poids</label>
+            <select id="simpleWeight">
+              <option value="all">Tous les poids</option>
+              <option value="portable">Facile à transporter</option>
+              <option value="medium">Moyen</option>
+              <option value="heavy">Lourd</option>
+              <option value="xheavy">Très lourd / grosse machine</option>
+            </select>
+          </div>
+
+          <div class="simple-field">
+            <label for="simpleMaintenance">Entretien</label>
+            <select id="simpleMaintenance">
+              <option value="all">Tous entretiens</option>
+              <option value="low">Entretien faible</option>
+              <option value="medium">Entretien moyen</option>
+              <option value="high">Entretien élevé</option>
+            </select>
+          </div>
+
+          <div class="simple-field">
+            <label for="simpleParts">Disponibilité des pièces</label>
+            <select id="simpleParts">
+              <option value="all">Toutes disponibilités</option>
+              <option value="easy">Pièces faciles à trouver</option>
+              <option value="medium">Pièces moyennement disponibles</option>
+              <option value="hard">Pièces difficiles à trouver</option>
+            </select>
+          </div>
+
+          <div class="simple-field">
+            <label for="simpleLevel">Niveau utilisateur</label>
+            <select id="simpleLevel">
+              <option value="all">Tous niveaux</option>
+              <option value="beginner">Débutant</option>
+              <option value="confirmed">Confirmé</option>
+            </select>
+          </div>
+        </div>
+      </div>
     </section>
 
     <section class="panel legacy-panel" aria-hidden="true">
@@ -2050,7 +2266,7 @@
         <p class="catalog-intro">La liste complète reste masquée pour garder l’application lisible. Elle est classée par batterie, de la plus petite à la plus grosse.</p>
       </div>
 
-      <button class="toggle-catalog-button" id="toggleCatalogButton" type="button">Afficher toutes les trottinettes</button>
+      <button class="toggle-catalog-button" id="toggleCatalogButton" type="button">Afficher tous les modèles</button>
 
       <div class="catalog-filters" aria-label="Filtres du comparatif">
         <div class="filter-field">
@@ -2067,17 +2283,6 @@
             <option value="Segway / Ninebot">Segway / Ninebot</option>
             <option value="Xiaomi">Xiaomi</option>
             <option value="other">Autre</option>
-          </select>
-        </div>
-
-        <div class="filter-field">
-          <label for="batteryFilter">🔋 Filtre batterie</label>
-          <select id="batteryFilter" data-catalog-filter="battery">
-            <option value="all">Toutes les batteries</option>
-            <option value="small">Petite batterie</option>
-            <option value="medium">Batterie moyenne</option>
-            <option value="large">Grosse batterie</option>
-            <option value="xlarge">Très grosse batterie</option>
           </select>
         </div>
 
@@ -2149,21 +2354,12 @@
         </div>
       </div>
 
-      <div class="catalog-sort" aria-label="Tri du comparatif">
-        <button type="button" class="is-active" data-catalog-sort="batteryAsc">Trier par batterie croissante</button>
-        <button type="button" data-catalog-sort="batteryDesc">Trier par batterie décroissante</button>
-        <button type="button" data-catalog-sort="range">Trier par autonomie</button>
-        <button type="button" data-catalog-sort="priceAsc">Trier par prix croissant</button>
-        <button type="button" data-catalog-sort="priceDesc">Trier par prix décroissant</button>
-        <button type="button" data-catalog-sort="weight">Trier par poids</button>
-        <button type="button" data-catalog-sort="maintenance">Trier par coût d’entretien</button>
-        <button type="button" data-catalog-sort="reliability">Trier par fiabilité</button>
-      </div>
-
       <div class="catalog-meta">
         <span id="catalogCount"></span>
-        <span>Tri actif : <strong id="catalogSortLabel">batterie croissante</strong></span>
+        <span>Tri actif : <strong id="catalogSortLabel">prix croissant</strong></span>
       </div>
+
+      <div class="catalog-card-list" id="catalogCardList"></div>
 
       <div class="selected-compare" id="selectedCompare">
         <h3>Comparer 2 ou 3 trottinettes</h3>
@@ -2228,7 +2424,7 @@
   </main>
 
   <script>
-    const APP_VERSION = "1.17";
+    const APP_VERSION = "1.18";
 
     const scooters = [
       { brand: "Angwatt", model: "CS1", range: 55, maxSpeed: 55, powerWatts: 2400, weightKg: 34, price: 849, category: "polyvalente" },
@@ -2426,7 +2622,15 @@
     els.appVersion.textContent = `🛴 Version ${APP_VERSION}`;
     els.compareButton.innerHTML = compareButtonLabel(false);
 
-    document.getElementById("simpleSearchButton").addEventListener("click", runSimpleSearch);
+    document.querySelectorAll("#simpleBrand, #simpleSort, #simpleBudget, #simpleUsage, #simpleRange, #simpleWeight, #simpleMaintenance, #simpleParts, #simpleLevel").forEach((field) => {
+      field.addEventListener("change", () => {
+        renderModelBrowser();
+        if (document.getElementById("catalogSection").classList.contains("is-expanded")) {
+          renderCatalogTable();
+        }
+      });
+    });
+    document.getElementById("advancedToggle").addEventListener("click", toggleAdvancedFilters);
     document.getElementById("recommendButton").addEventListener("click", recommendScooters);
     els.compareButton.addEventListener("click", toggleCompare);
     els.communityButton.addEventListener("click", openCommunity);
@@ -2435,6 +2639,13 @@
       const button = event.target.closest("[data-compare-key]");
       if (!button) return;
       toggleCompareSelection(button.dataset.compareKey);
+    });
+    document.addEventListener("click", (event) => {
+      const button = event.target.closest(".model-detail-toggle");
+      if (!button) return;
+      const details = button.nextElementSibling;
+      const isOpen = details.classList.toggle("is-open");
+      button.textContent = isOpen ? "Masquer détails" : "Voir détails";
     });
 
     function selectedValue(name) {
@@ -2905,7 +3116,7 @@
     }
 
     const preferredBrandOptions = ["Dualtron", "Kaabo", "Nami", "Teverun", "Vsett", "Inmotion", "Kukirin", "Segway / Ninebot", "Xiaomi"];
-    const catalogState = { sort: "batteryAsc", selected: [] };
+    const catalogState = { sort: "priceAsc", selected: [] };
 
     const knownBatteryData = {
       "Dualtron|Mini": { voltage: 52, ah: 21 },
@@ -3143,7 +3354,6 @@
 
     function catalogPassesFilters(item) {
       const brand = catalogFilterValue("brand");
-      const battery = catalogFilterValue("battery");
       const range = catalogFilterValue("range");
       const price = catalogFilterValue("price");
       const usage = catalogFilterValue("usage");
@@ -3152,7 +3362,6 @@
       const parts = catalogFilterValue("parts");
 
       if (!brandMatchesPreference(item, brand)) return false;
-      if (battery !== "all" && item.batteryBucket !== battery) return false;
       if (range === "lt40" && item.range >= 40) return false;
       if (range === "40-70" && (item.range < 40 || item.range > 70)) return false;
       if (range === "70-100" && (item.range < 70 || item.range > 100)) return false;
@@ -3171,8 +3380,6 @@
     function sortCatalogItems(items) {
       const common = (a, b) => a.brand.localeCompare(b.brand) || a.model.localeCompare(b.model);
       const sorters = {
-        batteryAsc: (a, b) => a.battery.wh - b.battery.wh || common(a, b),
-        batteryDesc: (a, b) => b.battery.wh - a.battery.wh || common(a, b),
         range: (a, b) => b.range - a.range || common(a, b),
         priceAsc: (a, b) => a.price - b.price || common(a, b),
         priceDesc: (a, b) => b.price - a.price || common(a, b),
@@ -3180,7 +3387,7 @@
         maintenance: (a, b) => a.maintenance.rank - b.maintenance.rank || a.price - b.price || common(a, b),
         reliability: (a, b) => b.reliability.rank - a.reliability.rank || common(a, b)
       };
-      return items.sort(sorters[catalogState.sort] || sorters.batteryAsc);
+      return items.sort(sorters[catalogState.sort] || sorters.priceAsc);
     }
 
     function getSimpleValue(id) {
@@ -3233,9 +3440,14 @@
     function simpleSearchFilters() {
       return {
         brand: getSimpleValue("simpleBrand"),
+        sort: getSimpleValue("simpleSort") || "priceAsc",
         budget: getSimpleValue("simpleBudget"),
         range: getSimpleValue("simpleRange"),
-        usage: getSimpleValue("simpleUsage")
+        usage: getSimpleValue("simpleUsage"),
+        weight: getSimpleValue("simpleWeight"),
+        maintenance: getSimpleValue("simpleMaintenance"),
+        parts: getSimpleValue("simpleParts"),
+        level: getSimpleValue("simpleLevel")
       };
     }
 
@@ -3243,7 +3455,11 @@
       return brandMatchesPreference(item, filters.brand)
         && priceMatchesBracket(item.price, filters.budget)
         && rangeMatchesBracket(item.range, filters.range)
-        && simpleUsageMatches(item, filters.usage);
+        && simpleUsageMatches(item, filters.usage)
+        && (filters.weight === "all" || !filters.weight || item.weightBucket === filters.weight)
+        && (filters.maintenance === "all" || !filters.maintenance || item.maintenance.key === filters.maintenance)
+        && (filters.parts === "all" || !filters.parts || item.parts.key === filters.parts)
+        && (filters.level === "all" || !filters.level || item.usageTags.includes(filters.level));
     }
 
     function simpleItemScore(item, filters) {
@@ -3346,6 +3562,137 @@
       revealResults();
     }
 
+    function sortBrowserItems(items, sort) {
+      const common = (a, b) => a.brand.localeCompare(b.brand) || a.model.localeCompare(b.model);
+      const sorters = {
+        priceAsc: (a, b) => a.price - b.price || common(a, b),
+        priceDesc: (a, b) => b.price - a.price || common(a, b),
+        rangeAsc: (a, b) => a.range - b.range || common(a, b),
+        rangeDesc: (a, b) => b.range - a.range || common(a, b),
+        weightAsc: (a, b) => a.weightKg - b.weightKg || common(a, b),
+        weightDesc: (a, b) => b.weightKg - a.weightKg || common(a, b),
+        maintenance: (a, b) => a.maintenance.rank - b.maintenance.rank || a.price - b.price || common(a, b),
+        reliability: (a, b) => b.reliability.rank - a.reliability.rank || common(a, b)
+      };
+      return items.sort(sorters[sort] || sorters.priceAsc);
+    }
+
+    function groupItemsByBrand(items) {
+      return items.reduce((groups, item) => {
+        if (!groups[item.brand]) groups[item.brand] = [];
+        groups[item.brand].push(item);
+        return groups;
+      }, {});
+    }
+
+    function purchaseAdvice(item) {
+      const advice = ["version exacte", "batterie", "pièces disponibles", "prix final"];
+      if (item.parts.key === "hard") advice.push("retours SAV");
+      if (item.maintenance.key === "high") advice.push("coût pneus/freins");
+      return `Avant achat, vérifiez : ${advice.slice(0, 5).join(", ")}.`;
+    }
+
+    function modelCard(item) {
+      return `
+        <article class="model-card">
+          <div class="model-card-header">
+            <div>
+              <div class="model-card-brand">${escapeHtml(item.brand)}</div>
+              <h3>${escapeHtml(item.model)}</h3>
+            </div>
+            <span class="model-card-usage">${escapeHtml(categoryLabel(item.category))}</span>
+          </div>
+          <div class="catalog-badges">${compactBadges(item)}</div>
+          <div class="model-card-main">
+            <div class="simple-line"><span>Batterie</span><strong>${escapeHtml(item.battery.label)}</strong></div>
+            <div class="simple-line"><span>Autonomie</span><strong>${Math.round(item.range)} km</strong></div>
+            <div class="simple-line"><span>Prix indicatif</span><strong>${priceRange(item.price)}</strong></div>
+            <div class="simple-line"><span>Poids</span><strong>${formatWeight(item.weightKg)}</strong></div>
+            <div class="simple-line"><span>Entretien</span><strong>${escapeHtml(item.maintenance.label)}</strong></div>
+          </div>
+          <button class="model-detail-toggle" type="button">Voir détails</button>
+          <div class="model-details">
+            <div><strong>Points forts :</strong> ${escapeHtml(simpleStrongPoints(item))}</div>
+            <div><strong>Points faibles :</strong> ${escapeHtml(item.weaknesses)}</div>
+            <div><strong>Fiabilité :</strong> ${escapeHtml(item.reliability.label)}</div>
+            <div><strong>Pièces :</strong> ${escapeHtml(item.parts.label)}</div>
+            <div><strong>Coût d’entretien :</strong> ${escapeHtml(item.maintenance.label)}</div>
+            <div><strong>Conseil :</strong> ${escapeHtml(purchaseAdvice(item))}</div>
+          </div>
+        </article>
+      `;
+    }
+
+    function renderBrandGroups(items) {
+      const groups = groupItemsByBrand(items);
+      const brands = Object.keys(groups).sort((a, b) => a.localeCompare(b));
+      if (!brands.length) {
+        return `
+          <div class="honest-message">
+            Aucun modèle ne correspond à ces filtres.<br><br>
+            Essayez d’élargir le budget, l’autonomie souhaitée ou la marque.
+          </div>
+        `;
+      }
+
+      return brands.map((brand) => `
+        <section class="brand-group">
+          <h3 class="brand-group-title">${escapeHtml(brand)}</h3>
+          <div class="model-card-grid">
+            ${groups[brand].map(modelCard).join("")}
+          </div>
+        </section>
+      `).join("");
+    }
+
+    function filteredBrowserItems(limitResults = true) {
+      const filters = simpleSearchFilters();
+      let items = scooters
+        .map(catalogItem)
+        .filter((item) => simplePassesFilters(item, filters))
+        .map((item) => ({ ...item, simpleScore: simpleItemScore(item, filters) }))
+        .sort((a, b) => b.simpleScore - a.simpleScore || a.price - b.price || a.brand.localeCompare(b.brand) || a.model.localeCompare(b.model));
+
+      items = sortBrowserItems(items, filters.sort);
+      if (limitResults && filters.brand === "all") items = items.slice(0, 12);
+      return { filters, items };
+    }
+
+    function runSimpleSearch() {
+      renderModelBrowser();
+    }
+
+    function renderModelBrowser() {
+      const { filters, items } = filteredBrowserItems(true);
+      state.choices = items.slice(0, 3);
+      els.result.classList.remove("future-mode");
+      els.result.style.display = "block";
+      els.resultSummary.style.display = "block";
+      els.resultSummary.innerHTML = `
+        <div class="simple-results-note">
+          ${items.length} modèle${items.length > 1 ? "s" : ""} affiché${items.length > 1 ? "s" : ""}. La batterie reste visible dans les fiches, mais le tri principal se fait par autonomie, prix, poids, entretien ou fiabilité.
+        </div>
+      `;
+      els.bestChoice.innerHTML = `<div class="model-browser">${renderBrandGroups(items)}</div>`;
+      els.alternatives.innerHTML = "";
+      trackEvent("model_browser_filter", {
+        brand: filters.brand,
+        budget: filters.budget,
+        range: filters.range,
+        usage: filters.usage,
+        sort: filters.sort,
+        results: items.length
+      });
+    }
+
+    function toggleAdvancedFilters() {
+      const panel = document.getElementById("advancedPanel");
+      const button = document.getElementById("advancedToggle");
+      if (!panel || !button) return;
+      const isOpen = panel.classList.toggle("is-open");
+      button.textContent = isOpen ? "Masquer les filtres avancés" : "Filtres avancés";
+    }
+
     function allCatalogItems() {
       return scooters.map(catalogItem).sort((a, b) => a.brand.localeCompare(b.brand) || a.model.localeCompare(b.model));
     }
@@ -3411,7 +3758,7 @@
       const button = document.getElementById("toggleCatalogButton");
       if (!section || !button) return;
       const isOpen = section.classList.toggle("is-expanded");
-      button.textContent = isOpen ? "Masquer toutes les trottinettes" : "Afficher toutes les trottinettes";
+      button.textContent = isOpen ? "Masquer tous les modèles" : "Afficher tous les modèles";
       if (isOpen) renderCatalogTable();
     }
 
@@ -3419,13 +3766,29 @@
       const body = document.getElementById("catalogTableBody");
       const count = document.getElementById("catalogCount");
       const sortLabel = document.getElementById("catalogSortLabel");
-      if (!body || !count || !sortLabel) return;
+      const cardList = document.getElementById("catalogCardList");
+      if (!body || !count || !sortLabel || !cardList) return;
+
+      const browserData = filteredBrowserItems(false);
+      const browserItems = browserData.items;
+      count.textContent = `${browserItems.length} modèle${browserItems.length > 1 ? "s" : ""} affiché${browserItems.length > 1 ? "s" : ""}`;
+      sortLabel.textContent = {
+        priceAsc: "prix croissant",
+        priceDesc: "prix décroissant",
+        rangeAsc: "autonomie faible à forte",
+        rangeDesc: "autonomie forte à faible",
+        weightAsc: "poids léger à lourd",
+        weightDesc: "poids lourd à léger",
+        maintenance: "entretien faible à élevé",
+        reliability: "fiabilité"
+      }[browserData.filters.sort] || "prix croissant";
+      cardList.innerHTML = renderBrandGroups(browserItems);
+      body.innerHTML = "";
+      return;
 
       const items = sortCatalogItems(scooters.map(catalogItem).filter(catalogPassesFilters));
       count.textContent = `${items.length} modèle${items.length > 1 ? "s" : ""} affiché${items.length > 1 ? "s" : ""}`;
       sortLabel.textContent = {
-        batteryAsc: "batterie croissante",
-        batteryDesc: "batterie décroissante",
         range: "autonomie",
         priceAsc: "prix croissant",
         priceDesc: "prix décroissant",
@@ -3474,6 +3837,7 @@
 
       renderSelectedCompare();
       renderCatalogTable();
+      renderModelBrowser();
     }
 
     function compareSelectButton(scooter) {
