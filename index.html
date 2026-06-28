@@ -1086,6 +1086,366 @@
       background: rgba(250, 204, 21, 0.11);
     }
 
+    .catalog-section {
+      margin-top: 18px;
+      padding: 16px;
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      border-radius: 26px;
+      color: #e0f2fe;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(56, 189, 248, 0.18), transparent 32%),
+        linear-gradient(135deg, rgba(249, 115, 22, 0.11), rgba(56, 189, 248, 0.08)),
+        rgba(15, 23, 42, 0.88);
+      box-shadow: 0 20px 48px rgba(2, 6, 23, 0.26), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    }
+
+    .catalog-header {
+      display: grid;
+      gap: 8px;
+      margin-bottom: 14px;
+      text-align: center;
+    }
+
+    .catalog-header h2 {
+      margin: 0;
+      color: #fff7ed;
+      font-size: 22px;
+      line-height: 1.1;
+      font-weight: 950;
+    }
+
+    .catalog-header p {
+      margin: 0;
+      color: #cbd5e1;
+      font-size: 13px;
+      line-height: 1.4;
+      font-weight: 750;
+    }
+
+    .catalog-filters {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .filter-field {
+      display: grid;
+      gap: 6px;
+      min-width: 0;
+    }
+
+    .filter-field label {
+      margin: 0;
+      color: #fed7aa;
+      font-size: 12px;
+      line-height: 1.2;
+      font-weight: 900;
+    }
+
+    .filter-field select {
+      width: 100%;
+      min-height: 46px;
+      padding: 0 12px;
+      border: 1px solid rgba(148, 163, 184, 0.22);
+      border-radius: 15px;
+      color: #f8fafc;
+      background: rgba(15, 23, 42, 0.92);
+      font-size: 13px;
+      font-weight: 850;
+      outline: none;
+    }
+
+    .filter-field select:focus {
+      border-color: rgba(56, 189, 248, 0.72);
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.13);
+    }
+
+    .catalog-sort {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+      padding-bottom: 4px;
+      overflow-x: auto;
+      scrollbar-width: thin;
+    }
+
+    .catalog-sort button {
+      flex: 0 0 auto;
+      width: auto;
+      min-height: 40px;
+      margin: 0;
+      padding: 0 12px;
+      border: 1px solid rgba(56, 189, 248, 0.18);
+      border-radius: 999px;
+      color: #dbeafe;
+      background:
+        linear-gradient(135deg, rgba(56, 189, 248, 0.12), rgba(249, 115, 22, 0.08)),
+        rgba(15, 23, 42, 0.82);
+      box-shadow: none;
+      font-size: 12px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .catalog-sort button.is-active {
+      color: #07111f;
+      background: linear-gradient(135deg, var(--blue), var(--orange));
+      border-color: transparent;
+      box-shadow: 0 10px 24px rgba(56, 189, 248, 0.18), 0 8px 18px rgba(249, 115, 22, 0.14);
+    }
+
+    .catalog-meta {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 8px;
+      margin: 12px 0 10px;
+      color: #bae6fd;
+      font-size: 12px;
+      font-weight: 850;
+    }
+
+    .catalog-table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      border: 1px solid rgba(148, 163, 184, 0.14);
+      border-radius: 18px;
+      background: rgba(2, 6, 23, 0.58);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+    }
+
+    .catalog-table {
+      width: 100%;
+      min-width: 1320px;
+      border-collapse: separate;
+      border-spacing: 0;
+      font-size: 12px;
+    }
+
+    .catalog-table th,
+    .catalog-table td {
+      padding: 10px;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .catalog-table th {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      color: #fed7aa;
+      background: rgba(15, 23, 42, 0.98);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0;
+      white-space: nowrap;
+    }
+
+    .catalog-table tbody tr:nth-child(even) {
+      background: rgba(255, 255, 255, 0.028);
+    }
+
+    .catalog-table tbody tr:hover {
+      background: rgba(56, 189, 248, 0.07);
+    }
+
+    .catalog-model {
+      color: #f8fafc;
+      font-size: 13px;
+      font-weight: 950;
+      white-space: nowrap;
+    }
+
+    .catalog-brand {
+      color: #7dd3fc;
+      font-size: 11px;
+      font-weight: 950;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .catalog-primary {
+      color: #fff7ed;
+      font-weight: 950;
+      white-space: nowrap;
+    }
+
+    .catalog-muted {
+      color: #cbd5e1;
+      font-weight: 800;
+    }
+
+    .catalog-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      min-width: 170px;
+    }
+
+    .catalog-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 5px 7px;
+      border: 1px solid rgba(56, 189, 248, 0.16);
+      border-radius: 999px;
+      color: #e0f2fe;
+      background: rgba(15, 23, 42, 0.78);
+      font-size: 10.5px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .model-compare-btn {
+      width: auto;
+      min-height: 34px;
+      margin-top: 8px;
+      padding: 0 11px;
+      border: 1px solid rgba(56, 189, 248, 0.22);
+      border-radius: 999px;
+      color: #e0f2fe;
+      background:
+        linear-gradient(135deg, rgba(56, 189, 248, 0.12), rgba(249, 115, 22, 0.08)),
+        rgba(15, 23, 42, 0.8);
+      box-shadow: none;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .model-compare-btn.is-selected {
+      color: #07111f;
+      background: linear-gradient(135deg, var(--blue), var(--orange));
+      border-color: transparent;
+    }
+
+    .purchase-warning {
+      display: grid;
+      gap: 6px;
+      padding: 11px;
+      border: 1px solid rgba(250, 204, 21, 0.28);
+      border-radius: 16px;
+      color: #fde68a;
+      background:
+        linear-gradient(135deg, rgba(250, 204, 21, 0.11), rgba(249, 115, 22, 0.07)),
+        rgba(15, 23, 42, 0.76);
+      font-size: 11.5px;
+      line-height: 1.35;
+      font-weight: 800;
+      text-align: left;
+    }
+
+    .purchase-warning strong {
+      color: #fff7ed;
+      font-size: 12px;
+    }
+
+    .selected-compare {
+      display: grid;
+      gap: 12px;
+      margin-top: 14px;
+      padding: 12px;
+      border: 1px solid rgba(56, 189, 248, 0.18);
+      border-radius: 18px;
+      background: rgba(2, 6, 23, 0.56);
+    }
+
+    .selected-compare h3 {
+      margin: 0;
+      color: #fff7ed;
+      font-size: 16px;
+      line-height: 1.2;
+    }
+
+    .selected-compare-help {
+      margin: 0;
+      color: #cbd5e1;
+      font-size: 12px;
+      font-weight: 800;
+      line-height: 1.35;
+    }
+
+    .selected-compare-grid {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding-bottom: 4px;
+    }
+
+    .selected-compare-card {
+      flex: 0 0 88%;
+      scroll-snap-align: start;
+      display: grid;
+      gap: 8px;
+      padding: 13px;
+      border: 1px solid rgba(148, 163, 184, 0.14);
+      border-radius: 16px;
+      background:
+        linear-gradient(145deg, rgba(56, 189, 248, 0.08), rgba(249, 115, 22, 0.07)),
+        rgba(15, 23, 42, 0.82);
+    }
+
+    .selected-compare-card h4 {
+      margin: 0;
+      color: #f8fafc;
+      font-size: 15px;
+      line-height: 1.2;
+    }
+
+    .selected-compare-line {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      color: #cbd5e1;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .selected-compare-line strong {
+      color: #fff7ed;
+      text-align: right;
+    }
+
+    @media (min-width: 760px) {
+      .selected-compare-card {
+        flex-basis: 31%;
+      }
+    }
+
+    .catalog-note {
+      display: grid;
+      gap: 8px;
+      margin-top: 12px;
+      padding: 12px;
+      border: 1px solid rgba(250, 204, 21, 0.24);
+      border-radius: 16px;
+      color: #fde68a;
+      background:
+        linear-gradient(135deg, rgba(250, 204, 21, 0.1), rgba(249, 115, 22, 0.07)),
+        rgba(15, 23, 42, 0.78);
+      font-size: 12px;
+      line-height: 1.4;
+      font-weight: 800;
+    }
+
+    @media (min-width: 700px) {
+      .catalog-filters {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (min-width: 980px) {
+      .app {
+        width: min(100%, 960px);
+      }
+
+      .catalog-filters {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+    }
+
     @media (min-width: 760px) {
       .compare.is-open {
         display: grid;
@@ -1259,6 +1619,23 @@
       </div>
 
       <div class="question-card">
+        <span class="question-title"><span class="question-icon">🏷️</span>Tu recherches une marque en particulier ?</span>
+        <div class="choice-grid">
+          <label class="choice"><input type="radio" name="brandPreference" value="all" checked /><span>Peu importe</span></label>
+          <label class="choice"><input type="radio" name="brandPreference" value="Dualtron" /><span>Dualtron</span></label>
+          <label class="choice"><input type="radio" name="brandPreference" value="Kaabo" /><span>Kaabo</span></label>
+          <label class="choice"><input type="radio" name="brandPreference" value="Nami" /><span>Nami</span></label>
+          <label class="choice"><input type="radio" name="brandPreference" value="Teverun" /><span>Teverun</span></label>
+          <label class="choice"><input type="radio" name="brandPreference" value="Vsett" /><span>Vsett</span></label>
+          <label class="choice"><input type="radio" name="brandPreference" value="Inmotion" /><span>Inmotion</span></label>
+          <label class="choice"><input type="radio" name="brandPreference" value="Kukirin" /><span>Kukirin</span></label>
+          <label class="choice"><input type="radio" name="brandPreference" value="Segway / Ninebot" /><span>Segway / Ninebot</span></label>
+          <label class="choice"><input type="radio" name="brandPreference" value="Xiaomi" /><span>Xiaomi</span></label>
+          <label class="choice"><input type="radio" name="brandPreference" value="other" /><span>Autre</span></label>
+        </div>
+      </div>
+
+      <div class="question-card">
         <span class="question-title"><span class="question-icon">🎯</span>Votre priorité ?</span>
         <div class="choice-grid">
           <label class="choice">
@@ -1284,6 +1661,22 @@
         </div>
       </div>
 
+      <div class="question-card">
+        <span class="question-title"><span class="question-icon">🧭</span>Ton usage principal ?</span>
+        <div class="choice-grid">
+          <label class="choice"><input type="radio" name="realUsage" value="all" checked /><span>Je veux un bon équilibre</span></label>
+          <label class="choice"><input type="radio" name="realUsage" value="city" /><span>Ville</span></label>
+          <label class="choice"><input type="radio" name="realUsage" value="ride" /><span>Balade</span></label>
+          <label class="choice"><input type="radio" name="realUsage" value="long" /><span>Longue distance</span></label>
+          <label class="choice"><input type="radio" name="realUsage" value="power" /><span>Grosse puissance</span></label>
+          <label class="choice"><input type="radio" name="realUsage" value="comfort" /><span>Confort</span></label>
+          <label class="choice"><input type="radio" name="realUsage" value="beginner" /><span>Débutant</span></label>
+          <label class="choice"><input type="radio" name="realUsage" value="confirmed" /><span>Confirmé</span></label>
+          <label class="choice"><input type="radio" name="realUsage" value="portable" /><span>Je dois la porter</span></label>
+          <label class="choice"><input type="radio" name="realUsage" value="lowMaintenance" /><span>Limiter l’entretien</span></label>
+        </div>
+      </div>
+
       <button id="recommendButton" type="button">Trouver ma trott idéale ⚡</button>
     </section>
 
@@ -1298,6 +1691,161 @@
         <span class="swipe-arrow">↔</span>
       </div>
       <div class="compare" id="comparePanel"></div>
+    </section>
+
+    <section class="catalog-section" id="catalogSection" aria-labelledby="catalogTitle">
+      <div class="catalog-header">
+        <h2 id="catalogTitle">Comparer les trottinettes</h2>
+        <p>Tableau classé par batterie, de la plus petite à la plus grosse. Les capacités sont estimées quand la donnée exacte n’est pas disponible.</p>
+      </div>
+
+      <div class="catalog-filters" aria-label="Filtres du comparatif">
+        <div class="filter-field">
+          <label for="brandFilter">🏷️ Tu recherches une marque en particulier ?</label>
+          <select id="brandFilter" data-catalog-filter="brand">
+            <option value="all">Peu importe / Toutes marques</option>
+            <option value="Dualtron">Dualtron</option>
+            <option value="Kaabo">Kaabo</option>
+            <option value="Nami">Nami</option>
+            <option value="Teverun">Teverun</option>
+            <option value="Vsett">Vsett</option>
+            <option value="Inmotion">Inmotion</option>
+            <option value="Kukirin">Kukirin</option>
+            <option value="Segway / Ninebot">Segway / Ninebot</option>
+            <option value="Xiaomi">Xiaomi</option>
+            <option value="other">Autre</option>
+          </select>
+        </div>
+
+        <div class="filter-field">
+          <label for="batteryFilter">🔋 Filtre batterie</label>
+          <select id="batteryFilter" data-catalog-filter="battery">
+            <option value="all">Toutes les batteries</option>
+            <option value="small">Petite batterie</option>
+            <option value="medium">Batterie moyenne</option>
+            <option value="large">Grosse batterie</option>
+            <option value="xlarge">Très grosse batterie</option>
+          </select>
+        </div>
+
+        <div class="filter-field">
+          <label for="rangeFilter">🔋 Filtre autonomie</label>
+          <select id="rangeFilter" data-catalog-filter="range">
+            <option value="all">Toutes les autonomies</option>
+            <option value="lt40">Moins de 40 km</option>
+            <option value="40-70">40 à 70 km</option>
+            <option value="70-100">70 à 100 km</option>
+            <option value="gt100">Plus de 100 km</option>
+          </select>
+        </div>
+
+        <div class="filter-field">
+          <label for="priceFilter">💸 Filtre prix</label>
+          <select id="priceFilter" data-catalog-filter="price">
+            <option value="all">Tous les prix</option>
+            <option value="lt1000">Moins de 1000 €</option>
+            <option value="1000-2000">1000 à 2000 €</option>
+            <option value="2000-3000">2000 à 3000 €</option>
+            <option value="gt3000">Plus de 3000 €</option>
+          </select>
+        </div>
+
+        <div class="filter-field">
+          <label for="usageFilter">🛴 Filtre usage</label>
+          <select id="usageFilter" data-catalog-filter="usage">
+            <option value="all">Tous les usages</option>
+            <option value="city">Ville</option>
+            <option value="ride">Balade</option>
+            <option value="long">Longue distance</option>
+            <option value="power">Grosse puissance</option>
+            <option value="comfort">Confort</option>
+            <option value="beginner">Débutant</option>
+            <option value="confirmed">Confirmé</option>
+          </select>
+        </div>
+
+        <div class="filter-field">
+          <label for="weightFilter">⚖️ Filtre poids</label>
+          <select id="weightFilter" data-catalog-filter="weight">
+            <option value="all">Tous les poids</option>
+            <option value="portable">Facile à transporter</option>
+            <option value="medium">Moyen</option>
+            <option value="heavy">Lourd</option>
+            <option value="xheavy">Très lourd / grosse machine</option>
+          </select>
+        </div>
+
+        <div class="filter-field">
+          <label for="maintenanceFilter">🔧 Filtre entretien</label>
+          <select id="maintenanceFilter" data-catalog-filter="maintenance">
+            <option value="all">Tous les entretiens</option>
+            <option value="low">Entretien faible</option>
+            <option value="medium">Entretien moyen</option>
+            <option value="high">Entretien élevé</option>
+          </select>
+        </div>
+
+        <div class="filter-field">
+          <label for="partsFilter">🧩 Filtre pièces</label>
+          <select id="partsFilter" data-catalog-filter="parts">
+            <option value="all">Toutes disponibilités</option>
+            <option value="easy">Pièces faciles à trouver</option>
+            <option value="medium">Pièces moyennement disponibles</option>
+            <option value="hard">Pièces difficiles à trouver</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="catalog-sort" aria-label="Tri du comparatif">
+        <button type="button" class="is-active" data-catalog-sort="batteryAsc">Trier par batterie croissante</button>
+        <button type="button" data-catalog-sort="batteryDesc">Trier par batterie décroissante</button>
+        <button type="button" data-catalog-sort="range">Trier par autonomie</button>
+        <button type="button" data-catalog-sort="priceAsc">Trier par prix croissant</button>
+        <button type="button" data-catalog-sort="priceDesc">Trier par prix décroissant</button>
+        <button type="button" data-catalog-sort="weight">Trier par poids</button>
+        <button type="button" data-catalog-sort="maintenance">Trier par coût d’entretien</button>
+        <button type="button" data-catalog-sort="reliability">Trier par fiabilité</button>
+      </div>
+
+      <div class="catalog-meta">
+        <span id="catalogCount"></span>
+        <span>Tri actif : <strong id="catalogSortLabel">batterie croissante</strong></span>
+      </div>
+
+      <div class="selected-compare" id="selectedCompare">
+        <h3>Comparer 2 ou 3 trottinettes</h3>
+        <p class="selected-compare-help" id="selectedCompareHelp">Sélectionnez 2 ou 3 modèles avec le bouton “Comparer”.</p>
+        <div class="selected-compare-grid" id="selectedCompareGrid"></div>
+      </div>
+
+      <div class="catalog-table-wrap" role="region" aria-label="Tableau comparatif des trottinettes" tabindex="0">
+        <table class="catalog-table">
+          <thead>
+            <tr>
+              <th>Marque</th>
+              <th>Modèle</th>
+              <th>Batterie</th>
+              <th>Wh estimés</th>
+              <th>Autonomie</th>
+              <th>Prix indicatif</th>
+              <th>Poids</th>
+              <th>Usage conseillé</th>
+              <th>Entretien</th>
+              <th>Pièces</th>
+              <th>Fiabilité</th>
+              <th>Pour qui ?</th>
+              <th>Points forts</th>
+              <th>Points faibles</th>
+            </tr>
+          </thead>
+          <tbody id="catalogTableBody"></tbody>
+        </table>
+      </div>
+
+      <div class="catalog-note">
+        <span>Les prix, autonomies et coûts d’entretien sont indicatifs. Ils peuvent varier selon les promotions, les stocks, les revendeurs, le poids du pilote, la vitesse, le terrain, la météo, la pression des pneus et l’usage.</span>
+        <span>Pensez à consulter nos partenaires FASTRIDE et FHOZSHOP pour les disponibilités, conseils, pièces et codes promos.</span>
+      </div>
     </section>
 
     <section class="advice-note">
@@ -1323,11 +1871,11 @@
       <span>Créé par Mister Luxuryplus</span>
     </footer>
 
-    <div class="app-version" id="appVersion">🛴 Version 1.14</div>
+    <div class="app-version" id="appVersion">🛴 Version 1.16</div>
   </main>
 
   <script>
-    const APP_VERSION = "1.14";
+    const APP_VERSION = "1.16";
 
     const scooters = [
       { brand: "Angwatt", model: "CS1", range: 55, maxSpeed: 55, powerWatts: 2400, weightKg: 34, price: 849, category: "polyvalente" },
@@ -1443,7 +1991,10 @@
       { brand: "Nami", model: "Burn-E 2", range: 95, maxSpeed: 90, powerWatts: 8400, weightKg: 47, price: 3290, category: "puissante" },
       { brand: "Nami", model: "Burn-E 3", range: 105, maxSpeed: 95, powerWatts: 9000, weightKg: 50, price: 3590, category: "longue autonomie" },
       { brand: "Nami", model: "Burn-E 3 Max", range: 130, maxSpeed: 105, powerWatts: 12000, weightKg: 53, price: 4590, category: "longue autonomie", ratingsOverride: { autonomy: 10, power: 10, comfort: 10, reliability: 7, value: 7, portability: 2, service: 6 } },
+      { brand: "Nami", model: "Burn-E", range: 105, maxSpeed: 90, powerWatts: 8400, weightKg: 47, price: 3490, category: "longue autonomie", ratingsOverride: { autonomy: 9, power: 9, comfort: 10, reliability: 7, value: 7, portability: 2, service: 6 } },
       { brand: "Nami", model: "Burn-E Max", range: 120, maxSpeed: 100, powerWatts: 10000, weightKg: 49, price: 4190, category: "longue autonomie" },
+      { brand: "Nami", model: "Blast", range: 75, maxSpeed: 70, powerWatts: 5000, weightKg: 38, price: 2190, category: "puissante", ratingsOverride: { autonomy: 8, power: 8, comfort: 9, reliability: 7, value: 7, portability: 4, service: 6 } },
+      { brand: "Nami", model: "Blast Max", range: 90, maxSpeed: 80, powerWatts: 6000, weightKg: 41, price: 2690, category: "puissante", ratingsOverride: { autonomy: 8, power: 9, comfort: 9, reliability: 7, value: 7, portability: 3, service: 6 } },
       { brand: "Nami", model: "Klima", range: 80, maxSpeed: 70, powerWatts: 5340, weightKg: 36, price: 1990, category: "puissante" },
       { brand: "Nami", model: "Klima Max", range: 95, maxSpeed: 75, powerWatts: 5340, weightKg: 39, price: 2290, category: "longue autonomie" },
       { brand: "Nami", model: "Stellar", range: 65, maxSpeed: 55, powerWatts: 2500, weightKg: 30, price: 1390, category: "polyvalente", ratingsOverride: { autonomy: 7, power: 7, comfort: 8, reliability: 7, value: 8, portability: 5, service: 6 } },
@@ -1526,6 +2077,11 @@
     els.compareButton.addEventListener("click", toggleCompare);
     els.communityButton.addEventListener("click", openCommunity);
     els.result.addEventListener("click", toggleWhyDetails);
+    document.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-compare-key]");
+      if (!button) return;
+      toggleCompareSelection(button.dataset.compareKey);
+    });
 
     function selectedValue(name) {
       return document.querySelector(`input[name="${name}"]:checked`).value;
@@ -1885,7 +2441,7 @@
     function quickStats(scooter) {
       return `
         <div class="result-lines">
-          <div class="result-line"><span>${icon("price")} Prix</span><strong>${euro(scooter.price)}</strong></div>
+          <div class="result-line"><span>${icon("price")} Prix</span><strong>${priceRange(scooter.price)}</strong></div>
           <div class="result-line"><span>${icon("battery")} Autonomie</span><strong>${Math.round(scooter.estimatedRange)} km</strong></div>
         </div>
       `;
@@ -1990,6 +2546,415 @@
       return `
         <div class="maintenance-mini maintenance-${maintenance.tone}">
           <span>${maintenance.label}</span>
+        </div>
+      `;
+    }
+
+    const preferredBrandOptions = ["Dualtron", "Kaabo", "Nami", "Teverun", "Vsett", "Inmotion", "Kukirin", "Segway / Ninebot", "Xiaomi"];
+    const catalogState = { sort: "batteryAsc", selected: [] };
+
+    const knownBatteryData = {
+      "Dualtron|Mini": { voltage: 52, ah: 21 },
+      "Dualtron|Victor": { voltage: 60, ah: 30 },
+      "Dualtron|Victor 2026": { voltage: 60, ah: 30 },
+      "Dualtron|Victor Limited": { voltage: 60, ah: 35 },
+      "Dualtron|Victor Luxury Plus": { voltage: 60, ah: 35 },
+      "Dualtron|Thunder": { voltage: 60, ah: 35 },
+      "Dualtron|Thunder 2": { voltage: 72, ah: 40 },
+      "Dualtron|Thunder 3": { voltage: 72, ah: 40 },
+      "Dualtron|Ultra 2": { voltage: 72, ah: 40 },
+      "Kaabo|Mantis 10": { voltage: 60, ah: 24.5 },
+      "Kaabo|Mantis King GT": { voltage: 60, ah: 24 },
+      "Kaabo|Wolf King GT": { voltage: 72, ah: 35 },
+      "Kaabo|Wolf Warrior 11": { voltage: 60, ah: 35 },
+      "Nami|Klima": { voltage: 60, ah: 25 },
+      "Nami|Klima Max": { voltage: 60, ah: 30 },
+      "Nami|Burn-E": { voltage: 72, ah: 28 },
+      "Nami|Burn-E 2": { voltage: 72, ah: 28 },
+      "Nami|Burn-E Max": { voltage: 72, ah: 40 },
+      "Nami|Burn-E 3 Max": { voltage: 72, ah: 40 },
+      "Segway / Ninebot|F2": { batteryWh: 367 },
+      "Segway / Ninebot|F2 Pro": { batteryWh: 460 },
+      "Segway / Ninebot|Max G2": { batteryWh: 551 },
+      "Segway / Ninebot|Max G3": { batteryWh: 597 },
+      "Xiaomi|M365": { voltage: 36, ah: 7.8 },
+      "Xiaomi|Pro 2": { voltage: 36, ah: 12.8 },
+      "Xiaomi|4 Ultra": { voltage: 48, ah: 12 },
+      "Vsett|Vsett 8": { voltage: 48, ah: 19.2 },
+      "Vsett|Vsett 9+": { voltage: 48, ah: 21 },
+      "Vsett|Vsett 10+": { voltage: 60, ah: 28 },
+      "Vsett|Vsett 11+": { voltage: 60, ah: 31.2 }
+    };
+
+    function escapeHtml(value) {
+      return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
+
+    function scooterKey(scooter) {
+      return `${scooter.brand}|${scooter.model}`;
+    }
+
+    function brandMatchesPreference(scooter, preference) {
+      if (!preference || preference === "all") return true;
+      if (preference === "other") return !preferredBrandOptions.includes(scooter.brand);
+      return scooter.brand === preference;
+    }
+
+    function batteryInfo(scooter) {
+      const known = knownBatteryData[`${scooter.brand}|${scooter.model}`] || {};
+      const voltage = scooter.voltage || known.voltage;
+      const ah = scooter.ah || known.ah;
+      const batteryWh = scooter.batteryWh || known.batteryWh;
+      let wh = batteryWh || (voltage && ah ? voltage * ah : 0);
+      let label = "";
+      let estimated = false;
+
+      if (wh) {
+        label = voltage && ah ? `${voltage}V ${ah}Ah` : `≈ ${Math.round(wh)} Wh`;
+      } else {
+        const whPerKm = {
+          urbaine: 13.5,
+          polyvalente: 16.5,
+          puissante: 20.5,
+          "longue autonomie": 22.5
+        }[scooter.category] || 18;
+
+        wh = Math.max(250, scooter.range * whPerKm);
+        estimated = true;
+        label = `≈ ${Math.round(wh)} Wh estimés`;
+      }
+
+      return { label, wh: Math.round(wh), estimated };
+    }
+
+    function batteryBucket(wh) {
+      if (wh < 900) return "small";
+      if (wh < 1500) return "medium";
+      if (wh < 2300) return "large";
+      return "xlarge";
+    }
+
+    function batteryBucketLabel(bucket) {
+      return {
+        small: "Petite batterie",
+        medium: "Batterie moyenne",
+        large: "Grosse batterie",
+        xlarge: "Très grosse batterie"
+      }[bucket] || "Batterie estimée";
+    }
+
+    function priceRange(value) {
+      if (value >= 4000) return "plus de 4 000 € selon version";
+      const spread = value < 1000 ? 150 : value < 2000 ? 250 : 400;
+      const min = Math.max(250, Math.floor((value - spread) / 50) * 50);
+      const max = Math.ceil((value + spread) / 50) * 50;
+      return `environ ${euro(min)} à ${euro(max)}`;
+    }
+
+    function categoryLabel(category) {
+      return {
+        urbaine: "Ville",
+        polyvalente: "Balade / polyvalent",
+        puissante: "Grosse puissance",
+        "longue autonomie": "Longue distance"
+      }[category] || category || "Polyvalent";
+    }
+
+    function maintenanceLevel(scooter) {
+      const maintenance = maintenanceInfo(scooter);
+      if (maintenance.tone === "economic") return { key: "low", rank: 1, label: "Entretien faible" };
+      if (maintenance.tone === "medium") return { key: "medium", rank: 2, label: "Entretien moyen" };
+      return { key: "high", rank: 3, label: maintenance.tone === "check" ? "SAV / pièces à vérifier" : "Entretien élevé" };
+    }
+
+    function partsAvailability(scooter) {
+      const service = getRatings(scooter).service;
+      if (scooter.market === "Marques alternatives / import" || service <= 4) return { key: "hard", label: "Pièces difficiles à trouver" };
+      if (service >= 8) return { key: "easy", label: "Pièces faciles à trouver" };
+      return { key: "medium", label: "Pièces moyennement disponibles" };
+    }
+
+    function reliabilityLevel(scooter) {
+      const rating = getRatings(scooter).reliability;
+      if (rating >= 8) return { rank: 3, label: "Très bonne" };
+      if (rating >= 6) return { rank: 2, label: "Correcte" };
+      return { rank: 1, label: "À vérifier" };
+    }
+
+    function weightBucket(scooter) {
+      if (scooter.weightKg < 25) return "portable";
+      if (scooter.weightKg < 35) return "medium";
+      if (scooter.weightKg < 45) return "heavy";
+      return "xheavy";
+    }
+
+    function usageTags(scooter) {
+      const ratings = getRatings(scooter);
+      const tags = new Set();
+      if (scooter.category === "urbaine" || scooter.weightKg < 30) tags.add("city");
+      if (scooter.category === "polyvalente" || (scooter.range >= 45 && scooter.range <= 90)) tags.add("ride");
+      if (scooter.category === "longue autonomie" || scooter.range > 95) tags.add("long");
+      if (scooter.category === "puissante" || scooter.maxSpeed >= 70 || scooter.powerWatts >= 3500) tags.add("power");
+      if (ratings.comfort >= 8) tags.add("comfort");
+      if (scooter.weightKg < 32 && scooter.maxSpeed <= 55 && ratings.reliability >= 6) tags.add("beginner");
+      if (scooter.maxSpeed >= 70 || scooter.weightKg >= 38 || scooter.powerWatts >= 3500) tags.add("confirmed");
+      return [...tags];
+    }
+
+    function realUsageScore(scooter, realUsage) {
+      if (!realUsage || realUsage === "all") return 0;
+      const itemTags = usageTags(scooter);
+      const maintenance = maintenanceLevel(scooter);
+      let score = 0;
+
+      if (itemTags.includes(realUsage)) score += 42;
+      if (realUsage === "portable") score += scooter.weightKg < 25 ? 55 : scooter.weightKg < 32 ? 24 : -42;
+      if (realUsage === "lowMaintenance") score += maintenance.key === "low" ? 55 : maintenance.key === "medium" ? 12 : -42;
+      if (realUsage === "comfort") score += getRatings(scooter).comfort * 5;
+      if (realUsage === "power") score += getRatings(scooter).power * 5;
+      if (realUsage === "long") score += getRatings(scooter).autonomy * 5;
+      if (realUsage === "beginner" && (scooter.weightKg >= 38 || scooter.maxSpeed >= 75)) score -= 45;
+      if (realUsage === "confirmed" && scooter.maxSpeed >= 70) score += 22;
+      return score;
+    }
+
+    function riderTarget(scooter) {
+      if (scooter.category === "urbaine" || usageTags(scooter).includes("beginner")) return "Débutant, ville, trajets simples";
+      if (scooter.category === "longue autonomie") return "Longues distances, utilisateur confirmé";
+      if (scooter.category === "puissante") return "Sensations, performance, confirmé";
+      return "Usage mixte, balade, quotidien";
+    }
+
+    function catalogBadges(scooter, battery) {
+      const ratings = getRatings(scooter);
+      const maintenance = maintenanceLevel(scooter);
+      const badges = [];
+      if (scooter.range >= 90 || battery.wh >= 1800) badges.push("🔋 Grosse autonomie");
+      if (ratings.value >= 8 || scooter.price < 1000) badges.push("💸 Bon rapport qualité/prix");
+      if (maintenance.key === "low") badges.push("🔧 Entretien facile");
+      if (maintenance.key === "high") badges.push("⚠️ Entretien coûteux");
+      if (usageTags(scooter).includes("beginner")) badges.push("🛴 Débutant friendly");
+      if (scooter.weightKg >= 45 || scooter.maxSpeed >= 90) badges.push("🔥 Grosse machine");
+      if (scooter.weightKg < 25) badges.push("🧳 Transportable");
+      if (scooter.price >= 3000 || ratings.comfort >= 9) badges.push("👑 Premium");
+      if (scooter.range >= 100 || scooter.category === "longue autonomie") badges.push("🛣️ Longue distance");
+      if (scooter.category === "urbaine" || scooter.weightKg < 25) badges.push("🏙️ Ville");
+      if (ratings.power >= 8 || scooter.maxSpeed >= 70) badges.push("⚡ Puissance");
+      return badges.slice(0, 4);
+    }
+
+    function catalogWeaknesses(scooter) {
+      const parts = partsAvailability(scooter);
+      const maintenance = maintenanceLevel(scooter);
+      const weaknesses = [];
+      if (scooter.weightKg >= 45) weaknesses.push("Très lourde");
+      else if (scooter.weightKg >= 35) weaknesses.push("Lourde au quotidien");
+      if (maintenance.key === "high") weaknesses.push("Entretien plus coûteux");
+      if (parts.key === "hard") weaknesses.push("Pièces à vérifier");
+      if (scooter.range < 45) weaknesses.push("Autonomie limitée");
+      if (scooter.price >= 3000) weaknesses.push("Budget élevé");
+      return weaknesses.length ? weaknesses.join(", ") : "Peu de compromis majeurs";
+    }
+
+    function catalogItem(scooter) {
+      const battery = batteryInfo(scooter);
+      const ratings = getRatings(scooter);
+      const maintenance = maintenanceLevel(scooter);
+      const parts = partsAvailability(scooter);
+      const reliability = reliabilityLevel(scooter);
+      return {
+        ...scooter,
+        battery,
+        batteryBucket: batteryBucket(battery.wh),
+        maintenance,
+        parts,
+        reliability,
+        ratings,
+        usageTags: usageTags(scooter),
+        weightBucket: weightBucket(scooter),
+        target: riderTarget(scooter),
+        badges: catalogBadges(scooter, battery),
+        weaknesses: catalogWeaknesses(scooter)
+      };
+    }
+
+    function catalogFilterValue(name) {
+      const field = document.querySelector(`[data-catalog-filter="${name}"]`);
+      return field ? field.value : "all";
+    }
+
+    function catalogPassesFilters(item) {
+      const brand = catalogFilterValue("brand");
+      const battery = catalogFilterValue("battery");
+      const range = catalogFilterValue("range");
+      const price = catalogFilterValue("price");
+      const usage = catalogFilterValue("usage");
+      const weight = catalogFilterValue("weight");
+      const maintenance = catalogFilterValue("maintenance");
+      const parts = catalogFilterValue("parts");
+
+      if (!brandMatchesPreference(item, brand)) return false;
+      if (battery !== "all" && item.batteryBucket !== battery) return false;
+      if (range === "lt40" && item.range >= 40) return false;
+      if (range === "40-70" && (item.range < 40 || item.range > 70)) return false;
+      if (range === "70-100" && (item.range < 70 || item.range > 100)) return false;
+      if (range === "gt100" && item.range <= 100) return false;
+      if (price === "lt1000" && item.price >= 1000) return false;
+      if (price === "1000-2000" && (item.price < 1000 || item.price > 2000)) return false;
+      if (price === "2000-3000" && (item.price < 2000 || item.price > 3000)) return false;
+      if (price === "gt3000" && item.price <= 3000) return false;
+      if (usage !== "all" && !item.usageTags.includes(usage)) return false;
+      if (weight !== "all" && item.weightBucket !== weight) return false;
+      if (maintenance !== "all" && item.maintenance.key !== maintenance) return false;
+      if (parts !== "all" && item.parts.key !== parts) return false;
+      return true;
+    }
+
+    function sortCatalogItems(items) {
+      const common = (a, b) => a.brand.localeCompare(b.brand) || a.model.localeCompare(b.model);
+      const sorters = {
+        batteryAsc: (a, b) => a.battery.wh - b.battery.wh || common(a, b),
+        batteryDesc: (a, b) => b.battery.wh - a.battery.wh || common(a, b),
+        range: (a, b) => b.range - a.range || common(a, b),
+        priceAsc: (a, b) => a.price - b.price || common(a, b),
+        priceDesc: (a, b) => b.price - a.price || common(a, b),
+        weight: (a, b) => a.weightKg - b.weightKg || common(a, b),
+        maintenance: (a, b) => a.maintenance.rank - b.maintenance.rank || a.price - b.price || common(a, b),
+        reliability: (a, b) => b.reliability.rank - a.reliability.rank || common(a, b)
+      };
+      return items.sort(sorters[catalogState.sort] || sorters.batteryAsc);
+    }
+
+    function renderCatalogTable() {
+      const body = document.getElementById("catalogTableBody");
+      const count = document.getElementById("catalogCount");
+      const sortLabel = document.getElementById("catalogSortLabel");
+      if (!body || !count || !sortLabel) return;
+
+      const items = sortCatalogItems(scooters.map(catalogItem).filter(catalogPassesFilters));
+      count.textContent = `${items.length} modèle${items.length > 1 ? "s" : ""} affiché${items.length > 1 ? "s" : ""}`;
+      sortLabel.textContent = {
+        batteryAsc: "batterie croissante",
+        batteryDesc: "batterie décroissante",
+        range: "autonomie",
+        priceAsc: "prix croissant",
+        priceDesc: "prix décroissant",
+        weight: "poids",
+        maintenance: "coût d’entretien",
+        reliability: "fiabilité"
+      }[catalogState.sort] || "batterie croissante";
+
+      body.innerHTML = items.map((item) => `
+        <tr>
+          <td><span class="catalog-brand">${escapeHtml(item.brand)}</span></td>
+          <td><span class="catalog-model">${escapeHtml(item.model)}</span><br>${compareSelectButton(item)}</td>
+          <td><span class="catalog-primary">${escapeHtml(item.battery.label)}</span><br><span class="catalog-muted">${batteryBucketLabel(item.batteryBucket)}</span></td>
+          <td><span class="catalog-primary">${item.battery.wh} Wh</span></td>
+          <td><span class="catalog-primary">${Math.round(item.range)} km</span></td>
+          <td><span class="catalog-primary">${priceRange(item.price)}</span></td>
+          <td><span class="catalog-primary">${formatWeight(item.weightKg)}</span></td>
+          <td>${escapeHtml(categoryLabel(item.category))}</td>
+          <td>${escapeHtml(item.maintenance.label)}</td>
+          <td>${escapeHtml(item.parts.label)}</td>
+          <td>${escapeHtml(item.reliability.label)}</td>
+          <td>${escapeHtml(item.target)}</td>
+          <td><div class="catalog-badges">${item.badges.map((badge) => `<span class="catalog-badge">${escapeHtml(badge)}</span>`).join("")}</div></td>
+          <td>${escapeHtml(item.weaknesses)}</td>
+        </tr>
+      `).join("");
+    }
+
+    function initCatalogTable() {
+      document.querySelectorAll("[data-catalog-filter]").forEach((field) => {
+        field.addEventListener("change", renderCatalogTable);
+      });
+
+      document.querySelectorAll("[data-catalog-sort]").forEach((button) => {
+        button.addEventListener("click", () => {
+          catalogState.sort = button.dataset.catalogSort;
+          document.querySelectorAll("[data-catalog-sort]").forEach((item) => item.classList.toggle("is-active", item === button));
+          renderCatalogTable();
+        });
+      });
+
+      renderSelectedCompare();
+      renderCatalogTable();
+    }
+
+    function compareSelectButton(scooter) {
+      const key = scooterKey(scooter);
+      const selected = catalogState.selected.includes(key);
+      return `<button type="button" class="model-compare-btn${selected ? " is-selected" : ""}" data-compare-key="${escapeHtml(key)}">${selected ? "✓ Sélectionné" : "Comparer"}</button>`;
+    }
+
+    function selectedCompareCard(item) {
+      return `
+        <article class="selected-compare-card">
+          <h4>${escapeHtml(item.brand)} ${escapeHtml(item.model)}</h4>
+          <div class="catalog-badges">${item.badges.map((badge) => `<span class="catalog-badge">${escapeHtml(badge)}</span>`).join("")}</div>
+          <div class="selected-compare-line"><span>Batterie</span><strong>${escapeHtml(item.battery.label)}</strong></div>
+          <div class="selected-compare-line"><span>Wh estimés</span><strong>${item.battery.wh} Wh</strong></div>
+          <div class="selected-compare-line"><span>Autonomie</span><strong>${Math.round(item.range)} km</strong></div>
+          <div class="selected-compare-line"><span>Prix</span><strong>${priceRange(item.price)}</strong></div>
+          <div class="selected-compare-line"><span>Poids</span><strong>${formatWeight(item.weightKg)}</strong></div>
+          <div class="selected-compare-line"><span>Usage</span><strong>${escapeHtml(categoryLabel(item.category))}</strong></div>
+          <div class="selected-compare-line"><span>Entretien</span><strong>${escapeHtml(item.maintenance.label)}</strong></div>
+          <div class="selected-compare-line"><span>Pièces</span><strong>${escapeHtml(item.parts.label)}</strong></div>
+          <div class="selected-compare-line"><span>Fiabilité</span><strong>${escapeHtml(item.reliability.label)}</strong></div>
+          <div class="selected-compare-line"><span>Pour qui ?</span><strong>${escapeHtml(item.target)}</strong></div>
+          <div class="selected-compare-line"><span>Points forts</span><strong>${escapeHtml(item.badges.join(", ") || "Profil équilibré")}</strong></div>
+          <div class="selected-compare-line"><span>Points faibles</span><strong>${escapeHtml(item.weaknesses)}</strong></div>
+        </article>
+      `;
+    }
+
+    function renderSelectedCompare() {
+      const grid = document.getElementById("selectedCompareGrid");
+      const help = document.getElementById("selectedCompareHelp");
+      if (!grid || !help) return;
+
+      const items = catalogState.selected
+        .map((key) => scooters.find((scooter) => scooterKey(scooter) === key))
+        .filter(Boolean)
+        .map(catalogItem);
+
+      help.textContent = items.length < 2
+        ? "Sélectionnez 2 ou 3 modèles avec le bouton “Comparer”."
+        : `${items.length} modèles sélectionnés. Faites défiler horizontalement sur mobile.`;
+      grid.innerHTML = items.map(selectedCompareCard).join("");
+    }
+
+    function toggleCompareSelection(key) {
+      const exists = catalogState.selected.includes(key);
+      if (exists) {
+        catalogState.selected = catalogState.selected.filter((item) => item !== key);
+      } else {
+        if (catalogState.selected.length >= 3) catalogState.selected.shift();
+        catalogState.selected.push(key);
+      }
+      renderSelectedCompare();
+      renderCatalogTable();
+      updateVisibleCompareButtons();
+    }
+
+    function updateVisibleCompareButtons() {
+      document.querySelectorAll("[data-compare-key]").forEach((button) => {
+        const selected = catalogState.selected.includes(button.dataset.compareKey);
+        button.classList.toggle("is-selected", selected);
+        button.textContent = selected ? "✓ Sélectionné" : "Comparer";
+      });
+    }
+
+    function purchaseWarningBlock() {
+      return `
+        <div class="purchase-warning">
+          <strong>⚠️ Avant d’acheter, vérifiez :</strong>
+          <span>facture détaillée, batterie et ampérage, version exacte, pièces disponibles, coût d’entretien, assurance possible et prix final selon promotions/revendeur.</span>
+          <span>Demandez conseil avant d’acheter, surtout si l’offre semble trop belle pour être vraie.</span>
         </div>
       `;
     }
@@ -2169,8 +3134,10 @@
             <p class="choice-summary">${modelSummary(scooter, totalDistance, usageType)}</p>
           </div>
           ${quickStats(scooter)}
+          ${compareSelectButton(scooter)}
           ${maintenanceMiniBlock(scooter)}
           ${reasonsBlock(scooter, totalDistance, speed, budget, usageType, riderWeight)}
+          ${purchaseWarningBlock()}
           ${importNotice(scooter)}
         </article>
       `;
@@ -2187,8 +3154,10 @@
             <p class="choice-summary">${modelSummary(scooter, totalDistance, usageType)}</p>
           </div>
           ${quickStats(scooter)}
+          ${compareSelectButton(scooter)}
           ${maintenanceMiniBlock(scooter)}
           ${reasonsBlock(scooter, totalDistance, speed, budget, usageType, riderWeight)}
+          ${purchaseWarningBlock()}
           ${importNotice(scooter)}
         </article>
       `;
@@ -2209,29 +3178,40 @@
             </div>
           </div>
           ${quickStats(scooter)}
+          ${compareSelectButton(scooter)}
           ${maintenanceMiniBlock(scooter)}
           ${reasonsBlock(scooter, totalDistance, speed, budget, usageType, riderWeight, referenceScooter)}
+          ${purchaseWarningBlock()}
           ${importNotice(scooter)}
         </article>
       `;
     }
 
     function compareCard(scooter) {
+      const item = catalogItem(scooter);
       return `
         <article class="compare-card">
           <h3>${scooter.brand} ${scooter.model}</h3>
           <div class="rating-grid">
-            <div class="rating-line price-line"><span>${icon("price")} Prix</span><strong>${euro(scooter.price)}</strong></div>
+            <div class="rating-line price-line"><span>${icon("price")} Prix</span><strong>${priceRange(scooter.price)}</strong></div>
+            <div class="rating-pill"><span>${icon("battery")} Batterie</span><strong>${escapeHtml(item.battery.label)}</strong></div>
+            <div class="rating-pill"><span>${icon("battery")} Wh estimés</span><strong>${item.battery.wh} Wh</strong></div>
             <div class="rating-pill"><span>${icon("battery")} Autonomie</span><strong>${Math.round(scooter.estimatedRange)} km</strong></div>
             <div class="rating-pill"><span>${icon("weight")} Poids</span><strong>${formatWeight(scooter.weightKg)}</strong></div>
             <div class="rating-pill"><span>${icon("speed")} Vitesse</span><strong>${scooter.maxSpeed} km/h</strong></div>
+            <div class="rating-pill"><span>🛴 Usage</span><strong>${escapeHtml(categoryLabel(scooter.category))}</strong></div>
+            <div class="rating-pill"><span>🧩 Pièces</span><strong>${escapeHtml(item.parts.label)}</strong></div>
+            <div class="rating-pill"><span>👤 Pour qui ?</span><strong>${escapeHtml(item.target)}</strong></div>
             <div class="rating-pill"><span>${icon("power")} Puissance</span>${scoreBadge(scooter.ratings.power)}</div>
             <div class="rating-pill"><span>${icon("comfort")} Confort</span>${scoreBadge(scooter.ratings.comfort)}</div>
             <div class="rating-pill"><span>${icon("reliability")} Fiabilité</span>${scoreBadge(scooter.ratings.reliability)}</div>
             <div class="rating-pill"><span>${icon("price")} Qualité/prix</span>${scoreBadge(scooter.ratings.value)}</div>
           </div>
+          <div class="catalog-badges">${item.badges.map((badge) => `<span class="catalog-badge">${escapeHtml(badge)}</span>`).join("")}</div>
+          <div class="comparison-note">Points faibles : ${escapeHtml(item.weaknesses)}</div>
           ${maintenanceBlock(scooter)}
           ${heavyWarning(scooter)}
+          ${purchaseWarningBlock()}
           ${importNotice(scooter)}
         </article>
       `;
@@ -2276,6 +3256,23 @@
       return choices;
     }
 
+    function selectChoicesByBrandPreference(candidates, brandPreference, limit = 3) {
+      if (!brandPreference || brandPreference === "all") return selectDiverseChoices(candidates, limit);
+
+      const preferred = candidates.filter((scooter) => brandMatchesPreference(scooter, brandPreference));
+      const alternatives = candidates.filter((scooter) => !brandMatchesPreference(scooter, brandPreference));
+      const choices = preferred.slice(0, limit);
+
+      for (const scooter of alternatives) {
+        if (choices.length >= limit) break;
+        if (!choices.some((choice) => scooterKey(choice) === scooterKey(scooter))) {
+          choices.push(scooter);
+        }
+      }
+
+      return choices;
+    }
+
     function recommendScooters() {
       const distance = Number(els.distance.value);
       const weight = Number(els.weight.value);
@@ -2283,6 +3280,8 @@
       const speed = Number(selectedValue("speed"));
       const usageType = selectedValue("usageType");
       const priority = selectedValue("priority");
+      const brandPreference = selectedValue("brandPreference");
+      const realUsage = selectedValue("realUsage");
       const totalDistance = distance;
 
       if (!distance || !weight || !budget) {
@@ -2301,7 +3300,14 @@
 
       const ranked = scooters
         .map((scooter) => estimateScooter(scooter, speed, weight))
-        .map((scooter) => ({ ...scooter, score: scoreScooter(scooter, totalDistance, speed, budget, usageType, priority, weight) }))
+        .map((scooter) => ({
+          ...scooter,
+          score:
+            scoreScooter(scooter, totalDistance, speed, budget, usageType, priority, weight)
+            + realUsageScore(scooter, realUsage)
+            + (brandPreference !== "all" && brandMatchesPreference(scooter, brandPreference) ? 180 : 0)
+            + (brandPreference !== "all" && !brandMatchesPreference(scooter, brandPreference) ? -120 : 0)
+        }))
         .sort((a, b) => b.score - a.score || a.price - b.price || a.brand.localeCompare(b.brand) || a.model.localeCompare(b.model));
 
       const accessibleFits = ranked.filter((scooter) => {
@@ -2314,7 +3320,12 @@
         return remaining >= 30 && scooter.score > 0;
       });
 
-      const recommendationPool = strongAccessibleFits.length ? strongAccessibleFits : accessibleFits;
+      let recommendationPool = strongAccessibleFits.length ? strongAccessibleFits : accessibleFits;
+      if (brandPreference !== "all") {
+        const preferredStrong = strongAccessibleFits.filter((scooter) => brandMatchesPreference(scooter, brandPreference));
+        const preferredAccessible = accessibleFits.filter((scooter) => brandMatchesPreference(scooter, brandPreference));
+        recommendationPool = preferredStrong.length ? preferredStrong : preferredAccessible.length ? preferredAccessible : [];
+      }
 
       const futureFits = scooters
         .map((scooter) => estimateScooter(scooter, speed, weight))
@@ -2324,12 +3335,16 @@
         })
         .map((scooter) => ({
           ...scooter,
-          score: scoreScooter(scooter, totalDistance, speed, scooter.price, usageType, priority, weight) - Math.min(70, (scooter.price - budget) / 45)
+          score:
+            scoreScooter(scooter, totalDistance, speed, scooter.price, usageType, priority, weight)
+            + realUsageScore(scooter, realUsage)
+            + (brandPreference !== "all" && brandMatchesPreference(scooter, brandPreference) ? 180 : 0)
+            - Math.min(70, (scooter.price - budget) / 45)
         }))
         .sort((a, b) => b.score - a.score || a.price - b.price || a.brand.localeCompare(b.brand) || a.model.localeCompare(b.model));
 
       if (!recommendationPool.length) {
-        const futureChoices = selectDiverseChoices(futureFits, 3);
+        const futureChoices = selectChoicesByBrandPreference(futureFits, brandPreference, 3);
         state.choices = futureChoices;
         els.result.classList.add("future-mode");
         els.resultSummary.textContent = "";
@@ -2351,7 +3366,7 @@
         return;
       }
 
-      const choices = selectDiverseChoices(recommendationPool, 3);
+      const choices = selectChoicesByBrandPreference(recommendationPool, brandPreference, 3);
       state.choices = choices;
       els.result.classList.remove("future-mode");
       els.resultSummary.style.display = "block";
@@ -2391,6 +3406,8 @@
       });
       window.open("https://www.facebook.com/groups/843618944246747?locale=fr_FR", "_blank");
     }
+
+    initCatalogTable();
 
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
